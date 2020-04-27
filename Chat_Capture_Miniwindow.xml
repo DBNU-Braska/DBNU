@@ -59,6 +59,16 @@ USAGE:
 
   <trigger
    enabled="y"
+   match="\<Clan\> (.*?) '(.*?)'$"
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>	
+	
+  <trigger
+   enabled="y"
    match="<<(OOC|IMM)>> (.*?)$"
    omit_from_output="y"
    regexp="y"
