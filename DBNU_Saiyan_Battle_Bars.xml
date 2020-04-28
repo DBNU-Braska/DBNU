@@ -39,9 +39,9 @@ fprompt must be set to: fprompt current_hp [%h] hp_pct [%c] current_energy [%m] 
 
 -->
    
-  <trigger
+  <trigger 
    enabled="y"
-   match="current_hp \[(.*?)\] hp_pct \[(.*?)\%\] current_energy \[(.*?)\] energy_pct \[(.*?)\%\]$"
+   match="current_hp \[(.*?)\] hp_pct \[(.*?)\%\] current_energy \[(.*?)\] energy_pct \[(.*?)\%\]$" -- first line of prompt
    regexp="y"
    omit_from_output="y"
    script="info_bars"
@@ -51,7 +51,7 @@ fprompt must be set to: fprompt current_hp [%h] hp_pct [%c] current_energy [%m] 
 
   <trigger
    enabled="y"
-   match="armour \[(.*?)\] base_pl \[(.*?)\] current_pl \[(.*?)\] rage \[(.*?)\] gained \[(.*?)\] zeni \[(.*?)\]$"
+   match="armour \[(.*?)\] base_pl \[(.*?)\] current_pl \[(.*?)\] rage \[(.*?)\] gained \[(.*?)\] zeni \[(.*?)\]$" -- second line of prompt
    regexp="y"
    omit_from_output="y"
    script="info_bars2"
@@ -61,7 +61,7 @@ fprompt must be set to: fprompt current_hp [%h] hp_pct [%c] current_energy [%m] 
 
   <trigger
    enabled="y"
-   match="focus \[(.*?)\] timer \[(.*?)\] mob_name \[(.*?)\:(.*?)\] mob_hp_pct \[(.*?)\%\]$"
+   match="focus \[(.*?)\] timer \[(.*?)\] mob_name \[(.*?)\:(.*?)\] mob_hp_pct \[(.*?)\%\]$" -- third line of prompt
    regexp="y"
    omit_from_output="y"
    script="info_bars3"
@@ -71,7 +71,7 @@ fprompt must be set to: fprompt current_hp [%h] hp_pct [%c] current_energy [%m] 
 
     <trigger
    enabled="y"
-   match="PL Gained This Fight - (.*?)$"
+   match="PL Gained This Fight - (.*?)$" -- end of combat string
    omit_from_output="y"
    regexp="y"
    script="pl_gained"
