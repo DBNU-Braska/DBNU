@@ -47,6 +47,16 @@ USAGE:
   >
   </trigger>	
 
+	<trigger
+   enabled="y"
+   match="\<OOC\> \*(.*?)\*$"
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>	
+
   <trigger
    enabled="y"
    match="<(IMM)> Someone \'(.*?)\'$"
