@@ -95,7 +95,7 @@ function info_bars (name, line, wildcards)
 require "InfoBox"
 
 sty = InfoBox.barStyles
-HPBox = InfoBox:New("HP/SP")
+HPBox = InfoBox:New("HP/SP") HPBox:Font("Consolas", 10)
  HPBox.Bar.textStyle = HPBox.textStyles.plain
  HPBox.Bar.barStyle = sty.glass + sty.gradientFixed 
 HPBar    = HPBox:AddBar("", 0, "green", "firebrick", false, sty.glass + sty.gradientFixed)
@@ -129,7 +129,7 @@ function info_bars2 (name, line, wildcards)
 
 require "InfoBox"
 
-PLBox = InfoBox:New("Powerlevel")
+PLBox = InfoBox:New("Powerlevel") PLBox:Font("Consolas", 10)
  PLBox.Bar.textStyle = PLBox.textStyles.plain
 RGBar    = PLBox:AddBar("", 0, "orange", "firebrick", false)
  local rgCaptionFmt = "@WRage: %s"
@@ -170,7 +170,7 @@ end
 require "InfoBox"
 
 sty = InfoBox.barStyles
-CTBox = InfoBox:New("Combat")
+CTBox = InfoBox:New("Combat") CTBox:Font("Consolas", 10)
  CTBox.Bar.textStyle = CTBox.textStyles.plain
  CTBox.Bar.barStyle = sty.glass + sty.gradientFixed 
 MNBar    = CTBox:AddBar("", 0, "green", "firebrick", false, sty.glass + sty.gradientFixed)
@@ -200,7 +200,7 @@ end
    
 require "InfoBox"
 
-GBox = InfoBox:New("Misc")
+GBox = InfoBox:New("Misc") GBox:Font("Consolas", 10)
 TextBar = GBox:AddBar("Last Combat")
 GBar    = GBox:AddBar("")
  local gCaptionFmt = "@WPL last combat: %s"
