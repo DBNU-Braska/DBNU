@@ -99,11 +99,11 @@ HPBox = InfoBox:New("HP/SP") HPBox:Font("Consolas", 10)
  HPBox.Bar.textStyle = HPBox.textStyles.plain
  HPBox.Bar.barStyle = sty.glass + sty.gradientFixed 
 HPBar    = HPBox:AddBar("", 0, "green", "firebrick", false, sty.glass + sty.gradientFixed)
- local hpCaptionFmt = "@WHealth: %s"
+ local hpCaptionFmt = "@WHealth: %s (%s%%)"
  HPBar.fade = true ; HPBar.threshold = 25
  HPBar:WatchValue ("vars.pHP") 
 SPBar    = HPBox:AddBar("", 0, "dodgerblue", "purple", false, sty.glass + sty.gradientFixed)
- local spCaptionFmt = "@WEnergy: %s"
+ local spCaptionFmt = "@WEnergy: %s (%s%%)"
  SPBar.fade = true ; SPBar.threshold = 25
  SPBar:WatchValue("vars.pSP")
 HPBox:WindowPosition ( InfoBox.windowPositions.S )
@@ -111,8 +111,8 @@ HPBox:Columns(1)
 
 --Following values are normally set by other triggers.
 vars = {pHP = hp_pct, pSP = energy_pct}
-HPBar.caption = hpCaptionFmt:format(hp)
-SPBar.caption = spCaptionFmt:format(current_energy)
+HPBar.caption = hpCaptionFmt:format(hp, hp_pct)
+SPBar.caption = spCaptionFmt:format(current_energy, energy_pct)
 HPBox:Update()
 
 end
@@ -174,7 +174,7 @@ CTBox = InfoBox:New("Combat") CTBox:Font("Consolas", 10)
  CTBox.Bar.textStyle = CTBox.textStyles.plain
  CTBox.Bar.barStyle = sty.glass + sty.gradientFixed 
 MNBar    = CTBox:AddBar("", 0, "green", "firebrick", false, sty.glass + sty.gradientFixed)
- local mnCaptionFmt = "@W%s"
+ local mnCaptionFmt = "@W%s (%s%%)"
  MNBar.fade = true ; MNBar.threshold = 50
  MNBar:WatchValue ("vars.pMN") 
 FBar    = CTBox:AddBar("", 0, "dodgerblue", "purple", false, sty.glass + sty.gradientFixed)
@@ -187,7 +187,7 @@ CTBox:WindowPosition ( InfoBox.windowPositions.SW )
 
 --Following values are normally set by other triggers.
 vars = {pMN = mob_pct, pF = focus_pct}
-MNBar.caption = mnCaptionFmt:format(mob_name)
+MNBar.caption = mnCaptionFmt:format(mob_name, mob_pct)
 FBar.caption = fCaptionFmt:format(focus)
 TBar.caption = tCaptionFmt:format(timer)
 CTBox:Update()
