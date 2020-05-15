@@ -42,7 +42,7 @@ USAGE:
    match="<(OOC|IMM)> {(.+)} \((.+)\) ([a-zA-Z]+) \'(.*?)\'$"
    omit_from_output="y"
    regexp="y"
-   script="chats"
+   script="channel_chats"
    sequence="100"
   >
   </trigger>	
@@ -52,7 +52,7 @@ USAGE:
    match="\<OOC\> \*(.*?)\*$"
    omit_from_output="y"
    regexp="y"
-   script="chats"
+   script="channel_chats"
    sequence="100"
   >
   </trigger>	
@@ -62,7 +62,7 @@ USAGE:
    match="<(IMM|Race)> Someone \'(.*?)\'$"
    omit_from_output="y"
    regexp="y"
-   script="chats"
+   script="channel_chats"
    sequence="100"
   >
   </trigger>
@@ -72,7 +72,7 @@ USAGE:
    match="\<Clan\> (.*?) '(.*?)'$"
    omit_from_output="y"
    regexp="y"
-   script="chats"
+   script="channel_chats"
    sequence="100"
   >
   </trigger>	
@@ -82,7 +82,7 @@ USAGE:
    match="<<(OOC|IMM)>> (.*?)$"
    omit_from_output="y"
    regexp="y"
-   script="chats"
+   script="channel_chats"
    sequence="100"
   >
   </trigger>
@@ -92,7 +92,7 @@ USAGE:
    match="\[(WAR|MUSIC|New-Player|Ask|Answer|Immortal)\] (.+) \'(.*?)\'$"
    omit_from_output="y"
    regexp="y"
-   script="chats"
+   script="channel_chats"
    sequence="100"
   >
   </trigger>
@@ -102,7 +102,7 @@ USAGE:
    match="\{(Area-Yell|FriendChat)\} (.+) \'(.*?)\'$"
    omit_from_output="y"
    regexp="y"
-   script="chats"
+   script="channel_chats"
    sequence="100"
   >
   </trigger>
@@ -112,7 +112,7 @@ USAGE:
    match="<(Race)> \((.+)\) ([a-zA-Z]+) \'(.*?)\'$"
    omit_from_output="y"
    regexp="y"
-   script="chats"
+   script="channel_chats"
    sequence="100"
   >
   </trigger>
@@ -122,7 +122,7 @@ USAGE:
    match="\[(Scouter - Private)\] ([a-zA-Z]+) tells you \'(.*?)\'"
    omit_from_output="y"
    regexp="y"
-   script="chats"
+   script="channel_chats"
    sequence="100"
   >
   </trigger> 
@@ -132,11 +132,141 @@ USAGE:
    match="\[(Scouter - Private)\] To ([a-zA-Z]+) \'(.*?)\'"
    omit_from_output="y"
    regexp="y"
-   script="chats"
+   script="channel_chats"
    sequence="100"
   >
   </trigger> 
-	
+
+    <trigger
+   enabled="y"
+   match="\[NEWS-FLASH\] :: (.*?) ::$"
+   omit_from_output="y"
+   regexp="y"
+   script="event_chats"
+   sequence="100"
+  >
+  </trigger>  
+
+  <trigger
+   enabled="y"
+   match="\[(Info|HighScore)\] -> (.+)$"
+   omit_from_output="y"
+   regexp="y"
+   script="event_chats"
+   sequence="100"
+  >
+  </trigger>
+    
+    <trigger
+   enabled="y"
+   match="\[(Auto-Event)\] -> (.*?)$"
+   omit_from_output="y"
+   regexp="y"
+   script="event_chats"
+   sequence="100"
+  >
+  </trigger>
+
+    <trigger
+   enabled="y"
+   match="\[Clan-Info\] -> (.*?) has been inducted to (.*?)!$"
+   omit_from_output="y"
+   regexp="y"
+   script="event_chats"
+   sequence="100"
+  >
+  </trigger>
+
+    <trigger
+   enabled="y"
+   match="\[DBNU Auction House\] -> The item \[(.*?)\] is being auctioned for \[(.*?)\] Zeni by the player (.*?)$"
+   omit_from_output="y"
+   regexp="y"
+   script="event_chats"
+   sequence="100"
+  >
+  </trigger>  
+    
+    <trigger
+   enabled="y"
+   match="\[DBNU Auction House\] -> \[(.*?)\] is going (.*?) \((.*?)\)$"
+   omit_from_output="y"
+   regexp="y"
+   script="event_chats"
+   sequence="100"
+  >
+  </trigger>  
+  
+    <trigger
+   enabled="y"
+   match="\[DBNU Auction House\] -> No bids received for \[(.*?)\]  - It has been removed from auction house\.$"
+   omit_from_output="y"
+   regexp="y"
+   script="event_chats"
+   sequence="100"
+  >
+  </trigger>  
+  
+    <trigger
+   enabled="y"
+   match="\[DBNU Auction House\] -> (.*?) has placed bid of \[(.*?)\] Zeni on \[(.*?)\]$"
+   omit_from_output="y"
+   regexp="y"
+   script="event_chats"
+   sequence="100"
+  >
+  </trigger>  
+  
+    <trigger
+   enabled="y"
+   match="\[DBNU Auction House\] -> \[(.*?)\] is going (.*?) for \[(.*?)\]$"
+   omit_from_output="y"
+   regexp="y"
+   script="event_chats"
+   sequence="100"
+  >
+  </trigger>  
+  
+    <trigger
+   enabled="y"
+   match="\[DBNU Auction House\] -> \[(.*?)\] SOLD to (.*?) for \[(.*?)\]\!$"
+   omit_from_output="y"
+   regexp="y"
+   script="event_chats"
+   sequence="100"
+  >
+  </trigger>  
+  
+    <trigger
+   enabled="y"
+   match="The auctioneer pays you (.*?) zeni, charging an auction fee of (.*?).$"
+   omit_from_output="y"
+   regexp="y"
+   script="event_chats"
+   sequence="100"
+  >
+  </trigger>  
+  
+    <trigger
+   enabled="y"
+   match="The auctioneer materializes before you, and hands you (.*?).$"
+   omit_from_output="y"
+   regexp="y"
+   script="event_chats"
+   sequence="100"
+  >
+  </trigger>  
+  
+    <trigger
+   enabled="y"
+   match="The auctioneer appears before you to return (.*?) to you\.$"
+   omit_from_output="y"
+   regexp="y"
+   script="event_chats"
+   sequence="100"
+  >
+  </trigger> 
+
 </triggers>
 
 <aliases>
@@ -169,8 +299,25 @@ USAGE:
 
 <script>
 
-CHAT_WINDOW_NAME = "Chat Channels"
 dofile (GetPluginInfo (GetPluginID (), 20) .. "My_Chat_Window.lua")
+
+function event_chats (name, line, wildcards, styles)
+  Win = Event_Win  -- switch to the Group window name
+  CHAT_WINDOW_NAME = "Events"
+  lines = Event_lines  -- and the group lines
+  rawlines = Event_rawlines  -- and the group rawlines
+  chats (name, line, wildcards, styles) -- call the usual function
+end -- event_chats
+
+function channel_chats (name, line, wildcards, styles)
+  Win = Channel_Win  -- switch to the Group window name
+  CHAT_WINDOW_NAME = "Channels"
+  lines = Channel_lines  -- and the channel lines
+  rawlines = Channel_rawlines  -- and the channel rawlines
+  chats (name, line, wildcards, styles) -- call the usual function
+end -- channel_chats
+
+
 
 
 

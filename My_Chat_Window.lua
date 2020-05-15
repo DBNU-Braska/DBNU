@@ -26,8 +26,11 @@ WINDOW_HEIGHT = tonumber(GetVariable("WINDOW_HEIGHT"))
 TEXT_INSET = 5
 
 -- where to store the chat line
-lines = {}  -- table of recent chat lines
-rawlines = {}
+Channel_lines = {}  -- table of recent channel chat lines
+Channel_rawlines = {}
+Event_lines = {}  -- table of recent event chat lines
+Event_rawlines = {}
+
 
 lineStart = ""
 lineEnd = ""
@@ -87,7 +90,9 @@ function DrawThemedResizeTag(Window, x1, y1, size)
 end  -- function DrawThemedResizeTag
 
 
-Win = GetPluginID()
+-- Win = GetPluginID()
+Event_Win  = GetPluginID() .. "_event"
+Channel_Win = GetPluginID() .. "_channel"
 font_height = ""
 line_height = ""
 windowinfo = ""
