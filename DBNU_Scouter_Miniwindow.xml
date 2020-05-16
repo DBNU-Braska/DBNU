@@ -137,6 +137,16 @@ USAGE:
   >
   </trigger> 
 
+  <trigger
+   enabled="y"
+   match="They aren't here."
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger> 
+
 </triggers>
 
 <aliases>
