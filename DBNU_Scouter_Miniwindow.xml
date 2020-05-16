@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE muclient>
+
+<!-- Bits of this plugin and ideas were borrowed and remixed from the MUSHclient community. http://www.gammon.com.au/forum/?id=9385 and others. -->
+<!-- Modifications for Aardwolf and extra awesome sauce added by Fiendish with help from Orogan -->
+<!-- Adapated by Nick Gammon for Smaug and similar MUDs -->
+
+<muclient>
+    <plugin
+    name="DBNU_Scouter_Miniwindow"
+    author="Braska"
+    id="093a837879816dacecc14a28"
+    language="Lua"
+    purpose="Move chats to a miniwindow"
+    date_written="2010-04-04"
+    date_modified="2020-04-27"
+    requires="4.52"
+    version="2.4"
+    save_state="y"
+    >
+    
+<description trim="y">
+USAGE:
+
+  chats echo on    : echo chats in main window
+  chats echo off   : do not echo chats
+  chats show       : show chats window
+  chats hide       : hide chats window
+  
+  LH-click a line to copy it to the clipboard
+  RH-click main window to see menu of options
+  
+  Click title bar to drag window.
+</description>
+  
+</plugin>
+
+<triggers>
+    
+  <trigger
+   enabled="y"
+   match="<(Race)> Someone \'(.*?)\'$"
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+   enabled="y"
+   match="Whats the point in sensing someone who can't fight"
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+   >
+  </trigger>
+
+  <trigger
+   enabled="y"
+   match="You sense a powerlevel around (.*?) from (.*?)!"
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+   enabled="y"
+   match="You try, but you sense nothing from (.*?)."
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+   enabled="y"
+   match="\<Clan\> (.*?) '(.*?)'$"
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>	
+
+  <trigger
+   enabled="y"
+   match="\{(Area-Yell|FriendChat)\} (.+) \'(.*?)\'$"
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+  
+  <trigger
+   enabled="y"
+   match="<(Race)> \((.+)\) ([a-zA-Z]+) \'(.*?)\'$"
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+
+    <trigger
+   enabled="y"
+   match="\[(Scouter - Private)\] ([a-zA-Z]+) tells you \'(.*?)\'"
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger> 
+
+  <trigger
+   enabled="y"
+   match="\[(Scouter - Private)\] To ([a-zA-Z]+) \'(.*?)\'"
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger> 
+
+  <trigger
+   enabled="y"
+   match="You would get slaughtered in a battle against it."
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger> 
+
+</triggers>
+
+<aliases>
+    <alias
+    script="chat_echo"
+    match="^chats echo( on| off)?$"
+    enabled="y"
+    regexp="y"
+    sequence="100"
+    ignore_case="y"
+    ></alias>
+
+    <alias
+    script="chat_show"
+    match="chats show"
+    enabled="y"
+    sequence="100"
+    ignore_case="y"
+    ></alias>
+
+    <alias
+    script="chat_hide"
+    match="chats hide"
+    enabled="y"
+    sequence="100"
+    ignore_case="y"
+    ></alias>
+        
+</aliases>
+
+<script>
+
+CHAT_WINDOW_NAME = "Scouter"
+dofile (GetPluginInfo (GetPluginID (), 20) .. "My_Chat_Window.lua")
+
+
+
+</script>
+</muclient>

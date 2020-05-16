@@ -59,23 +59,13 @@ USAGE:
 
   <trigger
    enabled="y"
-   match="<(IMM|Race)> Someone \'(.*?)\'$"
+   match="<(IMM)> Someone \'(.*?)\'$"
    omit_from_output="y"
    regexp="y"
    script="chats"
    sequence="100"
   >
   </trigger>
-
-  <trigger
-   enabled="y"
-   match="\<Clan\> (.*?) '(.*?)'$"
-   omit_from_output="y"
-   regexp="y"
-   script="chats"
-   sequence="100"
-  >
-  </trigger>	
 	
   <trigger
    enabled="y"
@@ -97,46 +87,6 @@ USAGE:
   >
   </trigger>
 
-  <trigger
-   enabled="y"
-   match="\{(Area-Yell|FriendChat)\} (.+) \'(.*?)\'$"
-   omit_from_output="y"
-   regexp="y"
-   script="chats"
-   sequence="100"
-  >
-  </trigger>
-  
-    <trigger
-   enabled="y"
-   match="<(Race)> \((.+)\) ([a-zA-Z]+) \'(.*?)\'$"
-   omit_from_output="y"
-   regexp="y"
-   script="chats"
-   sequence="100"
-  >
-  </trigger>
-
-    <trigger
-   enabled="y"
-   match="\[(Scouter - Private)\] ([a-zA-Z]+) tells you \'(.*?)\'"
-   omit_from_output="y"
-   regexp="y"
-   script="chats"
-   sequence="100"
-  >
-  </trigger> 
-
-    <trigger
-   enabled="y"
-   match="\[(Scouter - Private)\] To ([a-zA-Z]+) \'(.*?)\'"
-   omit_from_output="y"
-   regexp="y"
-   script="chats"
-   sequence="100"
-  >
-  </trigger> 
-	
 </triggers>
 
 <aliases>
@@ -169,7 +119,7 @@ USAGE:
 
 <script>
 
-CHAT_WINDOW_NAME = "Chat Channels"
+CHAT_WINDOW_NAME = "Channels"
 dofile (GetPluginInfo (GetPluginID (), 20) .. "My_Chat_Window.lua")
 
 
