@@ -7,9 +7,9 @@
 
 <muclient>
     <plugin
-    name="DBNU_Scouter_Miniwindow"
+    name="DBNU_Quest_Miniwindow"
     author="Braska"
-    id="093a837879816dacecc14a28"
+    id="df24676d8179f4b9907f08e5"
     language="Lua"
     purpose="Move chats to a miniwindow"
     date_written="2010-04-04"
@@ -39,7 +39,7 @@ USAGE:
     
   <trigger
    enabled="y"
-   match="<(Race)> Someone \'(.*?)\'$"
+   match="The Questmaster says(.*?)"
    omit_from_output="y"
    regexp="y"
    script="chats"
@@ -49,17 +49,7 @@ USAGE:
 
   <trigger
    enabled="y"
-   match="Whats the point in sensing someone who can't fight"
-   omit_from_output="y"
-   regexp="y"
-   script="chats"
-   sequence="100"
-   >
-  </trigger>
-
-  <trigger
-   enabled="y"
-   match="You sense a powerlevel around (.*?) from (.*?)!"
+   match="The quest receptionist says(.*?)"
    omit_from_output="y"
    regexp="y"
    script="chats"
@@ -67,9 +57,10 @@ USAGE:
   >
   </trigger>
 
+
   <trigger
    enabled="y"
-   match="You try, but you sense nothing from (.*?)."
+   match="You may now quest again."
    omit_from_output="y"
    regexp="y"
    script="chats"
@@ -79,83 +70,13 @@ USAGE:
 
   <trigger
    enabled="y"
-   match="\<Clan\> (.*?) '(.*?)'$"
-   omit_from_output="y"
-   regexp="y"
-   script="chats"
-   sequence="100"
-  >
-  </trigger>	
-
-  <trigger
-   enabled="y"
-   match="\{(Area-Yell|FriendChat)\} (.+) \'(.*?)\'$"
+   match="You aren't on a quest."
    omit_from_output="y"
    regexp="y"
    script="chats"
    sequence="100"
   >
   </trigger>
-  
-  <trigger
-   enabled="y"
-   match="<(Race)> \((.+)\) ([a-zA-Z]+) \'(.*?)\'$"
-   omit_from_output="y"
-   regexp="y"
-   script="chats"
-   sequence="100"
-  >
-  </trigger>
-
-    <trigger
-   enabled="y"
-   match="\[(Scouter - Private)\] ([a-zA-Z]+) tells you \'(.*?)\'"
-   omit_from_output="y"
-   regexp="y"
-   script="chats"
-   sequence="100"
-  >
-  </trigger> 
-
-  <trigger
-   enabled="y"
-   match="\[(Scouter - Private)\] To ([a-zA-Z]+) \'(.*?)\'"
-   omit_from_output="y"
-   regexp="y"
-   script="chats"
-   sequence="100"
-  >
-  </trigger> 
-
-  <trigger
-   enabled="y"
-   match="You would get slaughtered in a battle against it."
-   omit_from_output="y"
-   regexp="y"
-   script="chats"
-   sequence="100"
-  >
-  </trigger> 
-
- <trigger
-   enabled="y"
-   match="You can't seem to sense their lifeforce anywhere."
-   omit_from_output="y"
-   regexp="y"
-   script="chats"
-   sequence="100"
-  >
-  </trigger> 
-
-  <trigger
-   enabled="y"
-   match="They aren't here."
-   omit_from_output="y"
-   regexp="y"
-   script="chats"
-   sequence="100"
-  >
-  </trigger> 
 
 </triggers>
 
@@ -189,10 +110,8 @@ USAGE:
 
 <script>
 
-CHAT_WINDOW_NAME = "Scouter"
+CHAT_WINDOW_NAME = "Quests"
 dofile (GetPluginInfo (GetPluginID (), 20) .. "My_Chat_Window.lua")
-
-
 
 </script>
 </muclient>
