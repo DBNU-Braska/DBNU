@@ -148,6 +148,16 @@ USAGE:
   >
   </trigger>
 
+    <trigger
+   enabled="y"
+   match="You have almost completed your mission!"
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+
 </triggers>
 
 <aliases>
