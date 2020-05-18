@@ -78,6 +78,56 @@ USAGE:
   >
   </trigger>
 
+  <trigger
+   enabled="y"
+   match="There are (.*?) minutes remaining until you can go on another quest."
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+   enabled="y"
+   match="You have delivered the package now hurry up and get back to turn it in."
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+   enabled="y"
+   match="There is less than a minute remaining until you can go on another quest."
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+   enabled="y"
+   match="You have completed your quest, now head back to turn it in."
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+   enabled="y"
+   match="You have finished your zeni quest, now hurry up and turn it in."
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+
 </triggers>
 
 <aliases>
