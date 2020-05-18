@@ -128,6 +128,26 @@ USAGE:
   >
   </trigger>
 
+  <trigger
+   enabled="y"
+   match="You are on a quest to kill those of the opposite alignment you have (.*?) left!"
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+
+    <trigger
+   enabled="y"
+   match="You have completed your quest go turn it in!!!"
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+
 </triggers>
 
 <aliases>
