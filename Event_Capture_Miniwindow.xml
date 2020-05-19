@@ -116,7 +116,27 @@ USAGE:
    sequence="100"
   >
   </trigger>  
-  
+
+    <trigger
+   enabled="y"
+   match="\[RP-STORY (.*?)\] (.*?):"
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>  
+
+    <trigger
+   enabled="y"
+   match="\(Chat\) (.*?) '(.*?)'"
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>  
+
     <trigger
    enabled="y"
    match="\[DBNU Auction House\] -> \[(.*?)\] is going (.*?) for \[(.*?)\]$"
