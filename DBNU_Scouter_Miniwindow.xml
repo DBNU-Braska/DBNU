@@ -39,7 +39,7 @@ USAGE:
     
   <trigger
    enabled="y"
-   match="<(Race)> Someone \'(.*?)\'$"
+   match="<(Race)> Someone \'(.*?)\'"
    omit_from_output="y"
    regexp="y"
    script="chats"
@@ -49,7 +49,7 @@ USAGE:
 
   <trigger
    enabled="y"
-   match="Whats the point in sensing someone who can't fight$"
+   match="Whats the point in sensing someone who can't fight"
    omit_from_output="y"
    regexp="y"
    script="chats"
@@ -59,7 +59,7 @@ USAGE:
 
   <trigger
    enabled="y"
-   match="You sense a powerlevel around (.*?) from (.*?)!$"
+   match="You sense a powerlevel around (.*?) from (.*?)!"
    omit_from_output="y"
    regexp="y"
    script="chats"
@@ -69,7 +69,7 @@ USAGE:
 
   <trigger
    enabled="y"
-   match="You try, but you sense nothing from (.*?).$"
+   match="You try, but you sense nothing from (.*?)."
    omit_from_output="y"
    regexp="y"
    script="chats"
@@ -79,7 +79,7 @@ USAGE:
 
   <trigger
    enabled="y"
-   match="\<Clan\> (.*?) '(.*?)'$"
+   match="\<Clan\> (.*?) '(.*?)'"
    omit_from_output="y"
    regexp="y"
    script="chats"
@@ -89,7 +89,7 @@ USAGE:
 
   <trigger
    enabled="y"
-   match="\{(Area-Yell|FriendChat)\} (.+) \'(.*?)\'$"
+   match="\{(Area-Yell|FriendChat)\} (.+) \'(.*?)\'"
    omit_from_output="y"
    regexp="y"
    script="chats"
@@ -99,7 +99,7 @@ USAGE:
   
   <trigger
    enabled="y"
-   match="\[Scouter -(.*?)\] (.*?) -> (.*?)$"
+   match="\[Scouter -(.*?)\] (.*?) -> (.*?)"
    omit_from_output="y"
    regexp="y"
    script="chats"
@@ -109,7 +109,7 @@ USAGE:
   
   <trigger
    enabled="y"
-   match="\[Friend-Info\] (.*?)$"
+   match="\[Friend-Info\] (.*?)"
    omit_from_output="y"
    regexp="y"
    script="chats"
@@ -119,7 +119,7 @@ USAGE:
 
   <trigger
    enabled="y"
-   match="<(Race)> \((.+)\) ([a-zA-Z]+) \'(.*?)\'$"
+   match="<(Race)> \((.+)\) ([a-zA-Z]+) \'(.*?)\'"
    omit_from_output="y"
    regexp="y"
    script="chats"
@@ -129,7 +129,7 @@ USAGE:
 
     <trigger
    enabled="y"
-   match="\[(Scouter - Private)\] ([a-zA-Z]+) tells you \'(.*?)\'$"
+   match="\[(Scouter - Private)\] ([a-zA-Z]+) tells you \'(.*?)\'"
    omit_from_output="y"
    regexp="y"
    script="chats"
@@ -139,7 +139,7 @@ USAGE:
 
   <trigger
    enabled="y"
-   match="\[(Scouter - Private)\] To ([a-zA-Z]+) \'(.*?)\'$"
+   match="\[(Scouter - Private)\] To ([a-zA-Z]+) \'(.*?)\'"
    omit_from_output="y"
    regexp="y"
    script="chats"
@@ -149,7 +149,7 @@ USAGE:
 
   <trigger
    enabled="y"
-   match="You would get slaughtered in a battle against it.$"
+   match="You would get slaughtered in a battle against it."
    omit_from_output="y"
    regexp="y"
    script="chats"
@@ -159,7 +159,7 @@ USAGE:
 
  <trigger
    enabled="y"
-   match="You can't seem to sense their lifeforce anywhere.$"
+   match="You can't seem to sense their lifeforce anywhere."
    omit_from_output="y"
    regexp="y"
    script="chats"
@@ -169,7 +169,7 @@ USAGE:
 
   <trigger
    enabled="y"
-   match="They aren't here.$"
+   match="They aren't here."
    omit_from_output="y"
    regexp="y"
    script="chats"
