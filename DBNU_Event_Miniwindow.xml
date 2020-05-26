@@ -89,6 +89,16 @@ USAGE:
     
     <trigger
    enabled="y"
+   match="\[DBNU Auction House\] -> The sale of (.*?) has been stopped by an Administrator.$"
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>  
+
+    <trigger
+   enabled="y"
    match="\[DBNU Auction House\] -> \[(.*?)\] is going (.*?) \((.*?)\)$"
    omit_from_output="y"
    regexp="y"
