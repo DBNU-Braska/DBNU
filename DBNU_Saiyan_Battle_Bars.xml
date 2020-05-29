@@ -19,9 +19,9 @@ Install this plugin to show an info bar with HP, Energy,
 Rage, Armour, Powerlevel,
 and Combat info at the bottom of the screen
 
-prompt must be set to: prompt current_hp [%h] hp_pct [%c] current_energy [%m] energy_pct [%B]%larmour [%z] base_pl [%x] current_pl [%P] rage [%o] gained [%U] zeni [%g]%l
+prompt must be set to: prompt cur_hp [%h] max_hp [%H] cur_sp [%m] max_sp [%M] name [%n] ehp_pct [%Y] focus [%f] rage [%o]%l
 
-fprompt must be set to: fprompt current_hp [%h] hp_pct [%c] current_energy [%m] energy_pct [%B]%larmour [%z] base_pl [%x] current_pl [%P] rage [%o] gained [%U] zeni [%g]%lfocus [%f] timer [%v] mob_name [%y] mob_hp_pct [%Y]%l
+fprompt must be set to: fprompt cur_hp [%h] max_hp [%H] cur_sp [%m] max_sp [%M] name [%n] ehp_pct [%Y] focus [%f] rage [%o]%l
 ]]>
 </description>
 
@@ -30,28 +30,10 @@ fprompt must be set to: fprompt current_hp [%h] hp_pct [%c] current_energy [%m] 
 <!--  Triggers  -->
 
 <triggers>
-
-<!-- 
-
-prompt must be set to: prompt current_hp [%h] hp_pct [%c] current_energy [%m] energy_pct [%B]%larmour [%z] base_pl [%x] current_pl [%P] rage [%o] gained [%U] zeni [%g]%l
-
-fprompt must be set to: fprompt current_hp [%h] hp_pct [%c] current_energy [%m] energy_pct [%B]%larmour [%z] base_pl [%x] current_pl [%P] rage [%o] gained [%U] zeni [%g]%lfocus [%f] timer [%v] mob_name [%y] mob_hp_pct [%Y]%l
-
--->
    
   <trigger
    enabled="y"
-   match="current_hp \[(.*?)\] hp_pct \[(.*?)\%\] current_energy \[(.*?)\] energy_pct \[(.*?)\%\]$"
-   regexp="y"
-   omit_from_output="y"
-   script="info_bars"
-   sequence="100"
-  >
-  </trigger>
-
-  <trigger
-   enabled="y"
-   match="armour \[(.*?)\] base_pl \[(.*?)\] current_pl \[(.*?)\] rage \[(.*?)\] gained \[(.*?)\] zeni \[(.*?)\]$"
+   match="armour \[(.*?)\] base_pl \[(.*?)\] cur_pl \[(.*?)\] zeni \[(.*?)\]$"
    regexp="y"
    omit_from_output="y"
    script="info_bars2"
@@ -60,16 +42,6 @@ fprompt must be set to: fprompt current_hp [%h] hp_pct [%c] current_energy [%m] 
   </trigger>
 
   <trigger
-   enabled="y"
-   match="focus \[(.*?)\] timer \[(.*?)\] mob_name \[(.*?)\:(.*?)\] mob_hp_pct \[(.*?)\%\]$"
-   regexp="y"
-   omit_from_output="y"
-   script="info_bars3"
-   sequence="100"
-  >
-  </trigger>
-
-    <trigger
    enabled="y"
    match="PL Gained This Fight - (.*?)$"
    omit_from_output="y"
@@ -85,125 +57,48 @@ fprompt must be set to: fprompt current_hp [%h] hp_pct [%c] current_energy [%m] 
 
 <script>
 
-function info_bars (name, line, wildcards)
-
-  local hp = wildcards [1]
-  local hp_pct = tonumber ((string.gsub(wildcards [2], ",", "")))
-  local current_energy = wildcards [3]
-  local energy_pct = tonumber ((string.gsub(wildcards [4], ",", "")))
-
-require "InfoBox"
-
-sty = InfoBox.barStyles
-HPBox = InfoBox:New("HP/SP") HPBox:Font("Consolas", 10)
- HPBox.Bar.textStyle = HPBox.textStyles.plain
- HPBox.Bar.barStyle = sty.glass + sty.gradientFixed 
-HPBar    = HPBox:AddBar("", 0, "green", "firebrick", false, sty.glass + sty.gradientFixed)
- local hpCaptionFmt = "@WHealth: %s (%s%%)"
- HPBar.fade = true ; HPBar.threshold = 25
- HPBar:WatchValue ("vars.pHP") 
-SPBar    = HPBox:AddBar("", 0, "dodgerblue", "purple", false, sty.glass + sty.gradientFixed)
- local spCaptionFmt = "@WEnergy: %s (%s%%)"
- SPBar.fade = true ; SPBar.threshold = 25
- SPBar:WatchValue("vars.pSP")
-HPBox:WindowPosition ( InfoBox.windowPositions.S )
-HPBox:Columns(1)
-
---Following values are normally set by other triggers.
-vars = {pHP = hp_pct, pSP = energy_pct}
-HPBar.caption = hpCaptionFmt:format(hp, hp_pct)
-SPBar.caption = spCaptionFmt:format(current_energy, energy_pct)
-HPBox:Update()
-
-end
-
 function info_bars2 (name, line, wildcards)
 
   local armor = wildcards [1]
   local base_pl = wildcards [2]
-  local current_pl = wildcards [3]
-  local rage = wildcards [4]
-  local rage_pct = tonumber ((string.gsub(wildcards [4], ",", ""))) / 10
-  local lgained = wildcards [5]
+  local cur_pl = wildcards [3]
   local zeni = wildcards [6]
 
 require "InfoBox"
 
 PLBox = InfoBox:New("Powerlevel") PLBox:Font("Consolas", 10)
  PLBox.Bar.textStyle = PLBox.textStyles.plain
-RGBar    = PLBox:AddBar("", 0, "orange", "firebrick", false)
- local rgCaptionFmt = "@WRage: %s"
- RGBar:WatchValue ("vars.pRG")
 CPLBar    = PLBox:AddBar("")
  local cplCaptionFmt = "@WBase PL: %s"
 ABar    = PLBox:AddBar("")
  local aCaptionFmt = "@WArmor: %s"
 MPLBar	= PLBox:AddBar("")
  local mplCaptionFmt = "@WMax PL: @Y%s"
-MGBar	= PLBox:AddBar("")
- local mgCaptionFmt = "@WPL Gained: %s"
+
 ZBar    = PLBox:AddBar("")
  local zCaptionFmt = "@WZeni: %s"
 PLBox:WindowPosition ( InfoBox.windowPositions.S )
 PLBox:Columns(3)
 
 -- Following values are normally set by other triggers.
-vars = {pRG = rage_pct}
 CPLBar.caption = cplCaptionFmt:format(base_pl)
-MPLBar.caption = mplCaptionFmt:format(current_pl)
+MPLBar.caption = mplCaptionFmt:format(cur_pl)
 ABar.caption = aCaptionFmt:format(armor)
-RGBar.caption = rgCaptionFmt:format(rage)
-MGBar.caption = mgCaptionFmt:format(lgained)
 ZBar.caption = zCaptionFmt:format(zeni)
 PLBox:Update()
 
 end
 
- function info_bars3 (name, line, wildcards)
+function pl_gained (name, line, wildcards)
 
-   local focus = wildcards [1]
-   local focus_pct = tonumber ((string.gsub(wildcards [1], ",", "")))
-   local timer = wildcards [2]
-   local mob_name = wildcards [3]
-   local mob_pct = tonumber ((string.gsub(wildcards [5], ",", "")))
-
-require "InfoBox"
-
-sty = InfoBox.barStyles
-CTBox = InfoBox:New("Combat") CTBox:Font("Consolas", 10)
- CTBox.Bar.textStyle = CTBox.textStyles.plain
- CTBox.Bar.barStyle = sty.glass + sty.gradientFixed 
-MNBar    = CTBox:AddBar("", 0, "green", "firebrick", false, sty.glass + sty.gradientFixed)
- local mnCaptionFmt = "@W%s (%s%%)"
- MNBar.fade = true ; MNBar.threshold = 50
- MNBar:WatchValue ("vars.pMN") 
-FBar    = CTBox:AddBar("", 0, "dodgerblue", "purple", false, sty.glass + sty.gradientFixed)
- local fCaptionFmt = "@WFocus: %s"
- FBar.fade = true ; FBar.threshold = 25
- FBar:WatchValue("vars.pF")
-TBar    = CTBox:AddBar("")
- local tCaptionFmt = "@WTimer: %s"
-CTBox:WindowPosition ( InfoBox.windowPositions.SW )
-
---Following values are normally set by other triggers.
-vars = {pMN = mob_pct, pF = focus_pct}
-MNBar.caption = mnCaptionFmt:format(mob_name, mob_pct)
-FBar.caption = fCaptionFmt:format(focus)
-TBar.caption = tCaptionFmt:format(timer)
-CTBox:Update()
-
-end
-
- function pl_gained (name, line, wildcards)
-
-   local gained = wildcards [1]
+  local gained = wildcards [1]
    
 require "InfoBox"
 
 GBox = InfoBox:New("Misc") GBox:Font("Consolas", 10)
 TextBar = GBox:AddBar("Last Combat")
 GBar    = GBox:AddBar("")
- local gCaptionFmt = "@WPL last combat: %s"
+local gCaptionFmt = "@WPL last combat: %s"
 GBox:WindowPosition ( InfoBox.windowPositions.SE )
 GBox:Columns(1)
 --Following values are normally set by other triggers.
