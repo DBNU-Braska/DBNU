@@ -3,7 +3,7 @@
 
 <muclient>
 <plugin
-   name="DBNU_Health_Bar_Miniwindow"
+   name="DBNU_Combat_Bar"
    author="Braska"
    id="e523adb32aaec6c39de39de9"
    language="Lua"
@@ -18,9 +18,9 @@
 Install this plugin to show an info bar with HP, Mana, 
 and Movement points shown as a bar.
 
-prompt must be set to: prompt cur_hp [%h] max_hp [%H] cur_sp [%m] max_sp [%M] name [%n] ehp_pct [%Y] focus [%f] rage [%o]%l
+prompt must be set to: prompt cur_hp [%h] max_hp [%H] cur_sp [%m] max_sp [%M] name [%n] ehp_pct [%Y] focus [%f] rage [%o] skill [%v]%larmour [%z] base_pl [%p] cur_pl [%P] zeni [%g]%l
 
-fprompt must be set to: fprompt cur_hp [%h] max_hp [%H] cur_sp [%m] max_sp [%M] name [%n] ehp_pct [%Y] focus [%f] rage [%o]%l
+fprompt must be set to: fprompt cur_hp [%h] max_hp [%H] cur_sp [%m] max_sp [%M] name [%n] ehp_pct [%Y] focus [%f] rage [%o] skill [%v]%larmour [%z] base_pl [%p] cur_pl [%P] zeni [%g]%l
 
 ]]>
 </description>
@@ -34,7 +34,7 @@ fprompt must be set to: fprompt cur_hp [%h] max_hp [%H] cur_sp [%m] max_sp [%M] 
    
   <trigger
    enabled="y"
-   match="cur_hp \[(.*?)\] max_hp \[(.*?)\] cur_sp \[(.*?)\] max_sp \[(.*?)\] name \[(.*?)\] ehp_pct \[(.*?)\] focus \[(.*?)\] rage \[(.*?)\]$"
+   match="cur_hp \[(.*?)\] max_hp \[(.*?)\] cur_sp \[(.*?)\] max_sp \[(.*?)\] name \[(.*?)\] ehp_pct \[(.*?)\] focus \[(.*?)\] rage \[(.*?)\] skill \[(.*?)\]$"
    regexp="y"
    omit_from_output="y"
    script="draw_bar"
@@ -55,7 +55,7 @@ require "checkplugin"
 GAUGE_HEIGHT = 15
 
 WINDOW_WIDTH = 400
-WINDOW_HEIGHT = 80
+WINDOW_HEIGHT = 120
 NUMBER_OF_TICKS = 5
 
 BACKGROUND_COLOUR_NORMAL = ColourNameToRGB "slategray"
@@ -143,14 +143,14 @@ function draw_bar (name, line, wildcards)
   local name     = wildcards [5]
   local focus    = tonumber (wildcards [7])
   local rage     = tonumber (wildcards [8])
+  local skill    = wildcards [9]
 
   
   local ehp_pct = 0
   local line1 = string.format ("Braska is Awesome")
   if (name ~= "N/A") then
-    height = height + 40
     background = BACKGROUND_COLOUR_FIGHTING
-    line1 = string.format ("Fighting: %s", name)
+    line1 = string.format ("Fighting: %s Timer: %s", name, skill)
     ehp_pct = tonumber ((string.gsub(wildcards [6], "\%%", "")))
   end
   --print ("Enemy Name: ", name)
@@ -197,14 +197,10 @@ function draw_bar (name, line, wildcards)
   movewindow.add_drag_handler (win, 0, 0, 0, 0)
 
   DoGauge ("Health: ", cur_hp, max_hp, ColourNameToRGB "darkgreen")
-  if (name ~= "N/A") then
-    DoGauge ("Enemy: ", ehp_pct, 100, ColourNameToRGB "darkred")
-  end
   DoGauge ("Energy: ",  cur_mana, max_mana, ColourNameToRGB "mediumblue")
-  if (name ~= "N/A") then
-    DoGauge ("Focus: ", focus, 100, ColourNameToRGB "lightblue")
-  end
   DoGauge ("Rage: ",  rage, 1000, ColourNameToRGB "red")
+  DoGauge ("Focus: ", focus, 100, ColourNameToRGB "lightblue")
+  DoGauge ("Enemy: ", ehp_pct, 100, ColourNameToRGB "darkred")
 
   WindowShow (win, true)
 

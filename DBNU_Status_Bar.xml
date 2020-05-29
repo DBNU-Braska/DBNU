@@ -3,7 +3,7 @@
 
 <muclient>
 <plugin
-   name="DBNU_Saiyan_Battle_Bars"
+   name="DBNU_Status_Bars"
    author="Braska"
    id="6e3fc654ff71145bb0cdd2b2"
    language="Lua"
@@ -39,16 +39,6 @@ fprompt must be set to: fprompt cur_hp [%h] max_hp [%H] cur_sp [%m] max_sp [%M] 
   >
   </trigger>
 
-  <trigger
-   enabled="y"
-   match="PL Gained This Fight - (.*?)$"
-   omit_from_output="y"
-   regexp="y"
-   script="pl_gained"
-   sequence="100"
-  >
-  </trigger>
-
 </triggers>
 
 <!--  Script  -->
@@ -60,7 +50,7 @@ function info_bars2 (name, line, wildcards)
   local armor = wildcards [1]
   local base_pl = wildcards [2]
   local cur_pl = wildcards [3]
-  local zeni = wildcards [4]
+  local zeni = wildcards [4] 
 
 require "InfoBox"
 
@@ -68,10 +58,10 @@ PLBox = InfoBox:New("Powerlevel") PLBox:Font("Consolas", 10)
  PLBox.Bar.textStyle = PLBox.textStyles.plain
 CPLBar    = PLBox:AddBar("")
  local cplCaptionFmt = "@WBase PL: %s"
-ABar    = PLBox:AddBar("")
- local aCaptionFmt = "@WArmor: %s"
 MPLBar	= PLBox:AddBar("")
  local mplCaptionFmt = "@WMax PL: @Y%s"
+ABar    = PLBox:AddBar("")
+ local aCaptionFmt = "@WArmor: %s"
 ZBar    = PLBox:AddBar("")
  local zCaptionFmt = "@WZeni: %s"
 PLBox:WindowPosition ( InfoBox.windowPositions.SE )
@@ -83,24 +73,6 @@ ABar.caption = aCaptionFmt:format(armor)
 MPLBar.caption = mplCaptionFmt:format(cur_pl)
 ZBar.caption = zCaptionFmt:format(zeni)
 PLBox:Update()
-
-end
-
-function pl_gained (name, line, wildcards)
-
-  local gained = wildcards [1]
-   
-require "InfoBox"
-
-GBox = InfoBox:New("Misc") GBox:Font("Consolas", 10)
-TextBar = GBox:AddBar("Last Combat")
-GBar    = GBox:AddBar("")
-local gCaptionFmt = "@WPL last combat: %s"
-GBox:WindowPosition ( InfoBox.windowPositions.E )
-GBox:Columns(1)
---Following values are normally set by other triggers.
-GBar.caption = gCaptionFmt:format(gained)
-GBox:Update()
 
 end
 
