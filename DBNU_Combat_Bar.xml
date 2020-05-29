@@ -18,8 +18,9 @@
 Install this plugin to show an info bar with HP, Mana, 
 and Movement points shown as a bar.
 
-prompt cur_hp [%h] max_hp [%H] cur_sp [%m] max_sp [%M] name [%n] ehp_pct [%Y] focus [%f] rage [%o]%l
-fprompt cur_hp [%h] max_hp [%H] cur_sp [%m] max_sp [%M] name [%n] ehp_pct [%Y] focus [%f] rage [%o]%l
+prompt must be set to: prompt cur_hp [%h] max_hp [%H] cur_sp [%m] max_sp [%M] name [%n] ehp_pct [%Y] focus [%f] rage [%o]%l
+
+fprompt must be set to: fprompt cur_hp [%h] max_hp [%H] cur_sp [%m] max_sp [%M] name [%n] ehp_pct [%Y] focus [%f] rage [%o]%l
 
 ]]>
 </description>
