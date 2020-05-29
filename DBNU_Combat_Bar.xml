@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE muclient>
+
+<muclient>
+<plugin
+   name="DBNU_Combat_Bar"
+   author="Braska"
+   id="e523adb32aaec6c39de39de9"
+   language="Lua"
+   purpose="Dynamic Health Bar"
+   date_written="2020-05-10"
+   requires="4.40"
+   version="2.0"
+   save_state="y"
+   >
+<description trim="y">
+<![CDATA[
+Install this plugin to show an info bar with HP, Mana, 
+and Movement points shown as a bar.
+
+prompt must be set to: prompt cur_hp [%h] max_hp [%H] cur_sp [%m] max_sp [%M] name [%n] ehp_pct [%Y] focus [%f] rage [%o] skill [%v]%larmour [%z] base_pl [%p] cur_pl [%P] zeni [%g]%l
+
+fprompt must be set to: fprompt cur_hp [%h] max_hp [%H] cur_sp [%m] max_sp [%M] name [%n] ehp_pct [%Y] focus [%f] rage [%o] skill [%v]%larmour [%z] base_pl [%p] cur_pl [%P] zeni [%g]%l
+
+]]>
+</description>
+
+</plugin>
+
+<!--  Triggers  -->
+
+<triggers>
+
+   
+  <trigger
+   enabled="y"
+   match="cur_hp \[(.*?)\] max_hp \[(.*?)\] cur_sp \[(.*?)\] max_sp \[(.*?)\] name \[(.*?)\] ehp_pct \[(.*?)\] focus \[(.*?)\] rage \[(.*?)\] skill \[(.*?)\]$"
+   regexp="y"
+   omit_from_output="y"
+   script="draw_bar"
+   sequence="100"
+  >
+  </trigger>
+
+</triggers>
+
+
+<!--  Script  -->
+
+<script>
+<![CDATA[
+
+require "checkplugin"
+
+GAUGE_HEIGHT = 15
+
+WINDOW_WIDTH = 400
+WINDOW_HEIGHT = 120
+NUMBER_OF_TICKS = 5
+
+BACKGROUND_COLOUR_NORMAL = ColourNameToRGB "slategray"
+BACKGROUND_COLOUR_FIGHTING = ColourNameToRGB "rosybrown"
+FONT_COLOUR = ColourNameToRGB "darkred"
+BORDER_COLOUR = ColourNameToRGB "#553333"
+
+
+function DoGauge (sPrompt, current, max, Colour)
+
+  if max <= 0 then 
+    return 
+  end -- no divide by zero
+  
+  -- fraction in range 0 to 1
+  local Fraction = math.min (math.max (current / max, 0), 1) 
+   
+  local width = WindowTextWidth (win, font_id, sPrompt)
+  
+  WindowText (win, font_id, sPrompt, gauge_left - width, vertical, 0, 0, FONT_COLOUR)
+
+  WindowRectOp (win, 2, gauge_left, vertical, WINDOW_WIDTH - 5, vertical + GAUGE_HEIGHT, WindowInfo (win,9))  -- fill entire box
+  
+  local gauge_width = (WINDOW_WIDTH - gauge_left - 5) * Fraction
+  
+   -- box size must be > 0 or WindowGradient fills the whole thing 
+  if math.floor (gauge_width) > 0 then
+    
+    -- top half
+    WindowGradient (win, gauge_left, vertical, gauge_left + gauge_width, vertical + GAUGE_HEIGHT / 2, 
+                    0x000000,
+                    Colour, 2) 
+    
+    -- bottom half
+    WindowGradient (win, gauge_left, vertical + GAUGE_HEIGHT / 2, 
+                    gauge_left + gauge_width, vertical +  GAUGE_HEIGHT,   
+                    Colour,
+                    0x000000,
+                    2) 
+
+  end -- non-zero
+  
+  -- show ticks
+  local ticks_at = (WINDOW_WIDTH - gauge_left - 5) / (NUMBER_OF_TICKS + 1)
+  
+  -- ticks
+  for i = 1, NUMBER_OF_TICKS do
+    WindowLine (win, gauge_left + (i * ticks_at), vertical, 
+                gauge_left + (i * ticks_at), vertical + GAUGE_HEIGHT, ColourNameToRGB ("silver"), 0, 1)
+  end -- for
+
+  -- draw a box around it
+  WindowRectOp (win, 1, gauge_left, vertical, WINDOW_WIDTH - 5, vertical + GAUGE_HEIGHT, 
+          ColourNameToRGB ("lightgrey"))  -- frame entire box
+  
+  -- mouse-over information: add hotspot if not there
+  if not WindowHotspotInfo(win, sPrompt, 1) then
+    WindowAddHotspot (win, sPrompt, gauge_left, vertical, WINDOW_WIDTH - 5, vertical + font_height, 
+                  "", "", "", "", "", "", 0, 0)
+  end -- if
+  
+  -- store numeric values in case they mouse over it
+  WindowHotspotTooltip(win, sPrompt, string.format ("%s\t%i / %i (%i%%)", 
+                        sPrompt, current, max, Fraction * 100) )
+                                  
+  vertical = vertical + font_height + 3
+end -- function DoGauge
+  
+
+function draw_bar (name, line, wildcards)
+
+  -- find where it is now
+  local posx, posy, mode, flags = WindowInfo (win, 10),
+                     WindowInfo (win, 11),
+                     WindowInfo (win, 7),
+                     WindowInfo (win, 8)
+
+  local height = WINDOW_HEIGHT                    
+  local background = BACKGROUND_COLOUR_NORMAL
+  
+  local cur_hp   = tonumber ((string.gsub(wildcards [1], ",", "")))
+  local max_hp   = tonumber ((string.gsub(wildcards [2], ",", "")))
+  local cur_mana = tonumber ((string.gsub(wildcards [3], ",", "")))
+  local max_mana = tonumber ((string.gsub(wildcards [4], ",", "")))
+  local name     = wildcards [5]
+  local focus    = tonumber (wildcards [7])
+  local rage     = tonumber (wildcards [8])
+  local skill    = wildcards [9]
+
+  
+  local ehp_pct = 0
+  local line1 = string.format ("Braska is Awesome")
+  if (name ~= "N/A") then
+    background = BACKGROUND_COLOUR_FIGHTING
+    line1 = string.format ("Fighting: %s Timer: %s", name, skill)
+    ehp_pct = tonumber ((string.gsub(wildcards [6], "\%%", "")))
+  end
+  --print ("Enemy Name: ", name)
+  --print ("Enemy HP%: ", ehp_pct)
+  --print ("My HP%", hp_pct)
+  
+  WindowCreate (win, 
+  posx, posy, WINDOW_WIDTH, height,  
+  mode,   
+  flags,   
+  background)
+
+  -- fill entire box to clear it
+  check (WindowRectOp (win, 2, 0, 0, 0, 0, background))  -- fill entire box
+
+  -- Edge around box rectangle
+  check (WindowCircleOp (win, 3, 0, 0, 0, 0, BORDER_COLOUR, 0, 2, 0, 1))
+
+  vertical = 6  -- pixel to start at
+
+  local width = WindowTextWidth (win, font_id, line1)
+  local add_dots = false
+
+  -- truncate if too long
+  while width > (WINDOW_WIDTH - gauge_left - 5) do
+  -- get rid of last word
+  local s = string.match (" " .. line1 .. "...", "(%s%S*)$")
+  if not s or #s == 0 then break end
+  line1 = line1:sub (1, - (#s - 2))  -- except the last 3 dots but add the space
+  width = WindowTextWidth (win, font_id, line1 .. " ...")
+  add_dots = true
+  end -- while
+
+  if add_dots then
+  line1 = line1 .. " ..."
+  end -- if
+
+  WindowText (win, font_id, line1,
+            gauge_left, vertical, 0, 0, FONT_COLOUR)
+
+  vertical = vertical + font_height + 3
+
+  -- add the drag handler so they can move the window around
+  movewindow.add_drag_handler (win, 0, 0, 0, 0)
+
+  DoGauge ("Health: ", cur_hp, max_hp, ColourNameToRGB "darkgreen")
+  DoGauge ("Energy: ",  cur_mana, max_mana, ColourNameToRGB "mediumblue")
+  DoGauge ("Rage: ",  rage, 1000, ColourNameToRGB "red")
+  DoGauge ("Focus: ", focus, 100, ColourNameToRGB "lightblue")
+  DoGauge ("Enemy: ", ehp_pct, 100, ColourNameToRGB "darkred")
+
+  WindowShow (win, true)
+
+
+end -- function draw_bar
+
+function OnPluginInstall ()
+  
+  win = GetPluginID ()
+  font_id = "fn"
+  
+  require "movewindow"  -- load the movewindow.lua module
+
+  -- install the window movement handler, get back the window position
+  windowinfo = movewindow.install (win, 7)  -- default to 7 (on right, center top/bottom)
+                   
+  font_name = "Fixedsys"    -- the font
+    
+  -- make miniwindow so I can grab the font info
+  WindowCreate (win, 
+                windowinfo.window_left,
+                windowinfo.window_top,
+                WINDOW_WIDTH, 
+                WINDOW_HEIGHT,  
+                windowinfo.window_mode,   
+                windowinfo.window_flags,    
+                BACKGROUND_COLOUR_NORMAL)
+
+  -- add the drag handler so they can move the window around
+  movewindow.add_drag_handler (win, 0, 0, 0, 0)
+                 
+  WindowFont (win, font_id, font_name, 9)
+  font_height = WindowFontInfo (win, font_id, 1)  -- height
+  
+  -- work out how far in to start the gauge
+  gauge_left =                        WindowTextWidth (win, font_id, "Health: ")
+  gauge_left = math.max (gauge_left,  WindowTextWidth (win, font_id, "Energy: "))
+  gauge_left = math.max (gauge_left,  WindowTextWidth (win, font_id, "Enemy: "))
+  gauge_left = math.max (gauge_left,  WindowTextWidth (win, font_id, "Focus: "))
+  gauge_left = math.max (gauge_left,  WindowTextWidth (win, font_id, "Rage: "))
+  
+  gauge_left = gauge_left + 5  -- allow gap from edge
+  
+  if GetVariable ("enabled") == "false" then
+    ColourNote ("yellow", "", "Warning: Plugin " .. GetPluginName ().. " is currently disabled.")
+    check (EnablePlugin(GetPluginID (), false))
+  end -- they didn't enable us last time
+ 
+end -- OnPluginInstall
+
+function OnPluginDisable ()
+  WindowShow (win, false)
+end -- OnPluginDisable
+
+function OnPluginEnable ()
+  WindowShow (win, true)
+end -- OnPluginEnable
+
+function OnPluginSaveState ()
+   -- save window current location for next time  
+  movewindow.save_state (win)
+  SetVariable ("enabled", tostring (GetPluginInfo (GetPluginID (), 17)))
+end -- OnPluginSaveState
+
+
+]]>
+</script>
+
+</muclient>

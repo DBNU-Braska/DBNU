@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE muclient>
+
+<muclient>
+<plugin
+   name="DBNU_Status_Bars"
+   author="Braska"
+   id="6e3fc654ff71145bb0cdd2b2"
+   language="Lua"
+   purpose="Shows stats in InfoBars"
+   date_written="2020-04-25"
+   requires="4.40"
+   version="1.0"
+   save_state="y"
+   >
+<description trim="y">
+<![CDATA[
+Install this plugin to show an info bar with HP, Energy, 
+Rage, Armour, Powerlevel,
+and Combat info at the bottom of the screen
+prompt must be set to: prompt cur_hp [%h] max_hp [%H] cur_sp [%m] max_sp [%M] name [%n] ehp_pct [%Y] focus [%f] rage [%o]%l
+fprompt must be set to: fprompt cur_hp [%h] max_hp [%H] cur_sp [%m] max_sp [%M] name [%n] ehp_pct [%Y] focus [%f] rage [%o]%l
+]]>
+</description>
+
+</plugin>
+
+<!--  Triggers  -->
+
+<triggers>
+   
+  <trigger
+   enabled="y"
+   match="armour \[(.*?)\] base_pl \[(.*?)\] cur_pl \[(.*?)\] zeni \[(.*?)\]$"
+   regexp="y"
+   omit_from_output="y"
+   script="info_bars2"
+   sequence="100"
+  >
+  </trigger>
+
+</triggers>
+
+<!--  Script  -->
+
+<script>
+
+function info_bars2 (name, line, wildcards)
+
+  local armor = wildcards [1]
+  local base_pl = wildcards [2]
+  local cur_pl = wildcards [3]
+  local zeni = wildcards [4] 
+
+require "InfoBox"
+
+PLBox = InfoBox:New("Powerlevel") PLBox:Font("Consolas", 10)
+ PLBox.Bar.textStyle = PLBox.textStyles.plain
+CPLBar    = PLBox:AddBar("")
+ local cplCaptionFmt = "@WBase PL: %s"
+MPLBar	= PLBox:AddBar("")
+ local mplCaptionFmt = "@WMax PL: @Y%s"
+ABar    = PLBox:AddBar("")
+ local aCaptionFmt = "@WArmor: %s"
+ZBar    = PLBox:AddBar("")
+ local zCaptionFmt = "@WZeni: %s"
+PLBox:WindowPosition ( InfoBox.windowPositions.SE )
+PLBox:Columns(1)
+
+-- Following values are normally set by other triggers.
+CPLBar.caption = cplCaptionFmt:format(base_pl)
+ABar.caption = aCaptionFmt:format(armor)
+MPLBar.caption = mplCaptionFmt:format(cur_pl)
+ZBar.caption = zCaptionFmt:format(zeni)
+PLBox:Update()
+
+end
+
+</script>
+
+</muclient>
