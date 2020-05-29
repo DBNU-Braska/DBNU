@@ -60,7 +60,7 @@ function info_bars2 (name, line, wildcards)
   local armor = wildcards [1]
   local base_pl = wildcards [2]
   local cur_pl = wildcards [3]
-  local zeni = wildcards [6]
+  local zeni = wildcards [4]
 
 require "InfoBox"
 
@@ -76,12 +76,12 @@ MPLBar	= PLBox:AddBar("")
 ZBar    = PLBox:AddBar("")
  local zCaptionFmt = "@WZeni: %s"
 PLBox:WindowPosition ( InfoBox.windowPositions.S )
-PLBox:Columns(3)
+PLBox:Columns(2)
 
 -- Following values are normally set by other triggers.
 CPLBar.caption = cplCaptionFmt:format(base_pl)
-MPLBar.caption = mplCaptionFmt:format(cur_pl)
 ABar.caption = aCaptionFmt:format(armor)
+MPLBar.caption = mplCaptionFmt:format(cur_pl)
 ZBar.caption = zCaptionFmt:format(zeni)
 PLBox:Update()
 
