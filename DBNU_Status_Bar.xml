@@ -72,11 +72,10 @@ ABar    = PLBox:AddBar("")
  local aCaptionFmt = "@WArmor: %s"
 MPLBar	= PLBox:AddBar("")
  local mplCaptionFmt = "@WMax PL: @Y%s"
-
 ZBar    = PLBox:AddBar("")
  local zCaptionFmt = "@WZeni: %s"
-PLBox:WindowPosition ( InfoBox.windowPositions.S )
-PLBox:Columns(2)
+PLBox:WindowPosition ( InfoBox.windowPositions.SE )
+PLBox:Columns(1)
 
 -- Following values are normally set by other triggers.
 CPLBar.caption = cplCaptionFmt:format(base_pl)
@@ -97,7 +96,7 @@ GBox = InfoBox:New("Misc") GBox:Font("Consolas", 10)
 TextBar = GBox:AddBar("Last Combat")
 GBar    = GBox:AddBar("")
 local gCaptionFmt = "@WPL last combat: %s"
-GBox:WindowPosition ( InfoBox.windowPositions.SE )
+GBox:WindowPosition ( InfoBox.windowPositions.E )
 GBox:Columns(1)
 --Following values are normally set by other triggers.
 GBar.caption = gCaptionFmt:format(gained)
