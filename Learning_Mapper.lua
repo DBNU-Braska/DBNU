@@ -1254,19 +1254,23 @@ function OnPluginBroadcast (msg, id, name, text)
     if (text == "ROOM_VNUM" or text == "ROOM_NAME" or text == "ROOM_EXITS") then
       current_room = getmsdp("ROOM_VNUM")
       room_name = getmsdp("ROOM_NAME")  
-      exits = utils.split(exits, ",")
-      room_exits = ""
-      -- Go through and build the list of valid exits
-      -- ignoring all the custom exits ("enter hospital")
-      for key, value in pairs(exits) do
-        if (valid_direction[value]) then
-          if (room_exits ~= "") then
-            room_exits = room_exits.."," 
+      exits = getmsdp("ROOMEXITS")
+      if exits ~= nil and exits ~= '' then
+        --Initial population of Exits from MSDP
+        DebugNote(3,"Room", uid, "found exits:", exits)
+        exits = utils.split(exits, ",")
+        room_exits = ""
+        -- Go through and build the list of valid exits
+        -- ignoring all the custom exits ("enter hospital")
+        for key, value in pairs(exits) do
+          if (valid_direction[value]) then
+            if (room_exits ~= "") then room_exits = room_exits.."," 
+            end
+            room_exits = room_exits..valid_direction[value]
           end
-        room_exits = room_exits..valid_direction[value]
         end
       end
-      mapper.draw(current_room)
+      mapper.draw(current_room, room_exits, room_name)
     end
   end
 end -- OnPluginBroadcast
