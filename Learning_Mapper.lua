@@ -1250,44 +1250,26 @@ end -- OnPluginClose
 -------------------------------------------------------------------
 function OnPluginBroadcast (msg, id, name, text)
   if id == "5bb1dc730da3d325a81979af" then
-      -- By the time we get the VNUM, all the other data has been populated in MSDP
-      if (text == "ROOM_VNUM") then
-          uid = getmsdp("ROOM_VNUM")
-          if GetVariable("automap") == "false" then
-              DebugNote(2,"Got room vnum", uid, " Not automapping.")
-              current_room = uid
-              DebugNote(3,"Redrawing map")
-              mapper.draw(current_room)
-          else
-              DebugNote(2,"Got room vnum", uid)
-              got_room_number(uid)
-              got_room_name(strip_colours(getmsdp("ROOM_NAME")))
-              exits = getmsdp("ROOM_EXITS")
-              if exits ~= nil and exits ~= '' then
-                  --Initial population of Exits from MSDP
-                  DebugNote(3,"Room", uid, "found exits:", exits)
-                  exits = utils.split(exits, ",")
-                  room_exits = ""
-                  -- Go through and build the list of valid exits
-                  -- ignoring all the custom exits ("enter hospital")
-                  for key, value in pairs(exits) do
-                      if (valid_direction[value]) then
-                          if (room_exits ~= "") then room_exits = room_exits.."," end
-                          room_exits = room_exits..valid_direction[value]
-                      end
-                  end
-                  got_room_exit(room_exits)
-              else
-                  DebugNote(2,"Room", uid, "found no exits.")
-              end 
-              -- We've handled it, so clear it out so we don't mess with it again
-              DebugNote(3,"Room processed. Clearing last_direction_moved.")
-              last_direction_moved = nil
-              from_room = nil
+    -- By the time we get the VNUM, all the other data has been populated in MSDP
+    if (text == "ROOM_VNUM" or text == "ROOM_NAME" or text == "ROOM_EXITS") then
+      current_room = getmsdp("ROOM_VNUM")
+      room_name = getmsdp("ROOM_NAME")  
+      exits = utils.split(exits, ",")
+      room_exits = ""
+      -- Go through and build the list of valid exits
+      -- ignoring all the custom exits ("enter hospital")
+      for key, value in pairs(exits) do
+        if (valid_direction[value]) then
+          if (room_exits ~= "") then
+            room_exits = room_exits.."," 
           end
+        room_exits = room_exits..valid_direction[value]
+        end
       end
+      mapper.draw(current_room)
+    end
   end
-end
+end -- OnPluginBroadcast
 
 
 
