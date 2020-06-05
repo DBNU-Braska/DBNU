@@ -1271,6 +1271,9 @@ function OnPluginBroadcast (msg, id, name, text)
         end
       end
       mapper.draw(current_room, room_exits, room_name)
+      Note ("Room name is: %s", room_name)
+      Note ("Room Vnum is: %s", current_room)
+      Note ("Room exits: %s", exits)
     end
   end
 end -- OnPluginBroadcast
