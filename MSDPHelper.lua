@@ -5,7 +5,7 @@
 This file is used to facilitate variable calls to your MUD.
 
 To use this plugin to send MSDP variables to your plugin, enter this into the top of your plugin's code:
-  dofile(GetPluginInfo(GetPluginID(), 20) .. "LotJMSDPHelper.lua")
+  dofile(GetPluginInfo(GetPluginID(), 20) .. "MSDPHelper.lua")
 	
 Then whenever you want to set a variable, use this syntax:
   myVariable = getmsdp("VARIABLE NAME")

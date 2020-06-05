@@ -13,7 +13,7 @@ version="0.56">
 <![CDATA[
 --MSDP Handler--
 
-This plugin handles all MSDP communications between the LotJ server and MUSHclient.
+This plugin handles all MSDP communications between the MUD server and MUSHclient.
 Upon login or plugin install, the plugin will send a request for the list of all
 reportable variables, publish its plugin ID, and finally request all currently
 available MSDP variables so that will be sent in pulses whenever their values change
@@ -195,7 +195,7 @@ end
 
 function StoreVariable (MSDP_var, MSDP_val)
   -- To get MSDP variables in external plugins:
-  --	dofile(GetPluginInfo(GetPluginID(), 20) .. "LotJMSDPHelper.lua")
+  --	dofile(GetPluginInfo(GetPluginID(), 20) .. "MSDPHelper.lua")
   --	myVariable = getmsdp("VARIABLE NAME")
   msdp[MSDP_var] = (type(MSDP_val)=="table" and table.concat(MSDP_val, ",")) or MSDP_val
   msdpmsg(0, "msdp["..MSDP_var.."]="..msdp[MSDP_var])
@@ -211,7 +211,7 @@ function OnPluginInstall()
   BroadcastPlugin(1, "reload") -- tell other plugins to clear all msdp data
   if IsConnected() then
     Send_MSDP_Packet ("\1LIST\2COMMANDS\2LISTS\2CONFIGURABLE_VARIABLES\2REPORTABLE_VARIABLES\2REPORTED_VARIABLES\2SENDABLE_VARIABLES\2GUI_VARIABLES")
-    Send_MSDP_Packet ("\1PLUGINID\2LotJMSDPHandler_v"..VERSION) -- Send our PLUGIN ID
+    Send_MSDP_Packet ("\1PLUGINID\2MSDPHandler_v"..VERSION) -- Send our PLUGIN ID
     waitForReply()
  	end
 end
