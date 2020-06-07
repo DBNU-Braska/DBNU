@@ -163,8 +163,6 @@ function OnPluginBroadcast (msg, id, name, text)
     end -- if
     -- this is now our current room
     current_room = uid
-    -- draw this room
-    mapper.draw (current_room
     name = getmsdp("ROOM_NAME")
     -- ignore really long lines
     if #name > 50 then
@@ -192,6 +190,8 @@ function OnPluginBroadcast (msg, id, name, text)
   print("Room name: ", room_name)
   print("the vnum is: ", current_room)
   print("the exits: ", room_exits)
+  -- draw this room
+  mapper.draw (current_room)
 end -- got_prompt
 
 
