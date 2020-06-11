@@ -40,33 +40,16 @@
 <script>
 <![CDATA[
 
--- mapper module
 require "mapper"
 
--- configuration table
+dofile(GetPluginInfo(GetPluginID(), 20) .. "MSDPHelper.lua")
+
 config =  { 
           OUR_ROOM_COLOUR         = { name = "Our room",  colour =  ColourNameToRGB "black", },
           }   
-
-dofile(GetPluginInfo(GetPluginID(), 20) .. "MSDPHelper.lua")
-  
--- -----------------------------------------------------------------
--- mapper 'get_room' callback - it wants to know about room uid
--- -----------------------------------------------------------------
-function get_room (uid)
  
-    room = rooms [uid]
-    if not room then
-      return nil
-    end -- if not found
-
-  room.area = "The swamp"  -- OK, let's assume every room is in this area
-  room.hovermessage = room.name
-  return room
-end -- get_room
-
--- all the rooms we have come across
-rooms = { }  -- example rooms table
+rooms = { }
+areas = { }
 
 
 -- -----------------------------------------------------------------
@@ -136,7 +119,7 @@ function get_room (uid)
     room.borderpenwidth = 2
   end -- not in this area
 
-  room.area = "The swamp"  -- OK, let's assume every room is in this area
+  room.area = getmsdp("AREA_NAME")
   room.hovermessage = room.name
   return room
 end -- get_room 
@@ -163,7 +146,7 @@ function OnPluginBroadcast (msg, id, name, text)
     end -- if
     -- this is now our current room
     current_room = uid
-    name = getmsdp("ROOM_NAME")
+    name = StripANSI(strip_colors(getmsdp("ROOM_NAME")))
     -- ignore really long lines
     if #name > 50 then
       return
@@ -204,14 +187,24 @@ end -- OnPluginSent
 
 
 -- -----------------------------------------------------------------
+-- Strip colours
+-- -----------------------------------------------------------------
+function strip_colors(s)
+  s = s:gsub("&&", "\0")
+  s = s:gsub("&.", "")
+  s = s:gsub("%z", "&")
+  return s
+end
+
+-- -----------------------------------------------------------------
 -- Plugin Install
 -- -----------------------------------------------------------------
 function OnPluginInstall ()
   -- initialize mapper
   mapper.init { 
-            config = config,      -- ie. colours, sizes
-            get_room = get_room,  -- info about room (uid)
-            show_help  = OnHelp,   -- to show help
+    config          = config,       -- ie. colours, sizes
+    get_room        = get_room,     -- info about room (uid)
+    show_help       = OnHelp,       -- to show help
               }
                
   mapper.mapprint (string.format ("MUSHclient mapper installed, version %0.1f", mapper.VERSION))
@@ -224,7 +217,7 @@ end -- OnPluginInstall
 function OnHelp ()
   mapper.mapprint (string.format ("[MUSHclient mapper, version %0.1f]", mapper.VERSION))
   mapper.mapprint (world.GetPluginInfo (world.GetPluginID (), 3))
-end
+end -- end of OnHelp
 ]]>
 </script>
 
