@@ -227,11 +227,11 @@ MAX_HISTORICAL_EXITS_TO_VALIDATE = 10
 
 default_config = {
   -- assorted colours
-  BACKGROUND_COLOUR       = { name = "Background",        colour =  ColourNameToRGB "dimgray", },
-  ROOM_COLOUR             = { name = "Room",              colour =  ColourNameToRGB "white", },
+  BACKGROUND_COLOUR       = { name = "Background",        colour =  ColourNameToRGB "darkgray", },
+  ROOM_COLOUR             = { name = "Room",              colour =  ColourNameToRGB "royalblue", },
   EXIT_COLOUR             = { name = "Exit",              colour =  ColourNameToRGB "cadetblue", },
   EXIT_COLOUR_UP_DOWN     = { name = "Exit up/down",      colour =  ColourNameToRGB "darkmagenta", },
-  OUR_ROOM_COLOUR         = { name = "Our room",          colour =  ColourNameToRGB "black", },
+  OUR_ROOM_COLOUR         = { name = "Our room",          colour =  ColourNameToRGB "mediumblue", },
   UNKNOWN_ROOM_COLOUR     = { name = "Unknown room",      colour =  ColourNameToRGB "#00CACA", },
   -- room flag colours
   SHOP_FILL_COLOUR        = { name = "Shop",              colour =  ColourNameToRGB "darkolivegreen", },
@@ -874,7 +874,7 @@ function get_room (uid)
   -- build hover message 
   areaname = area
   if areaname then
-    room.area = areaname
+    room.area = getmsdp("AREA_NAME")
   else
     room.area = "Unknown"
   end
