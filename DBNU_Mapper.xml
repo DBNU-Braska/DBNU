@@ -235,16 +235,16 @@ default_config = {
   UNKNOWN_ROOM_COLOUR     = { name = "Unknown room",      colour =  ColourNameToRGB "#00CACA", },
   -- room flag colours
   SHOP_FILL_COLOUR        = { name = "Shop",              colour =  ColourNameToRGB "darkolivegreen", },
-  LIBRARY_FILL_COLOUR     = { name = "Library",           colour =  ColourNameToRGB "purple", },
+  LIBRARY_FILL_COLOUR     = { name = "Pawnshop",           colour =  ColourNameToRGB "purple", },
   BANK_FILL_COLOUR        = { name = "Bank",              colour =  ColourNameToRGB "yellow", },
-  WORKSHOP_FILL_COLOUR    = { name = "Workshop",          colour =  ColourNameToRGB "green", },
-  HOTEL_FILL_COLOUR       = { name = "Hotel",             colour =  ColourNameToRGB "red", },
+  WORKSHOP_FILL_COLOUR    = { name = "Gravity",          colour =  ColourNameToRGB "green", },
+  HOTEL_FILL_COLOUR       = { name = "Duel",             colour =  ColourNameToRGB "red", },
   TRAINER_FILL_COLOUR     = { name = "Trainer",           colour =  ColourNameToRGB "lightgreen" },
-  PAD_FILL_COLOUR         = { name = "Landing Pad",       colour =  ColourNameToRGB "orange" },
-  COMMAND_FILL_COLOUR     = { name = "Command",           colour =  ColourNameToRGB "steelblue" },
-  ALPHA_FILL_COLOUR       = { name = "Alpha",             colour =  ColourNameToRGB "white" },
-  BRAVO_FILL_COLOUR       = { name = "Bravo",             colour =  ColourNameToRGB "gray" },
-  CHARLIE_FILL_COLOUR     = { name = "Charlie",           colour =  ColourNameToRGB "black" },
+  PAD_FILL_COLOUR         = { name = "Spaceport",       colour =  ColourNameToRGB "orange" },
+  COMMAND_FILL_COLOUR     = { name = "Healing",           colour =  ColourNameToRGB "lawngreen" },
+  -- ALPHA_FILL_COLOUR       = { name = "Alpha",             colour =  ColourNameToRGB "white" },
+  -- BRAVO_FILL_COLOUR       = { name = "Bravo",             colour =  ColourNameToRGB "gray" },
+  -- CHARLIE_FILL_COLOUR     = { name = "Charlie",           colour =  ColourNameToRGB "black" },
 
   FONT = { name =  get_preferred_font {"Dina",  "Lucida Console",  "Fixedsys", "Courier", "Sylfaen",} ,
            size = 8
@@ -834,17 +834,17 @@ function room_toggle_command (room, uid)
   room_toggle_thing (room, uid, "command", "a command room")
 end 
 
-function room_toggle_alpha (room, uid)
-  room_toggle_thing (room, uid, "alpha", "alpha")
-end 
+--function room_toggle_alpha (room, uid)
+--  room_toggle_thing (room, uid, "alpha", "alpha")
+--end 
 
-function room_toggle_bravo (room, uid)
-  room_toggle_thing (room, uid, "bravo", "bravo")
-end 
+--function room_toggle_bravo (room, uid)
+--  room_toggle_thing (room, uid, "bravo", "bravo")
+--end 
 
-function room_toggle_charlie (room, uid)
-  room_toggle_thing (room, uid, "charlie", "charlie")
-end 
+--function room_toggle_charlie (room, uid)
+--  room_toggle_thing (room, uid, "charlie", "charlie")
+--end 
 
 -------------------------------------------------------------------
 -- mapper 'get_room' callback - it wants to know about room uid
@@ -933,15 +933,15 @@ function get_room (uid)
     elseif string.match (room.info, "command") then
         room.fillcolour = config.COMMAND_FILL_COLOUR.colour
         room.fillbrush = pattern
-    elseif string.match (room.info, "alpha") then
-        room.fillcolour = config.ALPHA_FILL_COLOUR.colour
-        room.fillbrush = miniwin.pen_solid 
-    elseif string.match (room.info, "bravo") then
-        room.fillcolour = config.BRAVO_FILL_COLOUR.colour
-        room.fillbrush = miniwin.pen_solid 
-    elseif string.match (room.info, "charlie") then
-        room.fillcolour = config.CHARLIE_FILL_COLOUR.colour
-        room.fillbrush = miniwin.pen_solid 
+    --elseif string.match (room.info, "alpha") then
+    --    room.fillcolour = config.ALPHA_FILL_COLOUR.colour
+    --    room.fillbrush = miniwin.pen_solid 
+    --elseif string.match (room.info, "bravo") then
+    --    room.fillcolour = config.BRAVO_FILL_COLOUR.colour
+    --    room.fillbrush = miniwin.pen_solid 
+    --elseif string.match (room.info, "charlie") then
+    --    room.fillcolour = config.CHARLIE_FILL_COLOUR.colour
+    --    room.fillbrush = miniwin.pen_solid 
     else
         room.fillcolour = config.ROOM_COLOUR.colour
     end
@@ -1239,18 +1239,18 @@ function room_click (uid, flags)
         { name = "-", } ,
         { name = checkmark ("shop")    .. "Shop",         func = room_toggle_shop } ,
         { name = checkmark ("trainer") .. "Trainer",      func = room_toggle_trainer } ,
-        { name = checkmark ("hotel")   .. "Hotel",        func = room_toggle_hotel } ,
+        { name = checkmark ("hotel")   .. "Duel",        func = room_toggle_hotel } ,
         { name = checkmark ("bank")    .. "Bank",         func = room_toggle_bank } ,
-        { name = checkmark ("library") .. "Library",      func = room_toggle_library } ,
-        { name = checkmark ("workshop").. "Workshop",     func = room_toggle_workshop } ,
-        { name = checkmark ("pad")     .. "Landing Pad",  func = room_toggle_pad } ,
-        { name = checkmark ("command") .. "Command",      func = room_toggle_command } ,
-        { name = "-", } ,
-        { name = "^Waypoint Markers", } ,
-        { name = "-", } ,
-        { name = checkmark ("alpha")   .. "Alpha",        func = room_toggle_alpha } ,
-        { name = checkmark ("bravo")   .. "Bravo",        func = room_toggle_bravo } ,
-        { name = checkmark ("charlie") .. "Charlie",      func = room_toggle_charlie } ,
+        { name = checkmark ("library") .. "Pawnshop",      func = room_toggle_library } ,
+        { name = checkmark ("workshop").. "Gravity",     func = room_toggle_workshop } ,
+        { name = checkmark ("pad")     .. "Spaceport",  func = room_toggle_pad } ,
+        { name = checkmark ("command") .. "Healing",      func = room_toggle_command } ,
+        --{ name = "-", } ,
+        --{ name = "^Waypoint Markers", } ,
+        --{ name = "-", } ,
+        --{ name = checkmark ("alpha")   .. "Alpha",        func = room_toggle_alpha } ,
+        --{ name = checkmark ("bravo")   .. "Bravo",        func = room_toggle_bravo } ,
+        --{ name = checkmark ("charlie") .. "Charlie",      func = room_toggle_charlie } ,
      }
     
     local t, tf = {}, {}
