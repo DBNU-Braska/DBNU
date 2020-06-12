@@ -39,7 +39,7 @@ USAGE:
 
     <trigger
    enabled="y"
-   match="\[NEWS-FLASH\] :: (.*?) ::$"
+   match="\[(NEWS-FLASH|BATTLE ARENA)\] :: (.*?) ::$"
    omit_from_output="y"
    regexp="y"
    script="chats"
