@@ -239,7 +239,7 @@ default_config = {
   BANK_FILL_COLOUR        = { name = "Bank",              colour =  ColourNameToRGB "yellow", },
   WORKSHOP_FILL_COLOUR    = { name = "Gravity",          colour =  ColourNameToRGB "green", },
   HOTEL_FILL_COLOUR       = { name = "Duel",             colour =  ColourNameToRGB "red", },
-  TRAINER_FILL_COLOUR     = { name = "Trainer",           colour =  ColourNameToRGB "lightgreen" },
+  --TRAINER_FILL_COLOUR     = { name = "Trainer",           colour =  ColourNameToRGB "lightgreen" },
   PAD_FILL_COLOUR         = { name = "Spaceport",       colour =  ColourNameToRGB "orange" },
   COMMAND_FILL_COLOUR     = { name = "Healing",           colour =  ColourNameToRGB "lawngreen" },
   -- ALPHA_FILL_COLOUR       = { name = "Alpha",             colour =  ColourNameToRGB "white" },
@@ -810,9 +810,9 @@ function room_toggle_hotel (room, uid)
   room_toggle_thing (room, uid, "hotel", "a hotel")
 end 
 
-function room_toggle_trainer (room, uid)
-  room_toggle_thing (room, uid, "trainer", "a training room")
-end 
+--function room_toggle_trainer (room, uid)
+--  room_toggle_thing (room, uid, "trainer", "a training room")
+--end 
 
 function room_toggle_library (room, uid)
   room_toggle_thing (room, uid, "library", "a library")
@@ -924,9 +924,9 @@ function get_room (uid)
     elseif string.match (room.info, "hotel") then
         room.fillcolour = config.HOTEL_FILL_COLOUR.colour
         room.fillbrush = pattern
-    elseif string.match (room.info, "trainer") then
-        room.fillcolour = config.TRAINER_FILL_COLOUR.colour
-        room.fillbrush = pattern
+    --elseif string.match (room.info, "trainer") then
+    --    room.fillcolour = config.TRAINER_FILL_COLOUR.colour
+    --    room.fillbrush = pattern
     elseif string.match (room.info, "shop") then
         room.fillcolour = config.SHOP_FILL_COLOUR.colour
         room.fillbrush = pattern
@@ -1238,7 +1238,7 @@ function room_click (uid, flags)
         { name = "^Utility Markers", } ,
         { name = "-", } ,
         { name = checkmark ("shop")    .. "Shop",         func = room_toggle_shop } ,
-        { name = checkmark ("trainer") .. "Trainer",      func = room_toggle_trainer } ,
+        --{ name = checkmark ("trainer") .. "Trainer",      func = room_toggle_trainer } ,
         { name = checkmark ("hotel")   .. "Duel",        func = room_toggle_hotel } ,
         { name = checkmark ("bank")    .. "Bank",         func = room_toggle_bank } ,
         { name = checkmark ("library") .. "Pawnshop",      func = room_toggle_library } ,
