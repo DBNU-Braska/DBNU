@@ -194,7 +194,7 @@ function loadluafile(filename)
         ColourNote("black","red","File error:")
         ColourNote("black","red",err)
         ColourNote("black","red","--------------------------------------------------------------------------------")
-        EnablePlugin("63e6909083318cf63707c044", false)
+        EnablePlugin("d03a69d4b267748c82175c9c", false)
         ColourNote("red","black","Plugin disabled.")
     else
         f()
@@ -227,7 +227,7 @@ MAX_HISTORICAL_EXITS_TO_VALIDATE = 10
 
 default_config = {
   -- assorted colours
-  BACKGROUND_COLOUR       = { name = "Background",        colour =  ColourNameToRGB "darkgray", },
+  BACKGROUND_COLOUR       = { name = "Background",        colour =  ColourNameToRGB "black", },
   ROOM_COLOUR             = { name = "Room",              colour =  ColourNameToRGB "royalblue", },
   EXIT_COLOUR             = { name = "Exit",              colour =  ColourNameToRGB "cadetblue", },
   EXIT_COLOUR_UP_DOWN     = { name = "Exit up/down",      colour =  ColourNameToRGB "darkmagenta", },
