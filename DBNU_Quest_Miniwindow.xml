@@ -100,6 +100,16 @@ USAGE:
 
   <trigger
    enabled="y"
+   match="That location is in the general area of (.*?)."
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+   enabled="y"
    match="Return to the Quest Master before your time runs out"
    omit_from_output="y"
    regexp="y"
