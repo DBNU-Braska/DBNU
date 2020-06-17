@@ -100,6 +100,16 @@ USAGE:
 
   <trigger
    enabled="y"
+   match="Return to the Quest Master before your time runs out"
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+   enabled="y"
    match="There is less than a minute remaining until you can go on another quest."
    omit_from_output="y"
    regexp="y"
