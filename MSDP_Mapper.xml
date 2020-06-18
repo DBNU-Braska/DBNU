@@ -413,8 +413,6 @@ require "serialize"
 require "checkplugin"
 require "json"
 
-dofile(GetPluginInfo(GetPluginID(), 20) .. "MSDPHelper.lua")
-
 mapper = require "mapper"
 
 
@@ -1645,7 +1643,7 @@ handlers = {
   }
 
 function gotRoomInfo (info)
-    if id == "b3aae34498d5bf19b5b2e2af" then
+    if id == "b3aae34498d5bf19b5b2e2af" then -- MSDP Helper
   
         if (text == "ROOM_VNUM") then
             got_room_number (getmsdp("ROOM_VNUM"))
@@ -1664,7 +1662,7 @@ function gotRoomInfo (info)
             got_room_full_exits (table.concat (t, ","))
         end -- if
         
-        if (text == "SECTOR_TYPE" then
+        if (text == "SECTOR_TYPE") then
             got_environment (getmsdp("SECTOR_TYPE"))
         end -- if
         
@@ -1676,7 +1674,7 @@ function gotRoomInfo (info)
             got_info (table.concat (info.details, ","))
         end -- if
         
-        if (text == "AREA_NAME" then
+        if (text == "AREA_NAME") then
             areas [current_area] = getmsdp("AREA_NAME")
         end -- if
 
@@ -2046,7 +2044,8 @@ function OnHelp ()
 end
 
 function OnPluginListChanged ()
-  do_plugin_check_now ("74f8c420df7d59ad5aa66246", "GMCP_handler_NJG")    -- check we have GMCP plugin
+  do_plugin_check_now ("b3aae34498d5bf19b5b2e2af", "MSDP_Handler")    -- check we have MSDP plugin
+  dofile(GetPluginInfo(GetPluginID(), 20) .. "MSDPHelper.lua")
 end -- OnPluginListChanged
 
 ]]>
