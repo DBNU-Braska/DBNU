@@ -95,7 +95,7 @@ USAGE:
   <trigger
    enabled="y"
    name="Newbie"
-   match="^\[(New-Player|Immortal)\] (.+)$"
+   match="^\[(New-Player|Immortal)\] (.*?)$"
    omit_from_output="n"
    regexp="y"
    script="chats"
@@ -106,7 +106,7 @@ USAGE:
   <trigger
    enabled="y"
    name="Ask_Answer"
-   match="^\[(Ask|Answer)\] (.+)$"
+   match="^\[(Ask|Answer)\] (.*?)$"
    omit_from_output="n"
    regexp="y"
    script="chats"
