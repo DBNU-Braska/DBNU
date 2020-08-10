@@ -39,18 +39,9 @@ USAGE:
     
 	<trigger
    enabled="y"
-   match="<(OOC|IMM)> {(.+)} \((.+)\) (.*?) \'(.*?)\'$"
-   omit_from_output="y"
-   regexp="y"
-   script="chats"
-   sequence="100"
-  >
-  </trigger>	
-
-	<trigger
-   enabled="y"
-   match="\<OOC\> \*(.*?)\*$"
-   omit_from_output="y"
+   name="OOC"
+   match="^<(OOC|IMM)> (.+)$"
+   omit_from_output="n"
    regexp="y"
    script="chats"
    sequence="100"
@@ -59,18 +50,9 @@ USAGE:
 
   <trigger
    enabled="y"
-   match="<(IMM)> Someone \'(.*?)\'$"
-   omit_from_output="y"
-   regexp="y"
-   script="chats"
-   sequence="100"
-  >
-  </trigger>
-	
-  <trigger
-   enabled="y"
-   match="<<(OOC|IMM)>> (.*?)$"
-   omit_from_output="y"
+   name="Wartalk"
+   match="^\[WAR\] (.+)$"
+   omit_from_output="n"
    regexp="y"
    script="chats"
    sequence="100"
@@ -79,13 +61,212 @@ USAGE:
 
   <trigger
    enabled="y"
-   match="\[(WAR|MUSIC|New-Player|Ask|Answer|Immortal)\] (.+) \'(.*?)\'$"
-   omit_from_output="y"
+   name="IMM"
+   match="^\[IMM\] (.+)$"
+   omit_from_output="n"
    regexp="y"
    script="chats"
    sequence="100"
   >
   </trigger>
+
+  <trigger
+   enabled="y"
+   name="IMM_Logs"
+   match="^(Log|Comm|Build|Monitor): (.*?)$"
+   omit_from_output="n"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+   enabled="y"
+   name="Music"
+   match="^\[MUSIC\] (.+)$"
+   omit_from_output="n"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+  
+  <trigger
+   enabled="y"
+   name="Newbie"
+   match="^\[(New-Player|Immortal)\] (.+)$"
+   omit_from_output="n"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+   enabled="y"
+   name="Ask_Answer"
+   match="^\[(Ask|Answer)\] (.+)$"
+   omit_from_output="n"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+   enabled="y"
+   name="RP_Chat"
+   match="^\((Chat|Chat:OOC)\) (.*?)$"
+   omit_from_output="n"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+   enabled="y"
+   name="RP_Story"
+   match="^\[RP-STORY (.*?)\] (.*?)$"
+   omit_from_output="n"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>   
+
+  <trigger
+   enabled="y"
+   name="Race"
+   match="^<(Race)> (.*?)$"
+   omit_from_output="n"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+   enabled="y"
+   name="Clan"
+   match="^\<Clan\> (.*?)$"
+   omit_from_output="n"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+   enabled="y"
+   name="Clan_Info"
+   match="^\[Clan-Info\] (.*?)$"
+   omit_from_output="n"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>	
+
+  <trigger
+   enabled="y"
+   name="Yell"
+   match="^\{Area-Yell\} (.*?)$"
+   omit_from_output="n"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+   enabled="y"
+   name="FriendChat"
+   match="^\{FriendChat\} (.*?)$"
+   omit_from_output="n"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+   
+  <trigger
+   enabled="y"
+   name="Friend_Info"
+   match="\[Friend-Info\] (.*?)"
+   omit_from_output="n"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+   enabled="y"
+   name="Scouter"
+   match="^\[Scouter -(.*?)\] (.*?)$"
+   omit_from_output="n"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+
+    <trigger
+   enabled="y"
+   name="News_Flash"
+   match="^\[NEWS-FLASH\] (.*?)$"
+   omit_from_output="n"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>  
+
+  <trigger
+   enabled="y"
+   name="Info"
+   match="^\[Info\] (.*?)$"
+   omit_from_output="n"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+    
+  <trigger
+   enabled="y"
+   name="HighScore"
+   match="^\[HighScore\] (.*?)$"
+   omit_from_output="n"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+    
+    <trigger
+   enabled="y"
+   name="Auto-Events"
+   match="^\[Auto-Event\] (.*?)$"
+   omit_from_output="n"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+   enabled="y"
+   name="Aution_House"
+   match="^\[DBNU Auction House\] (.*?)$"
+   omit_from_output="n"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>  
 
 </triggers>
 
