@@ -38,9 +38,9 @@ USAGE:
 <triggers>
     
 	<trigger
-   enabled="y"
+    enabled="y"
    name="OOC"
-   match="^<(OOC|IMM)> (.+)$"
+   match="^\<(OOC|IMM)\> (.+)$"
    omit_from_output="y"
    regexp="y"
    script="chats"
@@ -49,7 +49,7 @@ USAGE:
   </trigger>	
 
   <trigger
-   enabled="y"
+    enabled="y"
    name="Wartalk"
    match="^\[WAR\] (.+)$"
    omit_from_output="y"
@@ -60,7 +60,7 @@ USAGE:
   </trigger>
 
   <trigger
-   enabled="y"
+    enabled="y"
    name="IMM"
    match="^\[IMM\] (.+)$"
    omit_from_output="y"
@@ -71,7 +71,7 @@ USAGE:
   </trigger>
 
   <trigger
-   enabled="y"
+    enabled="y"
    name="IMM_Logs"
    match="^(Log|Comm|Build|Monitor): (.+)$"
    omit_from_output="y"
@@ -82,7 +82,7 @@ USAGE:
   </trigger>
 
   <trigger
-   enabled="y"
+    enabled="y"
    name="Music"
    match="^\[MUSIC\] (.+)$"
    omit_from_output="y"
@@ -93,7 +93,7 @@ USAGE:
   </trigger>
   
   <trigger
-   enabled="y"
+    enabled="y"
    name="Newbie"
    match="^\[(New-Player|Immortal)\] (.+)$"
    omit_from_output="y"
@@ -104,7 +104,7 @@ USAGE:
   </trigger>
 
   <trigger
-   enabled="y"
+    enabled="y"
    name="Ask_Answer"
    match="^\[(Ask|Answer)\] (.+)$"
    omit_from_output="y"
@@ -115,7 +115,7 @@ USAGE:
   </trigger>
 
   <trigger
-   enabled="y"
+    enabled="y"
    name="RP_Chat"
    match="^\(Chat\) (.+)$"
    omit_from_output="y"
@@ -126,7 +126,7 @@ USAGE:
   </trigger>
 
   <trigger
-   enabled="y"
+    enabled="y"
    name="RP_Story"
    match="^\[RP-STORY (.+)\] (.+)$"
    omit_from_output="y"
@@ -137,9 +137,9 @@ USAGE:
   </trigger>   
 
   <trigger
-   enabled="y"
+    enabled="y"
    name="Race"
-   match="^<(Race)> (.+)$"
+   match="^\<(Race)\> (.+)$"
    omit_from_output="y"
    regexp="y"
    script="chats"
@@ -148,7 +148,7 @@ USAGE:
   </trigger>
 
   <trigger
-   enabled="y"
+    enabled="y"
    name="Clan"
    match="^\<Clan\> (.+)$"
    omit_from_output="y"
@@ -159,7 +159,7 @@ USAGE:
   </trigger>
 
   <trigger
-   enabled="y"
+    enabled="y"
    name="Clan_Info"
    match="^\[Clan-Info\] (.+)$"
    omit_from_output="y"
@@ -170,7 +170,7 @@ USAGE:
   </trigger>	
 
   <trigger
-   enabled="y"
+    enabled="y"
    name="Yell"
    match="^\{Area-Yell\} (.+)$"
    omit_from_output="y"
@@ -181,7 +181,7 @@ USAGE:
   </trigger>
 
   <trigger
-   enabled="y"
+    enabled="y"
    name="FriendChat"
    match="\{(FriendChat)\} (.+) \'(.+)\'"
    omit_from_output="y"
@@ -192,7 +192,7 @@ USAGE:
   </trigger>
    
   <trigger
-   enabled="y"
+    enabled="y"
    name="Friend_Info"
    match="\[Friend-Info\] (.+)"
    omit_from_output="y"
@@ -203,7 +203,7 @@ USAGE:
   </trigger>
 
   <trigger
-   enabled="y"
+    enabled="y"
    name="Scouter"
    match="^\[Scouter -(.+)\] (.+)$"
    omit_from_output="y"
@@ -214,7 +214,7 @@ USAGE:
   </trigger>
 
     <trigger
-   enabled="y"
+    enabled="y"
    name="News_Flash"
    match="^\[NEWS-FLASH\] (.+)$"
    omit_from_output="y"
@@ -225,9 +225,9 @@ USAGE:
   </trigger>  
 
   <trigger
-   enabled="y"
+    enabled="y"
    name="Info"
-   match="^\[(Info|A - Info)\] (.+)$"
+   match="^\[Info\] (.+)$"
    omit_from_output="y"
    regexp="y"
    script="chats"
@@ -236,7 +236,7 @@ USAGE:
   </trigger>
     
   <trigger
-   enabled="y"
+    enabled="y"
    name="HighScore"
    match="^\[HighScore\] (.+)$"
    omit_from_output="y"
@@ -247,7 +247,7 @@ USAGE:
   </trigger>
     
     <trigger
-   enabled="y"
+    enabled="y"
    name="Auto_Events"
    match="^\[Auto-Event\] (.+)$"
    omit_from_output="y"
@@ -258,7 +258,7 @@ USAGE:
   </trigger>
 
   <trigger
-   enabled="y"
+    enabled="y"
    name="Aution_House"
    match="^\[DBNU Auction House\] (.+)$"
    omit_from_output="y"
@@ -271,7 +271,6 @@ USAGE:
 </triggers>
 
 <aliases>
-    
     <alias
     script="chat_echo"
     match="^chats echo( on| off)?$"
@@ -303,8 +302,6 @@ USAGE:
 
 CHAT_WINDOW_NAME = "Channels"
 dofile (GetPluginInfo (GetPluginID (), 20) .. "My_Chat_Window.lua")
-
-
 
 </script>
 </muclient>
