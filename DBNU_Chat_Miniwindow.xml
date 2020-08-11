@@ -227,7 +227,7 @@ USAGE:
   <trigger
     enabled="y"
    name="Info"
-   match="^\[Info\] (.+)$"
+   match="^\[(Info|A - Info)\] (.+)$"
    omit_from_output="y"
    regexp="y"
    script="chats"
