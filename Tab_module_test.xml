@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<muclient>
+<plugin
+   name="Tab_module_test"
+   author="Nick Gammon"
+   id="ad093daf13a156bb4ddf6854"
+   language="Lua"
+   purpose="Tests the tabbed_window module"
+   save_state="y"
+   date_written="2018-02-07 08:45:31"
+   date_modified="2018-02-08 13:15:00"
+   requires="5.01"
+   version="1.0"
+   >
+<description trim="y">
+<![CDATA[
+Demonstration of using tabbed_window.lua
+]]>
+</description>
+
+</plugin>
+
+<!--  Script  -->
+
+<script>
+<![CDATA[
+
+-- package.path = 'c:/source/mushclient/lua/?.lua'
+require "tabbed_window"
+
+-- -------------------------------------------------------------------------------
+-- First tabbed window
+-- -------------------------------------------------------------------------------
+
+function DrawCircle (win, left, top, right, bottom, context)
+
+  -- fill client area first
+  WindowRectOp (win,  miniwin.rect_fill, -- fill
+                left, top, right, bottom,
+                ColourNameToRGB "peachpuff")
+
+  WindowCircleOp (win, miniwin.circle_ellipse, -- circle
+                  60, 60, 120, 120,                -- Left, Top, Right, Bottom
+                  ColourNameToRGB("blue"), miniwin.pen_solid, 2, -- pen width 2
+                  ColourNameToRGB("cyan"), miniwin.brush_solid)  -- brush
+end -- DrawCircle
+
+
+function DrawSquare (win, left, top, right, bottom, context)
+  local square_size = 80
+
+  WindowRectOp (win,  miniwin.rect_fill, -- square
+                  (right - left) / 2 - square_size / 2, (bottom - top) / 2 - square_size / 2,   -- Left, Top,
+                  (right - left) / 2 + square_size / 2, (bottom - top) / 2 + square_size / 2,   -- Right, Bottom
+                  ColourNameToRGB("lightcoral"), miniwin.pen_solid, 2, -- pen width 2
+                  ColourNameToRGB("violet"), miniwin.brush_solid)  -- brush
+end -- DrawSquare
+
+function DrawArrow (win, left, top, right, bottom, context)
+  WindowPolygon (win, "20,50,180,50,180,20,230,70,180,120,180,90,20,90",
+                          ColourNameToRGB("cyan"),   miniwin.pen_solid, 3,   -- pen (solid, width 3)
+                          ColourNameToRGB("yellow"), miniwin.brush_solid,    -- brush (solid)
+                          true,    -- fill
+                          false)   -- alternate fill
+end -- DrawArrow
+
+function DrawPie (win, left, top, right, bottom, context)
+  local pie_size = 80
+
+  WindowCircleOp (win, miniwin.circle_pie,    -- pie
+          (right - left) / 2 - pie_size / 2, (bottom - top) / 2 - pie_size / 2,   -- Left, Top,
+          (right - left) / 2 + pie_size / 2, (bottom - top) / 2 + pie_size / 2,   -- Right, Bottom
+          ColourNameToRGB("green"), miniwin.pen_solid, 2,  -- pen width 2
+          ColourNameToRGB("cyan"), miniwin.brush_solid,    -- brush
+          0, right,     -- the x, y position of the pie's starting point
+          right, bottom)     -- the x, y position of the pie's ending point
+end -- DrawPie
+
+context1 = {
+
+ win = "tabbed_window_test1",
+
+ tabs = {
+      { name = "Circle", handler = DrawCircle },
+      { name = "Square", handler = DrawSquare },
+      { name = "Arrow",  handler = DrawArrow },
+      { name = "Pie",    handler = DrawPie },
+      } -- end of tabs
+    } -- end of context1
+
+
+-- -------------------------------------------------------------------------------
+-- Second tabbed window
+-- -------------------------------------------------------------------------------
+
+function DrawStats (win, left, top, right, bottom, context)
+  WindowText (win, context.tabfont.id, "Here are the stats", left + 10, top + 10, 0, 0, ColourNameToRGB "green")
+end -- DrawStats
+
+function DrawEquipment (win, left, top, right, bottom, context)
+  WindowText (win, context.tabfont.id, "Here is the equipment", left + 10, top + 10, 0, 0, ColourNameToRGB "darkblue")
+end -- DrawEquipment
+
+function DrawHealth (win, left, top, right, bottom, context)
+  WindowText (win, context.tabfont.id, "Here is my health", left + 10, top + 10, 0, 0, ColourNameToRGB "red")
+end -- DrawHealth
+
+context2 = {
+
+ win = "tabbed_window_test2",
+ font = {
+    size = 15,
+    name = 'Fixedsys'
+    },
+
+ window = {
+  width = 600,
+  height = 300,
+  }, -- end of window info
+
+ -- table of tabs with the name and a handler function for each one
+ tabs = {
+      { name = "Stats",     handler = DrawStats },
+      { name = "Equipment", handler = DrawEquipment },
+      { name = "Health",    handler = DrawHealth },
+      } -- end of tabs
+
+    }  -- end of context2
+
+
+function OnPluginInstall ()
+  tabbed_window.init (context1)
+  tabbed_window.init (context2)
+
+  tabbed_window.draw_window (context1, 1)
+  tabbed_window.draw_window (context2, 1)
+end -- OnPluginInstall
+
+-- -------------------------------------------------------------------------------
+-- OnPluginSaveState
+-- -------------------------------------------------------------------------------
+function OnPluginSaveState ()
+  -- save window current location for next time
+  tabbed_window.save_state (context1)
+  tabbed_window.save_state (context2)
+end -- function OnPluginSaveState
+
+-- -------------------------------------------------------------------------------
+-- OnPluginClose
+-- -------------------------------------------------------------------------------
+function OnPluginClose ()
+    -- if enabled
+    if GetPluginInfo (GetPluginID(), 17) then
+        OnPluginDisable()
+    end -- if enabled
+end -- function OnPluginClose
+
+-- -------------------------------------------------------------------------------
+-- OnPluginEnable
+-- -------------------------------------------------------------------------------
+function OnPluginEnable ()
+    WindowShow (context1.win, true)
+    WindowShow (context2.win, true)
+end -- function OnPluginEnable
+
+
+-- -------------------------------------------------------------------------------
+-- OnPluginDisable
+-- -------------------------------------------------------------------------------
+function OnPluginDisable ()
+    WindowShow (context1.win, false)
+    WindowShow (context2.win, false)
+end -- function OnPluginDisable
+
+]]>
+</script>
+
+</muclient>

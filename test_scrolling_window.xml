@@ -117,14 +117,17 @@ windowTitleBackgroundColour = ColourNameToRGB ("darkgoldenrod")
 -- offset of text from edge
 TEXT_INSET = 5
 
-SCROLL_BAR_SIZE = 20
+SCROLL_BAR_SIZE = 15
 SCROLL_THUMB_HOTSPOT = "thumb"
 SCROLL_WHEEL_HOTSPOT = "ScrollWheelHotspot"
 
 FONT_ID = "f"
 
 lines = { }
-title = ""  -- default empty title
+for i = 1, 300 do
+    table.insert (lines, string.format ("Line %03i ", i))
+  end -- for
+title = "Test"  -- default empty title
 scrollPos = 0  -- where scroll bar is (pixels)
 
 -- display one line
