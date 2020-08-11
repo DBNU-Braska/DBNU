@@ -124,10 +124,8 @@ SCROLL_WHEEL_HOTSPOT = "ScrollWheelHotspot"
 FONT_ID = "f"
 
 lines = { }
-for i = 1, 300 do
-    table.insert (lines, string.format ("Line %03i ", i))
-  end -- for
-title = "Test"  -- default empty title
+
+title = ""  -- default empty title
 scrollPos = 0  -- where scroll bar is (pixels)
 
 -- display one line

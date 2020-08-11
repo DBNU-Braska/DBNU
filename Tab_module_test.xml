@@ -130,10 +130,10 @@ context2 = {
 
 
 function OnPluginInstall ()
-  tabbed_window.init (context1)
+  tabbed_window.init (context1) -- initialise each window
   tabbed_window.init (context2)
 
-  tabbed_window.draw_window (context1, 1)
+  tabbed_window.draw_window (context1, 1) -- draw each window
   tabbed_window.draw_window (context2, 1)
 end -- OnPluginInstall
 
@@ -142,7 +142,7 @@ end -- OnPluginInstall
 -- -------------------------------------------------------------------------------
 function OnPluginSaveState ()
   -- save window current location for next time
-  tabbed_window.save_state (context1)
+  tabbed_window.save_state (context1) -- do this for every window you want to save
   tabbed_window.save_state (context2)
 end -- function OnPluginSaveState
 
@@ -160,7 +160,7 @@ end -- function OnPluginClose
 -- OnPluginEnable
 -- -------------------------------------------------------------------------------
 function OnPluginEnable ()
-    WindowShow (context1.win, true)
+    WindowShow (context1.win, true) -- show each of the windows. 
     WindowShow (context2.win, true)
 end -- function OnPluginEnable
 
@@ -169,7 +169,7 @@ end -- function OnPluginEnable
 -- OnPluginDisable
 -- -------------------------------------------------------------------------------
 function OnPluginDisable ()
-    WindowShow (context1.win, false)
+    WindowShow (context1.win, false) -- hide each of the windows.
     WindowShow (context2.win, false)
 end -- function OnPluginDisable
 
