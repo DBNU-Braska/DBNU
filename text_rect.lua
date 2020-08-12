@@ -3,7 +3,7 @@
 require "wait"
 require "copytable"
 require "colors"
-dofile (GetInfo(60) .. "aardwolf_colors.lua")
+dofile (GetInfo(60) .. "DBNU_colors.lua")
 
 local function getHighlightColor(bg)
    local h, s, l = colors.rgb_string_to_hsl(string.format('#%06x', bg))
