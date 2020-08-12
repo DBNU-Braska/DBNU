@@ -1,0 +1,25 @@
+'f' for foreground or 'b' for background (case insensitive), and the other three characters are 
+numeric digits in the range 0 to 5, representing red, green and blue.
+             
+ The predefined colours are:
+   
+    `n: no colour (switches colour off)(This systems &D)
+   
+    `r: dark red                        `R: light red
+    `g: dark green                      `G: light green
+    `b: dark blue                       `B: light blue
+    `y: dark yellow                     `Y: light yellow
+    `m: dark magenta                    `M: light magenta
+    `c: dark cyan                       `C: light cyan
+    `w: dark white                      `W: light white  
+    `a: dark azure                      `A: light azure
+    `j: dark jade                       `j: light jade
+    `l: dark lime                       `L: light lime
+    `o: dark orange                     `O: bright orange
+    `p: dark pink                       `P: light pink
+    `t: dark tan                        `T: light tan
+    `v: dark violet                     `V: light violet
+  
+  It's also possible to explicitly specify an RGB value, by including the four character colour sequence (as used by ColourRGB) within square brackets, eg:
+  
+    This is a `[F010]very dark green foreground.
