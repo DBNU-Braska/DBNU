@@ -97,12 +97,12 @@ function TextRect:findURLs(text)
 end -- function findURL
 
 function TextRect:addColorLine(line)
-   self:addStyles(ColoursToStyles(line))
+   self:addStyles(line)
 end
 
 function TextRect:addStyles(styles)
    -- extract URLs so we can add our movespots later
-   local urls = self:findURLs(strip_colours_from_styles(styles))
+   local urls = self:findURLs(styles)
 
    -- pop the oldest line from our buffer if we're at capacity
    if self.num_raw_lines >= self.max_lines then
@@ -916,11 +916,11 @@ function TextRect:copyUrl(hotspot_id)
 end
 
 function TextRect:copyPlain()
-   self:copyAndNotify(strip_colours(self:selected_text()))
+   self:copyAndNotify(self:selected_text())
 end
 
 function TextRect:copy()
-   self:copyAndNotify(canonicalize_colours(self:selected_text(), true))
+   self:copyAndNotify(self:selected_text())
 end
 
 function TextRect:selected_text()
@@ -938,7 +938,7 @@ function TextRect:selected_text()
          -- end
 
          -- preserve the message and start the next one
-         table.insert(s_text, StylesToColours(current_message))
+         table.insert(s_text, current_message)
          current_message = {}
       end
    end
@@ -981,7 +981,7 @@ end
 function TextRect:copyFull()
    local t = {}
    for _,line in ipairs(self.raw_lines) do
-      table.insert(t, StylesToColours(line[1]))
+      table.insert(t, line[1])
    end
    SetClipboard(table.concat(t, WHITE_CODE.."\n")..WHITE_CODE)
    ColourNote("yellow","","All text copied to clipboard.")
