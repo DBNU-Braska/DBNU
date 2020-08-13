@@ -21,7 +21,7 @@ CODE_PREFIX = "&"
 PREFIX_ESCAPE = "&&"
 
 XTERM_CHAR = "`"
-XTERM_EXCAPE = "``"
+XTERM_ESCAPE = "``"
 
 BLACK_CHAR = "x"
 RED_CHAR = "r"
@@ -65,7 +65,7 @@ BOLD_MAGENTA_CODE = CODE_PREFIX..BOLD_MAGENTA_CHAR
 BOLD_CYAN_CODE = CODE_PREFIX..BOLD_CYAN_CHAR
 BOLD_WHITE_CODE = CODE_PREFIX..BOLD_WHITE_CHAR
 
-TILDE_PATTERN = "~"
+--TILDE_PATTERN = "~"
 X_NONNUMERIC_PATTERN = XTERM_CODE.."([^%d])"
 X_THREEHUNDRED_PATTERN = XTERM_CODE.."[3-9]%d%d"
 X_TWOSIXTY_PATTERN = XTERM_CODE.."2[6-9]%d"
@@ -355,7 +355,7 @@ function ColoursToStyles (input, default_foreground_code, default_background_cod
       end -- if
 
       input = input:gsub(PREFIX_ESCAPE, "\0") -- change @@ to 0x00
-      input = input:gsub(TILDE_PATTERN, "~") -- fix tildes (historical)
+      --input = input:gsub(TILDE_PATTERN, "~") -- fix tildes (historical)
       input = input:gsub(X_NONNUMERIC_PATTERN,"%1") -- strip invalid xterm codes (non-number)
       input = input:gsub(X_THREEHUNDRED_PATTERN,"") -- strip invalid xterm codes (300+)
       input = input:gsub(X_TWOSIXTY_PATTERN,"") -- strip invalid xterm codes (260+)
@@ -410,7 +410,7 @@ end  -- function ColoursToStyles
 -- Strip all color codes from a string
 function strip_colours (s)
    s = s:gsub(PREFIX_ESCAPE, "\0")  -- change @@ to 0x00
-   s = s:gsub(TILDE_PATTERN, "~")    -- fix tildes (historical)
+   --s = s:gsub(TILDE_PATTERN, "~")    -- fix tildes (historical)
    s = s:gsub(X_ANY_DIGITS_PATTERN, "") -- strip valid and invalid xterm color codes
    s = s:gsub(ALL_CODES_PATTERN, "") -- strip normal color codes and hidden garbage
    return (s:gsub("%z", CODE_PREFIX)) -- put @ back (has parentheses on purpose)
