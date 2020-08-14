@@ -829,9 +829,9 @@ function TextRect:rightClickMenu(hotspot_id)
 
    if (self.copy_start_line ~= nil) and (self.copy_end_line ~= nil) then
       table.insert(menu_text, "Copy Selected")
-      table.insert(menu_text, "Copy Selected Without Colors")
+      --table.insert(menu_text, "Copy Selected Without Colors")
       table.insert(menu_functions, TextRect.copy)
-      table.insert(menu_functions, TextRect.copyPlain)
+      --table.insert(menu_functions, TextRect.copyPlain)
    end
 
    table.insert(menu_text, "Copy All")
@@ -938,7 +938,7 @@ function TextRect:selected_text()
    current_message = {}
 
    function store_message()
-      if current_message[1] then
+      -- if current_message[1] then
          -- -- end in white if line contains any other color
          -- for _,s in ipairs(current_message) do
          --    if s.textcolour then
@@ -950,7 +950,7 @@ function TextRect:selected_text()
          -- preserve the message and start the next one
          table.insert(s_text, current_message)
          current_message = {}
-      end
+      --end
    end
 
    for copy_line = self.copy_start_line, self.copy_end_line do

@@ -29,6 +29,7 @@ USAGE:
 
 </plugin>
 <triggers>
+<!--
 <trigger
    enabled="n"
    name="remort_auction"
@@ -83,14 +84,268 @@ USAGE:
    sequence="100"
 ></trigger>
 
---<trigger
---   enabled="y"
---   match="^\*\S.+[^*]$"
---   regexp="y"
---   script="rsocial"
---   name="remote_socials"
---   sequence="100"
---></trigger>
+<trigger
+   enabled="y"
+   match="^\*\S.+[^*]$"
+   regexp="y"
+   script="rsocial"
+   name="remote_socials"
+   sequence="100"
+></trigger>
+-->
+
+<trigger
+    enabled="n"
+   name="OOC"
+   match="^\<(OOC|IMM)\> (.+)$"
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>	
+
+  <trigger
+    enabled="n"
+   name="Wartalk"
+   match="^\[WAR\] (.+)$"
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+    enabled="n"
+   name="IMM"
+   match="^\[IMM\] (.+)$"
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+    enabled="n"
+   name="IMM_Logs"
+   match="^(Log|Comm|Build|Monitor): (.+)$"
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+    enabled="n"
+   name="Music"
+   match="^\[MUSIC\] (.+)$"
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+  
+  <trigger
+    enabled="n"
+   name="Newbie"
+   match="^\[(New-Player|Immortal)\] (.+)$"
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+    enabled="n"
+   name="Ask_Answer"
+   match="^\[(Ask|Answer)\] (.+)$"
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+    enabled="n"
+   name="RP_Chat"
+   match="^\(Chat\) (.+)$"
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+    enabled="n"
+   name="RP_Story"
+   match="^\[RP-STORY (.+)\] (.+)$"
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>   
+
+  <trigger
+    enabled="n"
+   name="Race"
+   match="^\<(Race)\> (.+)$"
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+    enabled="n"
+   name="Clan"
+   match="^\<Clan\> (.+)$"
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+    enabled="n"
+   name="Clan_Info"
+   match="^\[Clan-Info\] (.+)$"
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>	
+
+  <trigger
+    enabled="n"
+   name="Yell"
+   match="^\{Area-Yell\} (.+)$"
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+    enabled="n"
+   name="FriendChat"
+   match="\{(FriendChat)\} (.+) \'(.+)\'"
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+   
+  <trigger
+    enabled="n"
+   name="Friend_Info"
+   match="\[Friend-Info\] (.+)"
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+    enabled="n"
+   name="Scouter"
+   match="^\[Scouter -(.+)\] (.+)$"
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+
+    <trigger
+    enabled="n"
+   name="News_Flash"
+   match="^\[NEWS-FLASH\] (.+)$"
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>  
+
+  <trigger
+    enabled="n"
+   name="Info"
+   match="^\[(Info|A - Info)\] (.+)$"
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+    
+  <trigger
+    enabled="n"
+   name="HighScore"
+   match="^\[HighScore\] (.+)$"
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+    
+   <trigger
+    enabled="n"
+   name="Auto_Events"
+   match="^\[Auto-Event\] (.+)$"
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+    enabled="n"
+   name="Aution_House"
+   match="^\[DBNU Auction House\] (.+)$"
+   omit_from_output="y"
+   regexp="y"
+   script="chats"
+   sequence="100"
+  >
+  </trigger>  
+
+<trigger
+  enabled="n"
+ name="say_get"
+ match="^(.+) says (.+)$"
+ omit_from_output="y"
+ regexp="y"
+ script="chats"
+ sequence="100"
+>
+</trigger> 
+
+<trigger
+  enabled="n"
+ name="say"
+ match="^You say (.+)$"
+ omit_from_output="y"
+ regexp="y"
+ script="chats"
+ sequence="100"
+>
+</trigger> 
 
 </triggers>
 
@@ -158,9 +413,9 @@ log_colour_codes = tonumber(GetVariable("log_colour_codes")) or 1
 log_timestamps = tonumber(GetVariable("log_timestamps")) or 1
 log_file_size = tonumber(GetVariable("log_file_size")) or default_log_file_size
 
-local init_nonchannel_keys = {"info", "raidinfo", "claninfo", "clan_donations", "global_quest", "warfare", "remort_auction"} --"remote_socials"
-local init_nonchannel_pairs = {["warfare"]="WARFARE:", ["info"]="INFO:", ["raidinfo"]="RAIDINFO:", ["claninfo"]="CLANINFO:", ["global_quest"]="Global Quest:", ["remort_auction"]="Remort Auction:", ["clan_donations"]="Clan Donations"} --, ["remote_socials"]="Remote Socials"
-local init_channel_keys = {"answer","auction","barter","cant","chant","claninfo","clantalk","commune","curse","dtell","ftalk","gametalk","gclan","gossip","grapevine","gratz","group","gtell","helper","immtalk","inform","lasertag","ltalk","mafiainfo","market","mchat","mobsay","music","newbie","pchat","pokerinfo","ptell","question","racetalk","rauction","restores","rp","say","snewbie","spouse","tech","telepathy","tell","tiertalk","trivia","wangrp","wardrums","yell"}
+local init_nonchannel_keys = {"Auction_House", "Auto_Events", "Clan_Info", "Friend_Info", "HighScore", "Info", "IMM_Logs", "News_Flash", "RP_Story"} --"remote_socials"
+local init_nonchannel_pairs = {["Auction_House"]="[DBNU Auction House]", ["Auto_Events"]="[Auto-Event]", ["Clan_Info"]="[Clan-Info]", ["Friend_Info"]="[Friend-Info]", ["HighScore"]="[HighScore]", ["Info"]="[Info]", ["IMM_Log"]="IMM Logs", ["News_Flash"]="[NEWS-FLASH]", ["RP_Story"]="[RP-STORY"} --, ["remote_socials"]="Remote Socials"
+local init_channel_keys = {"Ask_Answer", "Clan", "FriendChat", "IMM", "Music", "Newbie", "OOC", "Race", "RP_Chat", "say", "say_get", "Scouter", "Wartalk", "Yell"}
 channels_table = {}
 loadstring(GetVariable("channels_table") or "")()
 
@@ -191,11 +446,11 @@ function reduce_diverse_channels()
 end
 
 -- legacy variables
-show_donations = tonumber(GetVariable("show_donations")) or 1
-info_on = tonumber(GetVariable("info_on")) or 0
-global_quest_on = tonumber(GetVariable("global_quest_on")) or 0
-remort_auction_on = tonumber(GetVariable("remort_auction_on")) or 0
-warfare_on = tonumber(GetVariable("warfare_on")) or 0
+--show_donations = tonumber(GetVariable("show_donations")) or 1
+--info_on = tonumber(GetVariable("info_on")) or 0
+--global_quest_on = tonumber(GetVariable("global_quest_on")) or 0
+--remort_auction_on = tonumber(GetVariable("remort_auction_on")) or 0
+--warfare_on = tonumber(GetVariable("warfare_on")) or 0
 
 function check_nonchannel_trigger(key)
    local on = false
@@ -217,12 +472,15 @@ function addDefaultNonChannels()
    end
 
    --EnableTrigger("remote_socials", check_nonchannel_trigger("remote_socials"))
-   EnableTrigger("warfare", check_nonchannel_trigger("warfare"))
-   EnableTrigger("info", check_nonchannel_trigger("info"))
-   EnableTrigger("raidinfo", check_nonchannel_trigger("raidinfo"))
-   EnableTrigger("claninfo", check_nonchannel_trigger("claninfo"))
-   EnableTrigger("global_quest", check_nonchannel_trigger("global_quest"))
-   EnableTrigger("remort_auction", check_nonchannel_trigger("remort_auction"))
+   EnableTrigger("Auction_House", check_nonchannel_trigger("Auction_House"))
+   EnableTrigger("Auto_Events", check_nonchannel_trigger("Auto_Events"))
+   EnableTrigger("Clan_Info", check_nonchannel_trigger("Clan_Info"))
+   EnableTrigger("Friend_Info", check_nonchannel_trigger("Friend_Info"))
+   EnableTrigger("HighScore", check_nonchannel_trigger("HighScore"))
+   EnableTrigger("Info", check_nonchannel_trigger("Info"))
+   EnableTrigger("IMM_Logs", check_nonchannel_trigger("IMM_Logs"))
+   EnableTrigger("News_Flash", check_nonchannel_trigger("News_Flash"))
+   EnableTrigger("RP_Story", check_nonchannel_trigger("RP_Story"))
 end
 
 function addNewChannel(chan)
@@ -657,10 +915,10 @@ function OnPluginSaveState()
    end
    SetVariable("WINDOW_WIDTH", width)
    SetVariable("WINDOW_HEIGHT", height)
-   SetVariable("info_on", info_on)
-   SetVariable("global_quest_on", global_quest_on)
-   SetVariable("remort_auction_on", remort_auction_on)
-   SetVariable("warfare_on", warfare_on)
+   --SetVariable("info_on", info_on)
+   --SetVariable("global_quest_on", global_quest_on)
+   --SetVariable("remort_auction_on", remort_auction_on)
+   --SetVariable("warfare_on", warfare_on)
    SetVariable("log_to_file", log_to_file)
    SetVariable("log_file_size", log_file_size)
    SetVariable("log_colour_codes", log_colour_codes)
@@ -1034,12 +1292,15 @@ function extend_rightclick_menu_result(sender, hotspot_id, result)
             v["capture"] = capture_result[k]
          end
       end
-      EnableTrigger("info", check_nonchannel_trigger("info"))
-      EnableTrigger("raidinfo", check_nonchannel_trigger("raidinfo"))
-      EnableTrigger("claninfo", check_nonchannel_trigger("claninfo"))
-      EnableTrigger("global_quest", check_nonchannel_trigger("global_quest"))
-      EnableTrigger("remort_auction", check_nonchannel_trigger("remort_auction"))
-      EnableTrigger("warfare", check_nonchannel_trigger("warfare"))
+      EnableTrigger("Auction_House", check_nonchannel_trigger("Auction_House"))
+      EnableTrigger("Auto_Events", check_nonchannel_trigger("Auto_Events"))
+      EnableTrigger("Clan_Info", check_nonchannel_trigger("Clan_Info"))
+      EnableTrigger("Friend_Info", check_nonchannel_trigger("Friend_Info"))
+      EnableTrigger("HighScore", check_nonchannel_trigger("HighScore"))
+      EnableTrigger("Info", check_nonchannel_trigger("Info"))
+      EnableTrigger("IMM_Logs", check_nonchannel_trigger("IMM_Logs"))
+      EnableTrigger("News_Flash", check_nonchannel_trigger("News_Flash"))
+      EnableTrigger("RP_Story", check_nonchannel_trigger("RP_Story"))
       --EnableTrigger("remote_socials", check_nonchannel_trigger("remote_socials"))
    elseif result == 16+echo_skip-noremove then
       tabs_rects[current_tab]:clear()
@@ -1136,7 +1397,7 @@ function getmemoryusage()
    return collectgarbage('count')
 end
 
---[[
+
 local charset = {
    'r', 'g', 'b', 'y', 'm', 'c', 'w', 'R', 'G', 'B', 'Y', 'M', 'C', 'W', '@', ' '
 }
@@ -1172,7 +1433,6 @@ function show(i)
 end
 -- \\\CallPlugin("b555825a4a5700c35fa80780","test")
 -- \\\CallPlugin("b555825a4a5700c35fa80780","show", 1)
-]]--
 ]]>
 </script>
 </muclient>

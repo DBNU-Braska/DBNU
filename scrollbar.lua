@@ -254,3 +254,13 @@ function ScrollBar:scroll()
       end
    end)
 end
+
+-- round normally, but when a number ends in exactly .5 round to the nearest even value.
+function round_banker(x)
+   if x == 0 then return 0 end -- prevent returning -0
+   if (x + 0.5) % 2 == 0 then
+      return math.floor(x + 0.5)
+   else
+      return math.ceil(x - 0.5)
+   end
+end
