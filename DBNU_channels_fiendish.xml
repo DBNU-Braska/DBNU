@@ -161,7 +161,7 @@ USAGE:
    sequence="100"
   >
   </trigger>
---[[
+
   <trigger
     enabled="n"
    name="IMM_Logs"
@@ -260,7 +260,7 @@ USAGE:
    sequence="100"
   >
   </trigger>  
---]]
+
    <trigger
    enabled="n"
    name="say_get"
@@ -432,7 +432,7 @@ function addDefaultChannels()
    for i,v in ipairs(init_channel_keys) do
       addNewChannel(v)
    end
-   --addDefaultNonChannels()
+   addDefaultNonChannels()
 end
 addDefaultChannels()
 reduce_diverse_channels()
@@ -875,15 +875,15 @@ end
 re = require "re"
 
 function log(styles_or_text, timestamp)
-   local text = ((type(styles_or_text) == "table") and styles_or_text)
+   local text = ((type(styles_or_text) == "table") and StylesToColours(styles_or_text) or styles_or_text)
    local log_text = text
 
    if log_timestamps == 1 then
-      log_text = timestamp..text
+      log_text = "@w"..timestamp..text
    end
-   --if log_colour_codes == 0 then
-   --   log_text = strip_colours(log_text)
-   --end
+   if log_colour_codes == 0 then
+      log_text = strip_colours(log_text)
+   end
    local filename = GetInfo(58):gsub("^.\\",GetInfo(56))..sanitize_filename(GetInfo(2)).."ChatLog.txt"
    local f, err = io.open(filename, "a+") -- handle to chat log file
    if f then
@@ -930,7 +930,7 @@ function stampAndLog(styles_or_text, timestamp, omit_log)
       if is_styles then
          table.insert(styles_or_text,1,{text=timestamp, length=string.len(timestamp), textcolour=0xc0c0c0})
       else
-         styles_or_text = timestamp..styles_or_text
+         styles_or_text = "@w"..timestamp..styles_or_text
       end
    end
 
@@ -938,15 +938,11 @@ function stampAndLog(styles_or_text, timestamp, omit_log)
 end
 
 function stampAndStore(msg, chan, is_nonchannel) --, is_gmcp
-   --if is_gmcp then
-   --   msg = filter_as_needed(msg)
-   --end
+   if is_nonchannel then
+      msg = filter_as_needed(msg)
+   end
    if msg then
-      --msg = filter_as_needed(msg)
       msg = stampAndLog(msg, os.date(date_format))
-      print("-StampAndStore-")
-      print("Message: ", msg)
-      print("Chan: ", chan)
       if is_nonchannel then
          storeNonChannel(msg, chan)
       else
@@ -981,7 +977,7 @@ function storeFromOutside(msg, tab, add_timestamp, omit_log)
 
    if tab then
       msg = stampAndLog(msg, add_timestamp and os.date(date_format) or "", omit_log)
-      local should_redraw = (storeTab(msg, tab) == 1)
+      local should_redraw = (storeTab(ColoursToStyles(msg), tab) == 1)
       if should_redraw == true then
          drawTabs()
       end
@@ -1004,20 +1000,10 @@ end
 
 function non_channel (name, line, wildcards, styles)
    stampAndStore(styles, name, true)
-   print("-Non_Channel-")
-   print("Name: ", name)
-   print("Styles: ", styles)
-   print("Line: ", line)
-   print("Wildcards: ", wildcards)
 end -- non-channel info
 
-function channel (name, line, wildcards, styles)
+function channel(name, line, wildcards, styles)
    stampAndStore(styles, name)
-   print("-Channel-")
-   print("Name: ", name)
-   print("Styles: ", styles)
-   print("Line: ", line)
-   print("Wildcards: ", wildcards)
 end -- channel info
 
 function filter_as_needed(msg)
@@ -1029,6 +1015,7 @@ function filter_as_needed(msg)
 --   end
    if type(msg) == "string" then
       return ColoursToStyles(msg)
+      print("Filter as needed; it's a string!")
    else
       return msg
    end
@@ -1036,10 +1023,7 @@ end
 
 function storeTab(styles, tab)
    if (tab >= 1) and (tab <= num_tabs) then
-      --tabs_rects[tab]:addStyles(styles)
-      print("-storeTab-")
-      print("styles: ", styles)
-      print("tab: ", tab)
+      tabs_rects[tab]:addStyles(styles)
       if tab == current_tab then
          tabs_rects[tab]:draw()
          tabs_scrollbars[tab]:draw()
@@ -1065,11 +1049,6 @@ function storeNonChannel(styles, label)
    end
    if will_draw then
       drawTabs()
-      print("-storeNonChannel-")
-      print("Styles: ", styles)
-      print("Label: ", label)
-      print("tab: ", tab)
-      print("whats_inside_the_tab[label]: ", whats_inside_the_tab[label])
    end
 end
 
