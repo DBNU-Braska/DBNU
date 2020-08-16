@@ -96,7 +96,7 @@ function TextRect:findURLs(text)
    local URLs = {}
    local start, position = 0, 0
    -- "rex" is a table supplied by MUSHclient for PCRE functionality.
-   local re = rex.new("(?:https?://|mailto:)\\S*[\\w/=@#\\-\\?]", rex.flags().CASELESS)
+   local re = rex.new("(?:https?://|mailto:)\\S*[\\w/=@#\\-\\?]")
    re:gmatch(text,
       function (link, _)
          start, position = string.find(text, link, position, true)

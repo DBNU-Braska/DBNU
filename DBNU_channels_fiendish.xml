@@ -29,70 +29,6 @@ USAGE:
 
 </plugin>
 <triggers>
-<!--
-<trigger
-   enabled="n"
-   name="remort_auction"
-   match="^Remort Auction:.+$"
-   regexp="y"
-   script="chats"
-   sequence="100"
-></trigger>
-
-<trigger
-   enabled="n"
-   name="global_quest"
-   match="^Global Quest:.+$"
-   regexp="y"
-   script="chats"
-   sequence="100"
-></trigger>
-
-<trigger
-   enabled="n"
-   name="info"
-   match="^INFO:.+$"
-   regexp="y"
-   script="chats"
-   sequence="100"
-></trigger>
-
-<trigger
-   enabled="n"
-   name="raidinfo"
-   match="^RAIDINFO:.+$"
-   regexp="y"
-   script="chats"
-   sequence="100"
-></trigger>
-
-<trigger
-   enabled="n"
-   name="claninfo"
-   match="^CLANINFO:.+$"
-   regexp="y"
-   script="chats"
-   sequence="100"
-></trigger>
-
-<trigger
-   enabled="n"
-   name="warfare"
-   match="^(WARFARE|GENOCIDE):.+$"
-   regexp="y"
-   script="chats"
-   sequence="100"
-></trigger>
-
-<trigger
-   enabled="y"
-   match="^\*\S.+[^*]$"
-   regexp="y"
-   script="rsocial"
-   name="remote_socials"
-   sequence="100"
-></trigger>
--->
 
 <trigger
     enabled="n"
@@ -129,17 +65,6 @@ USAGE:
 
   <trigger
     enabled="n"
-   name="IMM_Logs"
-   match="^(Log|Comm|Build|Monitor): (.+)$"
-   omit_from_output="n"
-   regexp="y"
-   script="non_channel"
-   sequence="100"
-  >
-  </trigger>
-
-  <trigger
-    enabled="n"
    name="Music"
    match="^\[MUSIC\] (.+)$"
    omit_from_output="n"
@@ -150,7 +75,7 @@ USAGE:
   </trigger>
   
   <trigger
-    enabled="n"
+    enabled="y"
    name="Newbie"
    match="^\[(New-Player|Immortal)\] (.+)$"
    omit_from_output="n"
@@ -184,17 +109,6 @@ USAGE:
 
   <trigger
     enabled="n"
-   name="RP_Story"
-   match="^\[RP-STORY (.+)\] (.+)$"
-   omit_from_output="n"
-   regexp="y"
-   script="non_channel"
-   sequence="100"
-  >
-  </trigger>   
-
-  <trigger
-    enabled="n"
    name="Race"
    match="^\<(Race)\> (.+)$"
    omit_from_output="n"
@@ -217,17 +131,6 @@ USAGE:
 
   <trigger
     enabled="n"
-   name="Clan_Info"
-   match="^\[Clan-Info\] (.+)$"
-   omit_from_output="n"
-   regexp="y"
-   script="non_channel"
-   sequence="100"
-  >
-  </trigger>	
-
-  <trigger
-    enabled="n"
    name="Yell"
    match="^\{Area-Yell\} (.+)$"
    omit_from_output="n"
@@ -247,11 +150,22 @@ USAGE:
    sequence="100"
   >
   </trigger>
-   
+
   <trigger
     enabled="n"
-   name="Friend_Info"
-   match="\[Friend-Info\] (.+)"
+   name="Scouter"
+   match="^\[Scouter -(.+)\] (.+)$"
+   omit_from_output="n"
+   regexp="y"
+   script="channel"
+   sequence="100"
+  >
+  </trigger>
+--[[
+  <trigger
+    enabled="n"
+   name="IMM_Logs"
+   match="^(Log|Comm|Build|Monitor): (.+)$"
    omit_from_output="n"
    regexp="y"
    script="non_channel"
@@ -261,11 +175,33 @@ USAGE:
 
   <trigger
     enabled="n"
-   name="Scouter"
-   match="^\[Scouter -(.+)\] (.+)$"
+   name="RP_Story"
+   match="^\[RP-STORY (.+)\] (.+)$"
    omit_from_output="n"
    regexp="y"
-   script="channel"
+   script="non_channel"
+   sequence="100"
+  >
+  </trigger>   
+
+  <trigger
+    enabled="n"
+   name="Clan_Info"
+   match="^\[Clan-Info\] (.+)$"
+   omit_from_output="n"
+   regexp="y"
+   script="non_channel"
+   sequence="100"
+  >
+  </trigger>	
+   
+  <trigger
+    enabled="n"
+   name="Friend_Info"
+   match="\[Friend-Info\] (.+)"
+   omit_from_output="n"
+   regexp="y"
+   script="non_channel"
    sequence="100"
   >
   </trigger>
@@ -324,28 +260,28 @@ USAGE:
    sequence="100"
   >
   </trigger>  
+--]]
+   <trigger
+   enabled="n"
+   name="say_get"
+   match="^(.+) says (.+)$"
+   omit_from_output="n"
+   regexp="y"
+   script="channel"
+   sequence="100"
+   >
+   </trigger> 
 
-<trigger
-  enabled="n"
- name="say_get"
- match="^(.+) says (.+)$"
- omit_from_output="n"
- regexp="y"
- script="channel"
- sequence="100"
->
-</trigger> 
-
-<trigger
-  enabled="n"
- name="say"
- match="^You say (.+)$"
- omit_from_output="n"
- regexp="y"
- script="channel"
- sequence="100"
->
-</trigger> 
+   <trigger
+   enabled="n"
+   name="say"
+   match="^You say (.+)$"
+   omit_from_output="n"
+   regexp="y"
+   script="channel"
+   sequence="100"
+   >
+   </trigger> 
 
 </triggers>
 
@@ -496,7 +432,7 @@ function addDefaultChannels()
    for i,v in ipairs(init_channel_keys) do
       addNewChannel(v)
    end
-   addDefaultNonChannels()
+   --addDefaultNonChannels()
 end
 addDefaultChannels()
 reduce_diverse_channels()
@@ -1001,16 +937,20 @@ function stampAndLog(styles_or_text, timestamp, omit_log)
    return styles_or_text
 end
 
-function stampAndStore(msg, chan, is_channel) --, is_gmcp
+function stampAndStore(msg, chan, is_nonchannel) --, is_gmcp
    --if is_gmcp then
    --   msg = filter_as_needed(msg)
    --end
    if msg then
+      --msg = filter_as_needed(msg)
       msg = stampAndLog(msg, os.date(date_format))
-      if is_channel then
-         storeChannel(msg, chan)
-      else
+      print("-StampAndStore-")
+      print("Message: ", msg)
+      print("Chan: ", chan)
+      if is_nonchannel then
          storeNonChannel(msg, chan)
+      else
+         storeChannel(msg, chan)
       end
    end
 end
@@ -1063,29 +1003,43 @@ end
 --end
 
 function non_channel (name, line, wildcards, styles)
-   stampAndStore(styles, name)
+   stampAndStore(styles, name, true)
+   print("-Non_Channel-")
+   print("Name: ", name)
+   print("Styles: ", styles)
+   print("Line: ", line)
+   print("Wildcards: ", wildcards)
 end -- non-channel info
 
 function channel (name, line, wildcards, styles)
-   stampAndStore(styles, name, true)
+   stampAndStore(styles, name)
+   print("-Channel-")
+   print("Name: ", name)
+   print("Styles: ", styles)
+   print("Line: ", line)
+   print("Wildcards: ", wildcards)
 end -- channel info
---function filter_as_needed(msg)
+
+function filter_as_needed(msg)
 --   if GetPluginInfo("48f867c18f6ff1d6d3b52918", 17) then -- if using the #sub plugin
 --      if type(msg) == "table" then
 --         msg = StylesToColours(msg)
 --      end
 --      rc, msg = CallPlugin("48f867c18f6ff1d6d3b52918", "filter_string", msg)
 --   end
---   if type(msg) == "string" then
---      return ColoursToStyles(msg)
---   else
---      return msg
---   end
---end
+   if type(msg) == "string" then
+      return ColoursToStyles(msg)
+   else
+      return msg
+   end
+end
 
 function storeTab(styles, tab)
    if (tab >= 1) and (tab <= num_tabs) then
-      tabs_rects[tab]:addStyles(styles)
+      --tabs_rects[tab]:addStyles(styles)
+      print("-storeTab-")
+      print("styles: ", styles)
+      print("tab: ", tab)
       if tab == current_tab then
          tabs_rects[tab]:draw()
          tabs_scrollbars[tab]:draw()
@@ -1111,6 +1065,11 @@ function storeNonChannel(styles, label)
    end
    if will_draw then
       drawTabs()
+      print("-storeNonChannel-")
+      print("Styles: ", styles)
+      print("Label: ", label)
+      print("tab: ", tab)
+      print("whats_inside_the_tab[label]: ", whats_inside_the_tab[label])
    end
 end
 
