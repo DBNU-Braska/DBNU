@@ -999,7 +999,12 @@ end
 --end
 
 function non_channel (name, line, wildcards, styles)
-   stampAndStore(styles, name, true)
+   --stampAndStore(styles, name, true)
+   print("-Non-Channel-")
+   print("Name: ", name)
+   print("Line: ", line)
+   print("Wildcards: ", wildcards)
+   print("Styles: ", styles)
 end -- non-channel info
 
 function channel(name, line, wildcards, styles)
@@ -1015,7 +1020,6 @@ function filter_as_needed(msg)
 --   end
    if type(msg) == "string" then
       return ColoursToStyles(msg)
-      print("Filter as needed; it's a string!")
    else
       return msg
    end
