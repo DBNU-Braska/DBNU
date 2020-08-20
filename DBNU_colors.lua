@@ -70,7 +70,7 @@ X_NONNUMERIC_PATTERN = XTERM_CODE.."([^%D])"
 X_THREEHUNDRED_PATTERN = XTERM_CODE.."[3-9]%d%d"
 X_TWOSIXTY_PATTERN = XTERM_CODE.."2[6-9]%d"
 X_TWOFIFTYSIX_PATTERN = XTERM_CODE.."25[6-9]"
-X_DIGITS_CAPTURE_PATTERN = XTERM_CODE.."(%d%d?%d?)"
+X_DIGITS_CAPTURE_PATTERN = XTERM_CODE.."(\[%D%d?%d?%d?\])"
 X_ANY_DIGITS_PATTERN = XTERM_CODE.."\[%D%d?%d?%d?\]"
 
 ALL_CODES_PATTERN = CODE_PREFIX.."."
@@ -346,16 +346,16 @@ function ColoursToStyles (input, default_foreground_code, default_background_cod
       default_background = default_black
    end
 
-   if input:find(CODE_PREFIX, nil, true) then
-      local astyles = {}
+--   if input:find(CODE_PREFIX, nil, true) then
+--      local astyles = {}
 
       -- make sure we start with a color
-      if input:sub(1, 1) ~= CODE_PREFIX then
-         input = default_foreground_code .. input
-      end -- if
+--      if input:sub(1, 1) ~= CODE_PREFIX then
+--         input = default_foreground_code .. input
+--      end -- if
 
       input = input:gsub(PREFIX_ESCAPE, "\0") -- change @@ to 0x00
-      input = input:gsub(XTERM_ESCAPE, "\0") -- change `` to 0x00
+      --input = input:gsub(XTERM_ESCAPE, "\0") -- change `` to 0x00
       input = input:gsub(TILDE_PATTERN, "~") -- fix tildes (historical)
       input = input:gsub(X_NONNUMERIC_PATTERN,"%1") -- strip invalid xterm codes (non-number)
       input = input:gsub(X_THREEHUNDRED_PATTERN,"") -- strip invalid xterm codes (300+)
@@ -363,39 +363,39 @@ function ColoursToStyles (input, default_foreground_code, default_background_cod
       input = input:gsub(X_TWOFIFTYSIX_PATTERN,"") -- strip invalid xterm codes (256+)
       input = input:gsub(HIDDEN_GARBAGE_PATTERN, "")  -- strip hidden garbage
 
-      for code, text in input:gmatch(CODE_REST_CAPTURE_PATTERN) do
-         local from_x = nil
-         text = text:gsub("%z", CODE_PREFIX) -- put any @ characters back
+--      for code, text in input:gmatch(CODE_REST_CAPTURE_PATTERN) do
+--         local from_x = nil
+--         text = text:gsub("%z", CODE_PREFIX) -- put any @ characters back
 
-         if code == XTERM_CODE then -- xterm 256 colors
-            num,text = text:match("(%d%d?%d?)(.*)")
-            code = code..num
+--         if code == XTERM_CODE then -- xterm 256 colors
+--            num,text = text:match("(%d%d?%d?)(.*)")
+--            code = code..num
             -- Aardwolf treats x1...x15 as normal ANSI colors.
             -- That behavior does not match MUSHclient's.
-            num = tonumber(num)
-            from_x = code
-            if num <= 15 then
-               textcolor = code_to_client_color[first_15_to_code[num]]
-            else
-               textcolor = x_to_client_color[code]
-            end
-         else
-            textcolor = code_to_client_color[code]
-         end
+--            num = tonumber(num)
+--            from_x = code
+--            if num <= 15 then
+--               textcolor = code_to_client_color[first_15_to_code[num]]
+--            else
+--               textcolor = x_to_client_color[code]
+--            end
+--         else
+--            textcolor = code_to_client_color[code]
+--         end
 
-         table.insert(astyles,
-         {
-            fromx = from_x,
-            text = text,
-            bold = bold_codes[code] or false,
-            length = #text,
-            textcolour = textcolor or default_foreground,
-            backcolour = default_background
-         })
-      end -- for each colour run.
+--         table.insert(astyles,
+--         {
+--            fromx = from_x,
+--            text = text,
+--            bold = bold_codes[code] or false,
+--            length = #text,
+--            textcolour = textcolor or default_foreground,
+--            backcolour = default_background
+--         })
+--      end -- for each colour run.
 
-      return astyles
-   end -- if any colour codes at all
+--      return astyles
+--   end -- if any colour codes at all
 
    -- No colour codes, create a single style.
    return {{
@@ -411,7 +411,7 @@ end  -- function ColoursToStyles
 -- Strip all color codes from a string
 function strip_colours (s)
    s = s:gsub(PREFIX_ESCAPE, "\0")  -- change @@ to 0x00
-   s = s:gsub(XTERM_ESCAPE, "\0")  -- change `` to 0x00
+   --s = s:gsub(XTERM_ESCAPE, "\0")  -- change `` to 0x00
    s = s:gsub(TILDE_PATTERN, "~")    -- fix tildes (historical)
    s = s:gsub(X_ANY_DIGITS_PATTERN, "") -- strip valid and invalid xterm color codes
    s = s:gsub(ALL_CODES_PATTERN, "") -- strip normal color codes and hidden garbage

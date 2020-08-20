@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE muclient>
+
+<muclient>
+<plugin
+   name="Aardwolf_Text_Substitutions"
+   author="Fiendish"
+   id="48f867c18f6ff1d6d3b52918"
+   language="Lua"
+   purpose="Replace text with other text"
+   date_written="2016-12-27 01:00:00"
+   requires="5.05"
+   version="2.0"
+   save_state="y"
+   sequence="-10000"
+>
+</plugin>
+
+<script>
+<![CDATA[
+-- fix stupid syntax highlighting in SublimeText --> '
+
+
+--require "aard_lua_extras"
+--require "serialize"
+--dofile(GetInfo(60) .. "DBNU_colors.lua")
+
+--require "addxml"
+--require "regex_helpers"
+
+-- proxy_sub("26240e292291e159e1ff3cde:test")
+function proxy_sub(plugin_func_str, prev_color)
+   local callstart = 'local a,b = CallPlugin("'..plugin_func_str:gsub(':', '","')..'"'
+   return function(...)
+      local params = {}
+      for n=1,select('#',...) do
+         params[#params+1] = '"'..select(n,...):gsub('"', '\\"')..'"'
+      end
+      local func = callstart..(#params > 0 and (","..table.concat(params,",")) or "")..'); if a ~= 0 then Note("Error in sub: "..b) else return b and string.gsub(b,"%$C", "'..prev_color..'") end'
+      return loadstring(func)()
+   end
+end
+
+
+function proxy_gag(plugin_func_str)
+   local callstart = 'local a,b = CallPlugin("'..plugin_func_str:gsub(':', '","')..'"'
+   return function(...)
+      local params = {}
+      for n=1,select('#',...) do
+         params[#params+1] = '"'..select(n,...):gsub('"', '\\"')..'"'
+      end
+      local func = callstart..(#params > 0 and (","..table.concat(params,",")) or "")..'); if a ~= 0 then Note("Error in gag: "..b) else return b end'
+      return loadstring(func)()
+   end
+end
+
+
+function do_gags_against_coded_colors_table(msg_t)
+   for i = 1,#msg_t,2 do
+      local color_bit = msg_t[i]
+      for _,v in ipairs(rex_gags) do
+         s, e, _ = gag_rexes[v.match_str]:exec(color_bit)
+         if s ~= nil then
+            if not v.use_function then
+               return true
+            else
+               return proxy_gag(v.use_function)()
+            end
+         end
+      end
+   end
+   return false
+end
+
+
+function do_subs_against_coded_colors_table(msg_t)
+   for i = 1,#msg_t,2 do
+      local color_bit = msg_t[i]
+      for _,v in ipairs(rex_subs) do
+         local prev_color = msg_t[i-1] or "@x007"
+         local replacement = v.use_function and proxy_sub(v.tostr, prev_color) or v.tostr:gsub("%$C", prev_color)
+         local ok,ret = pcall(rex.gsub, color_bit, sub_rexes[v.match_str], replacement)
+         if not ok then
+            AnsiNote(ColoursToANSI("@YError in sub ["..format_sub(v).."]: "..ret))
+         else
+            color_bit = ret
+         end
+      end
+      msg_t[i] = color_bit
+   end
+   return table.concat(msg_t)
+end
+
+
+cur_line = ""
+
+-- returns nil if gagged, otherwise returns the modified message
+-- input: string with Aardwolf color codes
+function filter_string(msg)
+   cur_line = msg
+
+   -- Matching #alone patterns at color and line boundaries is easier if
+   -- we split at the color codes first.
+   local msg_t = canonicalize_colours(msg):split("%f[@]@x%d%d%d", true)
+
+   local gagged = do_gags_against_coded_colors_table(msg_t)
+   if not gagged then
+      return do_subs_against_coded_colors_table(msg_t)
+   else
+      return nil
+   end
+end
+
+]]>
+</script>
+</muclient>
