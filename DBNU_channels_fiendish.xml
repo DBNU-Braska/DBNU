@@ -31,7 +31,7 @@ USAGE:
 <triggers>
 
 <trigger
-    enabled="n"
+   enabled="y"
    name="OOC"
    match="^\<(OOC|IMM)\> (.+)$"
    omit_from_output="n"
@@ -42,7 +42,7 @@ USAGE:
   </trigger>	
 
   <trigger
-    enabled="n"
+   enabled="y"
    name="Wartalk"
    match="^\[WAR\] (.+)$"
    omit_from_output="n"
@@ -53,7 +53,7 @@ USAGE:
   </trigger>
 
   <trigger
-    enabled="n"
+   enabled="y"
    name="IMM"
    match="^\[IMM\] (.+)$"
    omit_from_output="n"
@@ -64,7 +64,7 @@ USAGE:
   </trigger>
 
   <trigger
-    enabled="n"
+   enabled="y"
    name="Music"
    match="^\[MUSIC\] (.+)$"
    omit_from_output="n"
@@ -86,7 +86,7 @@ USAGE:
   </trigger>
 
   <trigger
-    enabled="n"
+   enabled="y"
    name="Ask_Answer"
    match="^\[(Ask|Answer)\] (.+)$"
    omit_from_output="n"
@@ -97,7 +97,7 @@ USAGE:
   </trigger>
 
   <trigger
-    enabled="n"
+   enabled="y"
    name="RP_Chat"
    match="^\(Chat\) (.+)$"
    omit_from_output="n"
@@ -108,7 +108,7 @@ USAGE:
   </trigger>
 
   <trigger
-    enabled="n"
+   enabled="y"
    name="Race"
    match="^\<(Race)\> (.+)$"
    omit_from_output="n"
@@ -119,7 +119,7 @@ USAGE:
   </trigger>
 
   <trigger
-    enabled="n"
+   enabled="y"
    name="Clan"
    match="^\<Clan\> (.+)$"
    omit_from_output="n"
@@ -130,7 +130,7 @@ USAGE:
   </trigger>
 
   <trigger
-    enabled="n"
+   enabled="y"
    name="Yell"
    match="^\{Area-Yell\} (.+)$"
    omit_from_output="n"
@@ -141,7 +141,7 @@ USAGE:
   </trigger>
 
   <trigger
-    enabled="n"
+   enabled="y"
    name="FriendChat"
    match="\{(FriendChat)\} (.+) \'(.+)\'"
    omit_from_output="n"
@@ -152,9 +152,9 @@ USAGE:
   </trigger>
 
   <trigger
-    enabled="n"
+   enabled="y"
    name="Scouter"
-   match="^\[Scouter -(.+)\] (.+)$"
+   match="\[Scouter -(.+)\] (.+)$"
    omit_from_output="n"
    regexp="y"
    script="channel"
@@ -163,7 +163,7 @@ USAGE:
   </trigger>
 
   <trigger
-    enabled="n"
+   enabled="y"
    name="IMM_Logs"
    match="^(Log|Comm|Build|Monitor): (.+)$"
    omit_from_output="n"
@@ -174,7 +174,7 @@ USAGE:
   </trigger>
 
   <trigger
-    enabled="n"
+   enabled="y"
    name="RP_Story"
    match="^\[RP-STORY (.+)\] (.+)$"
    omit_from_output="n"
@@ -185,7 +185,7 @@ USAGE:
   </trigger>   
 
   <trigger
-    enabled="n"
+   enabled="y"
    name="Clan_Info"
    match="^\[Clan-Info\] (.+)$"
    omit_from_output="n"
@@ -196,7 +196,7 @@ USAGE:
   </trigger>	
    
   <trigger
-    enabled="n"
+   enabled="y"
    name="Friend_Info"
    match="\[Friend-Info\] (.+)"
    omit_from_output="n"
@@ -207,7 +207,7 @@ USAGE:
   </trigger>
 
     <trigger
-    enabled="n"
+   enabled="y"
    name="News_Flash"
    match="^\[NEWS-FLASH\] (.+)$"
    omit_from_output="n"
@@ -218,7 +218,7 @@ USAGE:
   </trigger>  
 
   <trigger
-    enabled="n"
+   enabled="y"
    name="Info"
    match="^\[(Info|A - Info)\] (.+)$"
    omit_from_output="n"
@@ -229,7 +229,7 @@ USAGE:
   </trigger>
     
   <trigger
-    enabled="n"
+   enabled="y"
    name="HighScore"
    match="^\[HighScore\] (.+)$"
    omit_from_output="n"
@@ -240,7 +240,7 @@ USAGE:
   </trigger>
     
    <trigger
-    enabled="n"
+   enabled="y"
    name="Auto_Events"
    match="^\[Auto-Event\] (.+)$"
    omit_from_output="n"
@@ -251,9 +251,9 @@ USAGE:
   </trigger>
 
   <trigger
-    enabled="n"
+   enabled="y"
    name="Aution_House"
-   match="^\[DBNU Auction House\] (.+)$"
+   match="\[DBNU Auction House\] (.+)$"
    omit_from_output="n"
    regexp="y"
    script="non_channel"
@@ -262,7 +262,7 @@ USAGE:
   </trigger>  
 
    <trigger
-   enabled="n"
+  enabled="y"
    name="say_get"
    match="^(.+) says (.+)$"
    omit_from_output="n"
@@ -273,9 +273,9 @@ USAGE:
    </trigger> 
 
    <trigger
-   enabled="n"
+  enabled="y"
    name="say"
-   match="^You say (.+)$"
+   match="You say (.+)$"
    omit_from_output="n"
    regexp="y"
    script="channel"
@@ -938,18 +938,14 @@ function stampAndLog(styles_or_text, timestamp, omit_log)
 end
 
 function stampAndStore(msg, chan, is_nonchannel) --, is_gmcp
-   print("-stampAndStore-")
-   if is_nonchannel then
-      print("msg sent to filter_as_needed")
-      msg = filter_as_needed(msg)
-   end
+   --if is_nonchannel then
+   --   msg = filter_as_needed(msg)
+   --end
    if msg then
       msg = stampAndLog(msg, os.date(date_format))
       if is_nonchannel then
-         print("Sent to storeNonChannel")
          storeNonChannel(msg, chan)
       else
-         print("Sent to storeChannel")
          storeChannel(msg, chan)
       end
    end
@@ -1003,11 +999,6 @@ end
 --end
 
 function non_channel (name, line, wildcards, styles)
-   print("-Non-Channel-")
-   print("Name: ", name)
-   print("Line: ", line)
-   print("Wildcards: ", wildcards)
-   print("Styles: ", styles)
    stampAndStore(styles, name, true)
 end -- non-channel info
 
@@ -1016,7 +1007,6 @@ function channel(name, line, wildcards, styles)
 end -- channel info
 
 function filter_as_needed(msg)
-   print("-filter_as_needed-")
    --if GetPluginInfo("48f867c18f6ff1d6d3b52918", 17) then -- if using the #sub plugin
       if type(msg) == "table" then
          msg = StylesToColours(msg)
@@ -1024,10 +1014,8 @@ function filter_as_needed(msg)
       --rc, msg = CallPlugin("48f867c18f6ff1d6d3b52918", "filter_string", msg)
    --end
    if type(msg) == "string" then
-      print("msg sent to ColoursToStyles:")
       return ColoursToStyles(msg)
    else
-      print("msg unchanged")
       return msg
    end
 end
@@ -1050,9 +1038,6 @@ function storeTab(styles, tab)
 end
 
 function storeNonChannel(styles, label)
-   print("-storeNonChannel-")
-   print("styles: ", styles)
-   print("label: ", label)
    will_draw = false
    for tab, whats_inside_the_tab in ipairs(tabs_nonchannel_captures) do
       if whats_inside_the_tab[label]["capture"] then
@@ -1062,26 +1047,23 @@ function storeNonChannel(styles, label)
       end
    end
    if will_draw then
-      print("Drawing Tabs")
       drawTabs()
    end
 end
 
 function storeChannel(styles, label)
-   print("-storeChannel-")
    will_draw = false
    for tab, whats_inside_the_tab in ipairs(tabs_channel_captures) do
       if not whats_inside_the_tab[label] then
          addNewChannel(label)
       end
-      --if whats_inside_the_tab[label]["capture"] then
-      --   if storeTab(styles, tab) == 1 then
-      --      will_draw = true
-      --   end
-      --end
+      if whats_inside_the_tab[label]["capture"] then
+         if storeTab(styles, tab) == 1 then
+            will_draw = true
+         end
+      end
    end
    if will_draw then
-      print("Drawing Tabs")
       drawTabs()
    end
 end
@@ -1345,9 +1327,8 @@ function extend_rightclick_menu_string(tr)
       for i,v in ipairs(echo_menu_strings) do
          table.insert(menu_strings, 15+i, v)
       end
-
-      return table.concat(menu_strings, "|")
    end
+   return table.concat(menu_strings, "|")
 end
 
 function getmemoryusage()

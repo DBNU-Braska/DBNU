@@ -107,12 +107,12 @@ function TextRect:findURLs(text)
 end -- function findURL
 
 function TextRect:addColorLine(line)
-   self:addStyles(line)
+   self:addStyles(ColoursToStyles(line))
 end
 
 function TextRect:addStyles(styles)
    -- extract URLs so we can add our movespots later
-   local urls = self:findURLs(styles)
+   local urls = self:findURLs(strip_colours_from_styles(styles))
 
    -- pop the oldest line from our buffer if we're at capacity
    if self.num_raw_lines >= self.max_lines then
@@ -829,9 +829,9 @@ function TextRect:rightClickMenu(hotspot_id)
 
    if (self.copy_start_line ~= nil) and (self.copy_end_line ~= nil) then
       table.insert(menu_text, "Copy Selected")
-      --table.insert(menu_text, "Copy Selected Without Colors")
+      table.insert(menu_text, "Copy Selected Without Colors")
       table.insert(menu_functions, TextRect.copy)
-      --table.insert(menu_functions, TextRect.copyPlain)
+      table.insert(menu_functions, TextRect.copyPlain)
    end
 
    table.insert(menu_text, "Copy All")
@@ -926,11 +926,11 @@ function TextRect:copyUrl(hotspot_id)
 end
 
 function TextRect:copyPlain()
-   self:copyAndNotify(self:selected_text())
+   self:copyAndNotify(strip_colours(self:selected_text()))
 end
 
 function TextRect:copy()
-   self:copyAndNotify(self:selected_text())
+   self:copyAndNotify(canonicalize_colours(self:selected_text(), true))
 end
 
 function TextRect:selected_text()
@@ -938,7 +938,7 @@ function TextRect:selected_text()
    current_message = {}
 
    function store_message()
-      -- if current_message[1] then
+      if current_message[1] then
          -- -- end in white if line contains any other color
          -- for _,s in ipairs(current_message) do
          --    if s.textcolour then
@@ -950,7 +950,7 @@ function TextRect:selected_text()
          -- preserve the message and start the next one
          table.insert(s_text, current_message)
          current_message = {}
-      --end
+      end
    end
 
    for copy_line = self.copy_start_line, self.copy_end_line do
@@ -991,7 +991,7 @@ end
 function TextRect:copyFull()
    local t = {}
    for _,line in ipairs(self.raw_lines) do
-      table.insert(t, line[1])
+      table.insert(t, StylesToColours(line[1]))
    end
    SetClipboard(table.concat(t, WHITE_CODE.."\n")..WHITE_CODE)
    ColourNote("yellow","","All text copied to clipboard.")
