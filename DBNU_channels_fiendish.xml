@@ -34,7 +34,7 @@ USAGE:
    enabled="y"
    name="OOC"
    match="^\<(OOC|IMM)\> (.+)$"
-   omit_from_output="n"
+    
    regexp="y"
    script="channel"
    sequence="100"
@@ -45,7 +45,7 @@ USAGE:
    enabled="y"
    name="Wartalk"
    match="^\[WAR\] (.+)$"
-   omit_from_output="n"
+    
    regexp="y"
    script="channel"
    sequence="100"
@@ -56,7 +56,7 @@ USAGE:
    enabled="y"
    name="IMM"
    match="^\[IMM\] (.+)$"
-   omit_from_output="n"
+    
    regexp="y"
    script="channel"
    sequence="100"
@@ -67,7 +67,7 @@ USAGE:
    enabled="y"
    name="Music"
    match="^\[MUSIC\] (.+)$"
-   omit_from_output="n"
+    
    regexp="y"
    script="channel"
    sequence="100"
@@ -78,7 +78,7 @@ USAGE:
     enabled="y"
    name="Newbie"
    match="^\[(New-Player|Immortal)\] (.+)$"
-   omit_from_output="n"
+    
    regexp="y"
    script="channel"
    sequence="100"
@@ -89,7 +89,7 @@ USAGE:
    enabled="y"
    name="Ask_Answer"
    match="^\[(Ask|Answer)\] (.+)$"
-   omit_from_output="n"
+    
    regexp="y"
    script="channel"
    sequence="100"
@@ -100,7 +100,7 @@ USAGE:
    enabled="y"
    name="RP_Chat"
    match="^\(Chat\) (.+)$"
-   omit_from_output="n"
+    
    regexp="y"
    script="channel"
    sequence="100"
@@ -111,7 +111,7 @@ USAGE:
    enabled="y"
    name="Race"
    match="^\<(Race)\> (.+)$"
-   omit_from_output="n"
+    
    regexp="y"
    script="channel"
    sequence="100"
@@ -122,7 +122,7 @@ USAGE:
    enabled="y"
    name="Clan"
    match="^\<Clan\> (.+)$"
-   omit_from_output="n"
+    
    regexp="y"
    script="channel"
    sequence="100"
@@ -133,7 +133,7 @@ USAGE:
    enabled="y"
    name="Yell"
    match="^\{Area-Yell\} (.+)$"
-   omit_from_output="n"
+    
    regexp="y"
    script="channel"
    sequence="100"
@@ -144,7 +144,7 @@ USAGE:
    enabled="y"
    name="FriendChat"
    match="\{(FriendChat)\} (.+) \'(.+)\'"
-   omit_from_output="n"
+    
    regexp="y"
    script="channel"
    sequence="100"
@@ -155,7 +155,7 @@ USAGE:
    enabled="y"
    name="Scouter"
    match="\[Scouter -(.+)\] (.+)$"
-   omit_from_output="n"
+    
    regexp="y"
    script="channel"
    sequence="100"
@@ -163,10 +163,10 @@ USAGE:
   </trigger>
 
   <trigger
-   enabled="y"
+   enabled="n"
    name="IMM_Logs"
    match="^(Log|Comm|Build|Monitor): (.+)$"
-   omit_from_output="n"
+    
    regexp="y"
    script="non_channel"
    sequence="100"
@@ -174,10 +174,10 @@ USAGE:
   </trigger>
 
   <trigger
-   enabled="y"
+   enabled="n"
    name="RP_Story"
    match="^\[RP-STORY (.+)\] (.+)$"
-   omit_from_output="n"
+    
    regexp="y"
    script="non_channel"
    sequence="100"
@@ -185,10 +185,10 @@ USAGE:
   </trigger>   
 
   <trigger
-   enabled="y"
+   enabled="n"
    name="Clan_Info"
    match="^\[Clan-Info\] (.+)$"
-   omit_from_output="n"
+    
    regexp="y"
    script="non_channel"
    sequence="100"
@@ -196,10 +196,10 @@ USAGE:
   </trigger>	
    
   <trigger
-   enabled="y"
+   enabled="n"
    name="Friend_Info"
    match="\[Friend-Info\] (.+)"
-   omit_from_output="n"
+    
    regexp="y"
    script="non_channel"
    sequence="100"
@@ -207,10 +207,10 @@ USAGE:
   </trigger>
 
     <trigger
-   enabled="y"
+   enabled="n"
    name="News_Flash"
    match="^\[NEWS-FLASH\] (.+)$"
-   omit_from_output="n"
+    
    regexp="y"
    script="non_channel"
    sequence="100"
@@ -218,10 +218,10 @@ USAGE:
   </trigger>  
 
   <trigger
-   enabled="y"
+   enabled="n"
    name="Info"
    match="^\[(Info|A - Info)\] (.+)$"
-   omit_from_output="n"
+    
    regexp="y"
    script="non_channel"
    sequence="100"
@@ -229,10 +229,10 @@ USAGE:
   </trigger>
     
   <trigger
-   enabled="y"
+   enabled="n"
    name="HighScore"
    match="^\[HighScore\] (.+)$"
-   omit_from_output="n"
+    
    regexp="y"
    script="non_channel"
    sequence="100"
@@ -240,10 +240,10 @@ USAGE:
   </trigger>
     
    <trigger
-   enabled="y"
+   enabled="n"
    name="Auto_Events"
    match="^\[Auto-Event\] (.+)$"
-   omit_from_output="n"
+    
    regexp="y"
    script="non_channel"
    sequence="100"
@@ -251,10 +251,10 @@ USAGE:
   </trigger>
 
   <trigger
-   enabled="y"
+   enabled="n"
    name="Aution_House"
    match="\[DBNU Auction House\] (.+)$"
-   omit_from_output="n"
+    
    regexp="y"
    script="non_channel"
    sequence="100"
@@ -262,10 +262,10 @@ USAGE:
   </trigger>  
 
    <trigger
-  enabled="y"
+  enabled="n"
    name="say_get"
    match="^(.+) says (.+)$"
-   omit_from_output="n"
+    
    regexp="y"
    script="channel"
    sequence="100"
@@ -273,10 +273,10 @@ USAGE:
    </trigger> 
 
    <trigger
-  enabled="y"
+  enabled="n"
    name="say"
    match="You say (.+)$"
-   omit_from_output="n"
+    
    regexp="y"
    script="channel"
    sequence="100"
