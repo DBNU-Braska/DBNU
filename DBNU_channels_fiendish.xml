@@ -33,8 +33,7 @@ USAGE:
 <trigger
    enabled="y"
    name="OOC"
-   match="^\<(OOC|IMM)\> (.+)$"
-    
+   match="^\<(OOC|IMM)\> (.+)$"   
    regexp="y"
    script="channel"
    sequence="100"
@@ -45,117 +44,6 @@ USAGE:
    enabled="y"
    name="Wartalk"
    match="^\[WAR\] (.+)$"
-    
-   regexp="y"
-   script="channel"
-   sequence="100"
-  >
-  </trigger>
-
-  <trigger
-   enabled="y"
-   name="IMM"
-   match="^\[IMM\] (.+)$"
-    
-   regexp="y"
-   script="channel"
-   sequence="100"
-  >
-  </trigger>
-
-  <trigger
-   enabled="y"
-   name="Music"
-   match="^\[MUSIC\] (.+)$"
-    
-   regexp="y"
-   script="channel"
-   sequence="100"
-  >
-  </trigger>
-  
-  <trigger
-    enabled="y"
-   name="Newbie"
-   match="^\[(New-Player|Immortal)\] (.+)$"
-    
-   regexp="y"
-   script="channel"
-   sequence="100"
-  >
-  </trigger>
-
-  <trigger
-   enabled="y"
-   name="Ask_Answer"
-   match="^\[(Ask|Answer)\] (.+)$"
-    
-   regexp="y"
-   script="channel"
-   sequence="100"
-  >
-  </trigger>
-
-  <trigger
-   enabled="y"
-   name="RP_Chat"
-   match="^\(Chat\) (.+)$"
-    
-   regexp="y"
-   script="channel"
-   sequence="100"
-  >
-  </trigger>
-
-  <trigger
-   enabled="y"
-   name="Race"
-   match="^\<(Race)\> (.+)$"
-    
-   regexp="y"
-   script="channel"
-   sequence="100"
-  >
-  </trigger>
-
-  <trigger
-   enabled="y"
-   name="Clan"
-   match="^\<Clan\> (.+)$"
-    
-   regexp="y"
-   script="channel"
-   sequence="100"
-  >
-  </trigger>
-
-  <trigger
-   enabled="y"
-   name="Yell"
-   match="^\{Area-Yell\} (.+)$"
-    
-   regexp="y"
-   script="channel"
-   sequence="100"
-  >
-  </trigger>
-
-  <trigger
-   enabled="y"
-   name="FriendChat"
-   match="\{(FriendChat)\} (.+) \'(.+)\'"
-    
-   regexp="y"
-   script="channel"
-   sequence="100"
-  >
-  </trigger>
-
-  <trigger
-   enabled="y"
-   name="Scouter"
-   match="\[Scouter -(.+)\] (.+)$"
-    
    regexp="y"
    script="channel"
    sequence="100"
@@ -164,9 +52,128 @@ USAGE:
 
   <trigger
    enabled="n"
+   name="IMM"
+   match="^\[IMM\] (.+)$"
+   regexp="y"
+   script="channel"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+   enabled="n"
+   name="Music"
+   match="^\[MUSIC\] (.+)$"
+   regexp="y"
+   script="channel"
+   sequence="100"
+  >
+  </trigger>
+  
+  <trigger
+    enabled="n"
+   name="Newbie"
+   match="^\[(New-Player|Immortal)\] (.+)$"
+   regexp="y"
+   script="channel"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+   enabled="n"
+   name="Ask_Answer"
+   match="^\[(Ask|Answer)\] (.+)$"
+   regexp="y"
+   script="channel"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+   enabled="n"
+   name="RP_Chat"
+   match="^\(Chat\) (.+)$"
+   regexp="y"
+   script="channel"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+   enabled="n"
+   name="Race"
+   match="^\<(Race)\> (.+)$"
+   regexp="y"
+   script="channel"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+   enabled="n"
+   name="Clan"
+   match="^\<Clan\> (.+)$"
+   regexp="y"
+   script="channel"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+   enabled="n"
+   name="Yell"
+   match="^\{Area-Yell\} (.+)$"
+   regexp="y"
+   script="channel"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+   enabled="n"
+   name="FriendChat"
+   match="\{(FriendChat)\} (.+) \'(.+)\'"
+   regexp="y"
+   script="channel"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+   enabled="n"
+   name="Scouter"
+   match="\[Scouter -(.+)\] (.+)$"
+   regexp="y"
+   script="channel"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+   enabled="n"
+   name="say_get"
+   match="^(.+) says (.+)$"
+   regexp="y"
+   script="channel"
+   sequence="100"
+   >
+   </trigger> 
+
+   <trigger
+   enabled="n"
+   name="say"
+   match="You say (.+)$"
+   regexp="y"
+   script="channel"
+   sequence="100"
+   >
+   </trigger> 
+
+  <trigger
+   enabled="n"
    name="IMM_Logs"
    match="^(Log|Comm|Build|Monitor): (.+)$"
-    
    regexp="y"
    script="non_channel"
    sequence="100"
@@ -260,28 +267,6 @@ USAGE:
    sequence="100"
   >
   </trigger>  
-
-   <trigger
-  enabled="n"
-   name="say_get"
-   match="^(.+) says (.+)$"
-    
-   regexp="y"
-   script="channel"
-   sequence="100"
-   >
-   </trigger> 
-
-   <trigger
-  enabled="n"
-   name="say"
-   match="You say (.+)$"
-    
-   regexp="y"
-   script="channel"
-   sequence="100"
-   >
-   </trigger> 
 
 </triggers>
 
@@ -399,6 +384,17 @@ function check_nonchannel_trigger(key)
    return on
 end
 
+function check_channel_trigger(key)
+   local on = false
+   for tab,channels in ipairs(tabs_channel_captures) do
+      if channels[key]["capture"] then
+         on = true
+         break
+      end
+   end
+   return on
+end
+
 function addDefaultNonChannels()
    for tab,channels in ipairs(tabs_channel_captures) do
       tabs_nonchannel_captures[tab] = tabs_nonchannel_captures[tab] or {}
@@ -432,6 +428,20 @@ function addDefaultChannels()
    for i,v in ipairs(init_channel_keys) do
       addNewChannel(v)
    end
+   EnableTrigger("Ask_Answer", check_channel_trigger("Ask_Answer"))
+   EnableTrigger("Clan", check_channel_trigger("Clan"))
+   EnableTrigger("FriendChat", check_channel_trigger("FriendChat"))
+   EnableTrigger("IMM", check_channel_trigger("IMM"))
+   EnableTrigger("Music", check_channel_trigger("Music"))
+   EnableTrigger("Newbie", check_channel_trigger("Newbie"))
+   EnableTrigger("OOC", check_channel_trigger("OOC"))
+   EnableTrigger("Race", check_channel_trigger("Race"))
+   EnableTrigger("RP_Chat", check_channel_trigger("RP_Chat"))
+   EnableTrigger("say", check_channel_trigger("say"))
+   EnableTrigger("say_get", check_channel_trigger("say_get"))
+   EnableTrigger("Scouter", check_channel_trigger("Scouter"))
+   EnableTrigger("Wartalk", check_channel_trigger("Wartalk"))
+   EnableTrigger("Yell", check_channel_trigger("Yell"))
    addDefaultNonChannels()
 end
 addDefaultChannels()
