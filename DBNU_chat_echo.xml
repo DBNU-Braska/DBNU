@@ -555,16 +555,16 @@ function OnPluginSaveState()
    SetVariable("nonchannels_table", serialize.save("nonchannels_table"))
 end
 
-function OnPluginInstall()
-   OnPluginEnable()
-end
+--function OnPluginInstall()
+--   OnPluginEnable()
+--end
 
-function OnPluginEnable ()
+--function OnPluginEnable ()
    -- if we are connected when the plugin loads, it must have been reloaded while playing
-   if IsConnected() then
-      OnPluginConnect()
-   end -- if already connected
-end -- OnPluginEnable
+--   if IsConnected() then
+--      OnPluginConnect()
+--   end -- if already connected
+--end -- OnPluginEnable
 
 --function OnPluginClose()
 --   OnPluginDisable()

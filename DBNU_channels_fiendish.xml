@@ -594,6 +594,7 @@ function OnPluginInstall ()
    init()
    setupDisplay()
    OnPluginEnable()
+   CallPlugin ("55616ea13339bc68e963e1f8", "enable_hiding", true, GetPluginID())
 end
 
 function bump_top_for_tabs()
