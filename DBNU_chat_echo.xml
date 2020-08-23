@@ -375,15 +375,15 @@ function enable_hiding(true_false, enabler_id)
    for k,v in pairs(list_of_filter_enablers) do
       num_enablers = num_enablers + 1
    end
-   --if (not aard_req_novisuals_mode) and (num_enablers > 0) then
-   --   never_hide = false
-   --   addDefaultNonChannels()
-   --else
+   if num_enablers > 0 then --(not aard_req_novisuals_mode) and (
+      never_hide = false
+      addDefaultNonChannels()
+   else
       never_hide = true
       for i,v in ipairs(init_nonchannel_keys) do
          EnableTrigger(v, false)
       end
-  -- end
+   end
 end
 
 enable_hiding(false, GetPluginID())
@@ -477,6 +477,10 @@ function OnPluginBroadcast (msg, id, name, text)
 end
 --]]
 function non_channel (name, line, wildcards, styles)
+   EnableTriggerGroup("end_gag", true) -- gags trailing blank line
+end
+
+function channel (name, line, wildcards, styles)
    EnableTriggerGroup("end_gag", true) -- gags trailing blank line
 end
 
