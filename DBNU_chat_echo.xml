@@ -466,7 +466,7 @@ function chat_echo (toggle)
          ColourTell("yellow", "", tostring(k).." ")
          ColourNote((v["echo"] and "lime") or "red", "", tostring(v["echo"] or "false"))
       end
-      Note("")
+      Note("") -- just put this here now to show that I have some error... 
       ColourNote("yellow", "", "Current non-channel echo status: ")
       for b,c in pairsByKeys(nonchannels_table) do
          ColourTell("yellow", "", tostring(b).." ")
