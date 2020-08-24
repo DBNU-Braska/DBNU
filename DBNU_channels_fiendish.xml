@@ -337,6 +337,7 @@ log_file_size = tonumber(GetVariable("log_file_size")) or default_log_file_size
 local init_nonchannel_keys = {"Auction_House", "Auto_Events", "Clan_Info", "Friend_Info", "HighScore", "Info", "IMM_Logs", "News_Flash", "RP_Story"} --"remote_socials"
 local init_nonchannel_pairs = {["Auction_House"]="DBNU Auction House", ["Auto_Events"]="Auto-Event", ["Clan_Info"]="Clan-Info", ["Friend_Info"]="Friend-Info", ["HighScore"]="HighScore", ["Info"]="Info", ["IMM_Log"]="IMM Logs", ["News_Flash"]="NEWS-FLASH", ["RP_Story"]="RP-STORY"} --, ["remote_socials"]="Remote Socials"
 local init_channel_keys = {"Ask_Answer", "Clan", "FriendChat", "IMM", "Music", "Newbie", "OOC", "Race", "RP_Chat", "say", "say_get", "Scouter", "Wartalk", "Yell"}
+local init_channel_pairs = {["Ask_Answer"]="Ask_Answer", ["Clan"]="Clan", ["FriendChat"]="FriendChat", ["IMM"]="IMM", ["Music"]="Music", ["Newbie"]="Newbie", ["OOC"]="OOC", ["Race"]="Race", ["RP_Chat"]="RP_Chat", ["say"]="say", ["say_get"]="say_get", ["Scouter"]="Scouter", ["Wartalk"]="Wartalk", ["Yell"]="Yell"}
 channels_table = {}
 loadstring(GetVariable("channels_table") or "")()
 
@@ -344,17 +345,17 @@ tabs_activity = {}
 
 tabs_channel_captures = {{}}
 loadstring(GetVariable("tabs_channel_captures") or "")()
-num_tabs = #tabs_channel_captures
-current_tab = math.min(tonumber(GetVariable("current_tab")) or 1, #tabs_channel_captures)
-
 tabs_nonchannel_captures = {{}}
 loadstring(GetVariable("tabs_nonchannel_captures") or "")()
 
+num_tabs = #tabs_channel_captures
+current_tab = math.min(tonumber(GetVariable("current_tab")) or 1, #tabs_channel_captures)
 tabs_names = {}
 loadstring(GetVariable("tabs_names") or "")()
 
 window_title = GetVariable("window_title") or "Communication Log"
 
+--[[
 function reduce_diverse_channels()
    channels_table = {}
    for tab,channels in ipairs(tabs_channel_captures) do
@@ -365,6 +366,18 @@ function reduce_diverse_channels()
       end
    end
 end
+
+function reduce_diverse_nonchannels()
+   channels_table = {}
+   for tab,nonchannels in ipairs(tabs_nonchannel_captures) do
+      for chan,v in pairs(nonchannels) do
+         if v["capture"] then
+            channels_table[chan] = {["capture"]=true}
+         end
+      end
+   end
+end
+--]]--
 
 -- legacy variables
 --show_donations = tonumber(GetVariable("show_donations")) or 1
@@ -403,7 +416,6 @@ function addDefaultNonChannels()
       end
    end
 
-   --EnableTrigger("remote_socials", check_nonchannel_trigger("remote_socials"))
    EnableTrigger("Auction_House", check_nonchannel_trigger("Auction_House"))
    EnableTrigger("Auto_Events", check_nonchannel_trigger("Auto_Events"))
    EnableTrigger("Clan_Info", check_nonchannel_trigger("Clan_Info"))
@@ -415,19 +427,26 @@ function addDefaultNonChannels()
    EnableTrigger("RP_Story", check_nonchannel_trigger("RP_Story"))
 end
 
-function addNewChannel(chan)
-   for tab,channels in ipairs(tabs_channel_captures) do
-      channels[chan] = channels[chan] or {["capture"]=true}
-      if channels[chan]["capture"] then
-         channels_table[chan] = {["capture"]=true}
-      end
-   end
-end
+--function addNewChannel(chan)
+--   for tab,channels in ipairs(tabs_channel_captures) do
+--      channels[chan] = channels[chan] or {["capture"]=true}
+--      if channels[chan]["capture"] then
+--         channels_table[chan] = {["capture"]=true}
+--      end
+--   end
+--end
 
 function addDefaultChannels()
-   for i,v in ipairs(init_channel_keys) do
-      addNewChannel(v)
+   for tab,channels in ipairs(tabs_channel_captures) do
+      tabs_channel_captures[tab] = tabs_channel_captures[tab] or {}
+      for i,v in ipairs(init_channel_keys) do
+         tabs_channel_captures[tab][v] = tabs_channel_captures[tab][v] or {["capture"]=true}
+      end
    end
+
+--   for i,v in ipairs(init_channel_keys) do
+--      addNewChannel(v)
+--   end
    EnableTrigger("Ask_Answer", check_channel_trigger("Ask_Answer"))
    EnableTrigger("Clan", check_channel_trigger("Clan"))
    EnableTrigger("FriendChat", check_channel_trigger("FriendChat"))
@@ -442,10 +461,10 @@ function addDefaultChannels()
    EnableTrigger("Scouter", check_channel_trigger("Scouter"))
    EnableTrigger("Wartalk", check_channel_trigger("Wartalk"))
    EnableTrigger("Yell", check_channel_trigger("Yell"))
-   addDefaultNonChannels()
 end
 addDefaultChannels()
-reduce_diverse_channels()
+--reduce_diverse_channels()
+addDefaultNonChannels()
 
 function makeRect(i)
    tabs_rects[i] = TextRect.new(win, "tr"..tostring(i), tr_left, tr_top, tr_right, tr_bottom, 1000, true, Theme.PRIMARY_BODY, 3, "Dina", 10)
@@ -1065,9 +1084,9 @@ end
 function storeChannel(styles, label)
    will_draw = false
    for tab, whats_inside_the_tab in ipairs(tabs_channel_captures) do
-      if not whats_inside_the_tab[label] then
-         addNewChannel(label)
-      end
+      --if not whats_inside_the_tab[label] then
+      --   addNewChannel(label)
+      --end
       if whats_inside_the_tab[label]["capture"] then
          if storeTab(styles, tab) == 1 then
             will_draw = true
@@ -1218,19 +1237,33 @@ function extend_rightclick_menu_result(sender, hotspot_id, result)
       nameTab(current_tab, name)
    elseif result == 14+echo_skip-noremove then
       local defaults = {}
-      local tbl = {}
+      --local tbl = {}
       for k,v in pairs(tabs_channel_captures[current_tab]) do
-         tbl[k] = k
+         --tbl[k] = k
          defaults[k] = v["capture"]
       end
 
-      local capture_result = utils.multilistbox ("Choose which channels to capture to this communication log tab.", "Communication Log Channel Selection", tbl, defaults)
+      local ccapture_result = utils.multilistbox ("Choose which channels to capture to this communication log tab.", "Communication Log Channel Selection", init_channel_pairs, defaults)
       if capture_result then
          for k,v in pairs(tabs_channel_captures[current_tab]) do
             v["capture"] = capture_result[k]
          end
       end
-      reduce_diverse_channels()
+      --reduce_diverse_channels()
+      EnableTrigger("Ask_Answer", check_channel_trigger("Ask_Answer"))
+      EnableTrigger("Clan", check_channel_trigger("Clan"))
+      EnableTrigger("FriendChat", check_channel_trigger("FriendChat"))
+      EnableTrigger("IMM", check_channel_trigger("IMM"))
+      EnableTrigger("Music", check_channel_trigger("Music"))
+      EnableTrigger("Newbie", check_channel_trigger("Newbie"))
+      EnableTrigger("OOC", check_channel_trigger("OOC"))
+      EnableTrigger("Race", check_channel_trigger("Race"))
+      EnableTrigger("RP_Chat", check_channel_trigger("RP_Chat"))
+      EnableTrigger("say", check_channel_trigger("say"))
+      EnableTrigger("say_get", check_channel_trigger("say_get"))
+      EnableTrigger("Scouter", check_channel_trigger("Scouter"))
+      EnableTrigger("Wartalk", check_channel_trigger("Wartalk"))
+      EnableTrigger("Yell", check_channel_trigger("Yell"))
    elseif result == 15+echo_skip-noremove then
       local defaults = {}
       for k,v in pairs(tabs_nonchannel_captures[current_tab]) do
@@ -1252,7 +1285,6 @@ function extend_rightclick_menu_result(sender, hotspot_id, result)
       EnableTrigger("IMM_Logs", check_nonchannel_trigger("IMM_Logs"))
       EnableTrigger("News_Flash", check_nonchannel_trigger("News_Flash"))
       EnableTrigger("RP_Story", check_nonchannel_trigger("RP_Story"))
-      --EnableTrigger("remote_socials", check_nonchannel_trigger("remote_socials"))
    elseif result == 16+echo_skip-noremove then
       tabs_rects[current_tab]:clear()
    elseif result == 17+echo_skip-noremove then
