@@ -379,13 +379,6 @@ function reduce_diverse_nonchannels()
 end
 --]]--
 
--- legacy variables
---show_donations = tonumber(GetVariable("show_donations")) or 1
---info_on = tonumber(GetVariable("info_on")) or 0
---global_quest_on = tonumber(GetVariable("global_quest_on")) or 0
---remort_auction_on = tonumber(GetVariable("remort_auction_on")) or 0
---warfare_on = tonumber(GetVariable("warfare_on")) or 0
-
 function check_nonchannel_trigger(key)
    local on = false
    for tab,nonchannels in ipairs(tabs_nonchannel_captures) do
@@ -881,10 +874,6 @@ function OnPluginSaveState()
    end
    SetVariable("WINDOW_WIDTH", width)
    SetVariable("WINDOW_HEIGHT", height)
-   --SetVariable("info_on", info_on)
-   --SetVariable("global_quest_on", global_quest_on)
-   --SetVariable("remort_auction_on", remort_auction_on)
-   --SetVariable("warfare_on", warfare_on)
    SetVariable("log_to_file", log_to_file)
    SetVariable("log_file_size", log_file_size)
    SetVariable("log_colour_codes", log_colour_codes)
@@ -1018,15 +1007,6 @@ function storeFromOutside(msg, tab, add_timestamp, omit_log)
    end
    return false  -- not stored
 end
-
--- stolen from Mendaloth
---function rsocial (name, line, wildcards, styles)
-	-- Remote socials will always start with a dark cyan or bright magenta *
-	-- Checking color cuts down on non-socials ending up in the chat log...
---	if (styles[1].textcolour == GetNormalColour(7) or styles[1].textcolour == GetBoldColour(6)) then
---		stampAndStore(styles, "remote_socials")
---	end
---end
 
 function non_channel (name, line, wildcards, styles)
    stampAndStore(styles, name, true)
@@ -1374,6 +1354,7 @@ function extend_rightclick_menu_string(tr)
    return table.concat(menu_strings, "|")
 end
 
+--[[
 function getmemoryusage()
    collectgarbage('collect')
    return collectgarbage('count')
@@ -1415,6 +1396,7 @@ function show(i)
 end
 -- \\\CallPlugin("b555825a4a5700c35fa80780","test")
 -- \\\CallPlugin("b555825a4a5700c35fa80780","show", 1)
+--]]
 ]]>
 </script>
 </muclient>
