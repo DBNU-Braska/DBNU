@@ -358,13 +358,6 @@ local init_channel_pairs = {["Ask_Answer"]="Ask_Answer", ["Clan"]="Clan", ["Frie
 -- functions for handling Aardwolf color codes
 dofile(GetPluginInfo(GetPluginID(), 20) .. "DBNU_colors.lua")
 
--- legacy variables
---echo_info = GetVariable("echo_info_2") ~= "0"
---echo_global_quest = GetVariable("echo_global_quest_2") ~= "0"
---echo_remort_auction = GetVariable("echo_remort_auction_2") ~= "0"
---echo_donations = GetVariable("echo_donations_2") ~= "0"
---echo_warfare = GetVariable("echo_warfare_2") ~= "0"
-
 -- only hide echoes if at least one capture window is active
 -- use CallPlugin ("55616ea13339bc68e963e1f8", "enable_hiding", true, GetPluginID())
 never_hide = true
@@ -375,7 +368,7 @@ function enable_hiding(true_false, enabler_id)
    for k,v in pairs(list_of_filter_enablers) do
       num_enablers = num_enablers + 1
    end
-   if num_enablers > 0 then --(not aard_req_novisuals_mode) and (
+   if num_enablers > 0 then
       never_hide = false
       addDefaultNonChannels()
    else
@@ -383,9 +376,6 @@ function enable_hiding(true_false, enabler_id)
       for i,v in ipairs(init_nonchannel_keys) do
          EnableTrigger(v, false)
       end
-      --for i,v in ipairs(init_channel_keys) do
-      --   EnableTrigger(v, false)
-      --end
    end
 end
 
@@ -427,17 +417,7 @@ end
 
 addDefaultChannels()
 
-
---function echo_msg(msg)
---   Simulate(ColoursToANSI(msg).."\r\n")
---   if gmcp("config.compact") ~= "YES" then
---      Simulate("\r\n")
---   end
---   EnableTriggerGroup("end_gag", true) -- gags trailing blank line
---end
-
 function OnPluginListChanged ()
---   dofile "lua/aard_requirements.lua"
    for k,v in pairs(list_of_filter_enablers) do
       enable_hiding(GetPluginInfo(k, 17), k)
    end
@@ -491,23 +471,33 @@ function chat_echo (toggle)
       ColourNote ("yellow", "", "Note: This does not affect \"other\" (non-channel) messages, which must be toggled separately.")
       Note("")
    elseif toggle == "channels" then
-      local cdefaults = {}
+      --local tbl = {}
+      --local defaults = {}
+      --local i = 1
+      --for k,v in pairsByKeys(channels_table) do
+      --   tbl[i] = k
+      --   defaults[i] = v["echo"]
+      --   i = i+1
+      --end
+      local defaults = {}
       for k,v in pairs(channels_table) do
-         cdefaults[k] = v["echo"]
+         defaults[k] = v["echo"]
       end
-      local echo_result = utils.multilistbox("Choose which channels to show in the main window.", "Channel Echo Selection", init_channel_pairs, cdefaults)
+      local echo_result = utils.multilistbox("Choose which channels to show in the main window.", "Channel Echo Selection", init_channel_pairs, defaults) -- tbl
       if echo_result then
+         --for i,v in ipairs(tbl) do
+         --   channels_table[v]["echo"] = echo_result[i]
+         --end
          for k,v in pairs(channels_table) do
             v["echo"] = echo_result[k]
-            --EnableTrigger(k, not other_should_echo(k))
          end
       end
    elseif toggle == "nonchannels" then
-      local ncdefaults = {}
+      local defaults = {}
       for k,v in pairs(nonchannels_table) do
-         ncdefaults[k] = v["echo"]
+         defaults[k] = v["echo"]
       end
-      local echo_result = utils.multilistbox("Choose which non-channel to show in the main window.", "Non-Channel Echo Selection", init_nonchannel_pairs, ncdefaults)
+      local echo_result = utils.multilistbox("Choose which non-channel to show in the main window.", "Non-Channel Echo Selection", init_nonchannel_pairs, defaults)
       if echo_result then
          for k,v in pairs(nonchannels_table) do
             v["echo"] = echo_result[k]
@@ -528,35 +518,6 @@ function OnPluginSaveState()
    SetVariable("channels_table", serialize.save("channels_table"))
    SetVariable("nonchannels_table", serialize.save("nonchannels_table"))
 end
-
---function OnPluginInstall()
---   OnPluginEnable()
---end
-
---function OnPluginEnable ()
-   -- if we are connected when the plugin loads, it must have been reloaded while playing
---   if IsConnected() then
---      OnPluginConnect()
---   end -- if already connected
---end -- OnPluginEnable
-
---function OnPluginClose()
---   OnPluginDisable()
---end
-
--- pull in telnet option handling
---dofile (GetPluginInfo (GetPluginID(), 20) .. "telnet_options.lua")
-
---function OnPluginDisable()
---   if IsConnected() then
---      Send_GMCP_Packet("gmcpchannels off")
---   end
---end
-
---function OnPluginConnect()
---   Send_GMCP_Packet("gmcpchannels on")
---   Send_GMCP_Packet("request char")
---end
 
 function getmemoryusage()
   collectgarbage('collect')

@@ -184,7 +184,6 @@ USAGE:
    enabled="n"
    name="RP_Story"
    match="^\[RP-STORY (.+)\] (.+)$"
-    
    regexp="y"
    script="non_channel"
    sequence="100"
@@ -195,7 +194,6 @@ USAGE:
    enabled="n"
    name="Clan_Info"
    match="^\[Clan-Info\] (.+)$"
-    
    regexp="y"
    script="non_channel"
    sequence="100"
@@ -206,7 +204,6 @@ USAGE:
    enabled="n"
    name="Friend_Info"
    match="\[Friend-Info\] (.+)"
-    
    regexp="y"
    script="non_channel"
    sequence="100"
@@ -217,7 +214,6 @@ USAGE:
    enabled="n"
    name="News_Flash"
    match="^\[NEWS-FLASH\] (.+)$"
-    
    regexp="y"
    script="non_channel"
    sequence="100"
@@ -228,7 +224,6 @@ USAGE:
    enabled="n"
    name="Info"
    match="^\[(Info|A - Info)\] (.+)$"
-    
    regexp="y"
    script="non_channel"
    sequence="100"
@@ -239,7 +234,6 @@ USAGE:
    enabled="n"
    name="HighScore"
    match="^\[HighScore\] (.+)$"
-    
    regexp="y"
    script="non_channel"
    sequence="100"
@@ -250,7 +244,6 @@ USAGE:
    enabled="n"
    name="Auto_Events"
    match="^\[Auto-Event\] (.+)$"
-    
    regexp="y"
    script="non_channel"
    sequence="100"
@@ -260,8 +253,7 @@ USAGE:
   <trigger
    enabled="n"
    name="Aution_House"
-   match="\[DBNU Auction House\] (.+)$"
-    
+   match="^\[DBNU Auction House] (.+)$"
    regexp="y"
    script="non_channel"
    sequence="100"
@@ -338,11 +330,11 @@ local init_nonchannel_keys = {"Auction_House", "Auto_Events", "Clan_Info", "Frie
 local init_nonchannel_pairs = {["Auction_House"]="DBNU Auction House", ["Auto_Events"]="Auto-Event", ["Clan_Info"]="Clan-Info", ["Friend_Info"]="Friend-Info", ["HighScore"]="HighScore", ["Info"]="Info", ["IMM_Log"]="IMM Logs", ["News_Flash"]="NEWS-FLASH", ["RP_Story"]="RP-STORY"} --, ["remote_socials"]="Remote Socials"
 local init_channel_keys = {"Ask_Answer", "Clan", "FriendChat", "IMM", "Music", "Newbie", "OOC", "Race", "RP_Chat", "say", "say_get", "Scouter", "Wartalk", "Yell"}
 local init_channel_pairs = {["Ask_Answer"]="Ask_Answer", ["Clan"]="Clan", ["FriendChat"]="FriendChat", ["IMM"]="IMM", ["Music"]="Music", ["Newbie"]="Newbie", ["OOC"]="OOC", ["Race"]="Race", ["RP_Chat"]="RP_Chat", ["say"]="say", ["say_get"]="say_get", ["Scouter"]="Scouter", ["Wartalk"]="Wartalk", ["Yell"]="Yell"}
+
 channels_table = {}
 loadstring(GetVariable("channels_table") or "")()
 
 tabs_activity = {}
-
 tabs_channel_captures = {{}}
 loadstring(GetVariable("tabs_channel_captures") or "")()
 tabs_nonchannel_captures = {{}}
@@ -366,18 +358,7 @@ function reduce_diverse_channels()
       end
    end
 end
-
-function reduce_diverse_nonchannels()
-   channels_table = {}
-   for tab,nonchannels in ipairs(tabs_nonchannel_captures) do
-      for chan,v in pairs(nonchannels) do
-         if v["capture"] then
-            channels_table[chan] = {["capture"]=true}
-         end
-      end
-   end
-end
---]]--
+--]]
 
 function check_nonchannel_trigger(key)
    local on = false
@@ -454,10 +435,11 @@ function addDefaultChannels()
    EnableTrigger("Scouter", check_channel_trigger("Scouter"))
    EnableTrigger("Wartalk", check_channel_trigger("Wartalk"))
    EnableTrigger("Yell", check_channel_trigger("Yell"))
+   addDefaultNonChannels()
 end
 addDefaultChannels()
 --reduce_diverse_channels()
-addDefaultNonChannels()
+
 
 function makeRect(i)
    tabs_rects[i] = TextRect.new(win, "tr"..tostring(i), tr_left, tr_top, tr_right, tr_bottom, 1000, true, Theme.PRIMARY_BODY, 3, "Dina", 10)
@@ -616,7 +598,6 @@ function OnPluginInstall ()
    init()
    setupDisplay()
    OnPluginEnable()
-   CallPlugin ("55616ea13339bc68e963e1f8", "enable_hiding", true, GetPluginID())
 end
 
 function bump_top_for_tabs()
@@ -970,43 +951,6 @@ function stampAndStore(msg, chan, is_nonchannel) --, is_gmcp
    end
 end
 
--- storeFromOutside takes four arguments:
--- 1. the message you want to store in Aardwolf color code format
--- 2. (optional) the tab name or number to store it in
--- 3. (optional) true/false for controlling whether to timestamp the line (defaults to true if nil)
--- 4. (optional) true/false for whether to omit the line from the log file (defaults to false if nil)
--- (for add_timestamp, false means don't add a timestamp, and nil or true means obey the internal timestamping configuration)
--- (for omit_log, true means don't add the line to the log file, and nil or false means go ahead and log it)
--- Use via CallPlugin(), http://mushclient.com/scripts/doc.php?function=CallPlugin
---
--- Example: CallPlugin("b555825a4a5700c35fa80780","storeFromOutside","HELLO@RHello@Mhello@x215hello@x66HELLO", 1, true, true)
---   This example will use Tab #1, Add a timestamp, and Omit from the log
---
--- Example: CallPlugin("b555825a4a5700c35fa80780","storeFromOutside","HELLO@RHello@Mhello@x215hello@x66HELLO", "Q/A", false)
---   This example will use Tab Q/A, Not add a timestamp, and Log it
-function storeFromOutside(msg, tab, add_timestamp, omit_log)
-   if add_timestamp == nil then
-      add_timestamp = true
-   end
-   if tab == nil then
-      tab = 1
-   elseif type(tab) == "string" then
-      tab = findTab(tab)
-   end
-
-   if tab then
-      msg = stampAndLog(msg, add_timestamp and os.date(date_format) or "", omit_log)
-      local should_redraw = (storeTab(ColoursToStyles(msg), tab) == 1)
-      if should_redraw == true then
-         drawTabs()
-      end
-   end
-
-   if should_redraw ~= nil then
-      return true  -- stored
-   end
-   return false  -- not stored
-end
 
 function non_channel (name, line, wildcards, styles)
    stampAndStore(styles, name, true)
@@ -1077,24 +1021,6 @@ function storeChannel(styles, label)
       drawTabs()
    end
 end
-
---function OnPluginBroadcast(msg, id, name, text)
-   -- Look for GMCP handler.
---   if (id == '3e7dedbe37e44942dd46d264') then
---      if (text == "comm.channel") then
---         gmcpcomm = gmcp("comm.channel")
---         msg = gmcpcomm.msg or ""
---         chan = gmcpcomm.chan or ""
---         if (check_nonchannel_trigger("clan_donations") or string.match(strip_colours(msg), "^CLAN ANNOUNCEMENT: %a+ has donated") == nil) then
---            if (not channels_table[chan]) or channels_table[chan]["capture"] then
---               stampAndStore(msg, chan, true)
---            end
---         end
---      end
---   elseif (id == "462b665ecb569efbf261422f" and msg==996 and text == "re-register z") then
---      CallPlugin("462b665ecb569efbf261422f", "registerMiniwindow", win)
---   end
---end
 
 function MouseDown(flags, hotspot_id)
    if (hotspot_id == "resize") then
@@ -1223,27 +1149,27 @@ function extend_rightclick_menu_result(sender, hotspot_id, result)
          defaults[k] = v["capture"]
       end
 
-      local ccapture_result = utils.multilistbox ("Choose which channels to capture to this communication log tab.", "Communication Log Channel Selection", init_channel_pairs, defaults)
+      local capture_result = utils.multilistbox ("Choose which channels to capture to this communication log tab.", "Communication Log Channel Selection", init_channel_pairs, defaults)
       if capture_result then
          for k,v in pairs(tabs_channel_captures[current_tab]) do
             v["capture"] = capture_result[k]
          end
       end
       --reduce_diverse_channels()
-      EnableTrigger("Ask_Answer", check_channel_trigger("Ask_Answer"))
-      EnableTrigger("Clan", check_channel_trigger("Clan"))
-      EnableTrigger("FriendChat", check_channel_trigger("FriendChat"))
-      EnableTrigger("IMM", check_channel_trigger("IMM"))
-      EnableTrigger("Music", check_channel_trigger("Music"))
-      EnableTrigger("Newbie", check_channel_trigger("Newbie"))
-      EnableTrigger("OOC", check_channel_trigger("OOC"))
-      EnableTrigger("Race", check_channel_trigger("Race"))
-      EnableTrigger("RP_Chat", check_channel_trigger("RP_Chat"))
-      EnableTrigger("say", check_channel_trigger("say"))
-      EnableTrigger("say_get", check_channel_trigger("say_get"))
-      EnableTrigger("Scouter", check_channel_trigger("Scouter"))
-      EnableTrigger("Wartalk", check_channel_trigger("Wartalk"))
-      EnableTrigger("Yell", check_channel_trigger("Yell"))
+      --EnableTrigger("Ask_Answer", check_channel_trigger("Ask_Answer"))
+      --EnableTrigger("Clan", check_channel_trigger("Clan"))
+      --EnableTrigger("FriendChat", check_channel_trigger("FriendChat"))
+      --EnableTrigger("IMM", check_channel_trigger("IMM"))
+      --EnableTrigger("Music", check_channel_trigger("Music"))
+      --EnableTrigger("Newbie", check_channel_trigger("Newbie"))
+      --EnableTrigger("OOC", check_channel_trigger("OOC"))
+      --EnableTrigger("Race", check_channel_trigger("Race"))
+      --EnableTrigger("RP_Chat", check_channel_trigger("RP_Chat"))
+      --EnableTrigger("say", check_channel_trigger("say"))
+      --EnableTrigger("say_get", check_channel_trigger("say_get"))
+      --EnableTrigger("Scouter", check_channel_trigger("Scouter"))
+      --EnableTrigger("Wartalk", check_channel_trigger("Wartalk"))
+      --EnableTrigger("Yell", check_channel_trigger("Yell"))
    elseif result == 15+echo_skip-noremove then
       local defaults = {}
       for k,v in pairs(tabs_nonchannel_captures[current_tab]) do
@@ -1354,49 +1280,11 @@ function extend_rightclick_menu_string(tr)
    return table.concat(menu_strings, "|")
 end
 
---[[
 function getmemoryusage()
    collectgarbage('collect')
    return collectgarbage('count')
 end
 
-
-local charset = {
-   'r', 'g', 'b', 'y', 'm', 'c', 'w', 'R', 'G', 'B', 'Y', 'M', 'C', 'W', '@', ' '
-}
-math.randomseed(os.time())
-
-function string.random(Length)
-   -- Length (number)
-   local Result = {}
-   local Range = #charset
-
-   for Loop = 1,Length do
-      Result[Loop] = charset[math.random(1, Range)]
-   end
-
-   return table.concat(Result)
-end
-
-
-function test(arg)
-   if arg == nil then
-      arg = 1000
-   end
-   for i = 1, math.random(arg) do
-      storeFromOutside(
-         string.random(math.random(200)),
-         math.random(#tabs_rects)
-      )
-   end
-end
-
-function show(i)
-   tabs_rects[i]:debug()
-end
--- \\\CallPlugin("b555825a4a5700c35fa80780","test")
--- \\\CallPlugin("b555825a4a5700c35fa80780","show", 1)
---]]
 ]]>
 </script>
 </muclient>
