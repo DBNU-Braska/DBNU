@@ -269,7 +269,7 @@ USAGE:
 
 <trigger
    enabled="n"
-   name="Aution_House"
+   name="Auction_House"
    match="\[DBNU Auction House\] (.+)$"
    regexp="y"
    script="non_channel"
