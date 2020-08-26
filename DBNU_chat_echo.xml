@@ -358,70 +358,42 @@ local init_channel_pairs = {["Ask_Answer"]="Ask_Answer", ["Clan"]="Clan", ["Frie
 -- functions for handling Aardwolf color codes
 dofile(GetPluginInfo(GetPluginID(), 20) .. "DBNU_colors.lua")
 
--- only hide echoes if at least one capture window is active
--- use CallPlugin ("55616ea13339bc68e963e1f8", "enable_hiding", true, GetPluginID())
-never_hide = true
-list_of_filter_enablers = {}
-function enable_hiding(true_false, enabler_id)
-   list_of_filter_enablers[enabler_id] = true_false or nil
-   num_enablers = 0
-   for k,v in pairs(list_of_filter_enablers) do
-      num_enablers = num_enablers + 1
-   end
-   if num_enablers > 0 then
-      never_hide = false
-      addDefaultNonChannels()
-   else
-      never_hide = true
-      for i,v in ipairs(init_nonchannel_keys) do
-         EnableTrigger(v, false)
-      end
-   end
-end
-
-enable_hiding(false, GetPluginID())
-
-
 channels_table = {}
 nonchannels_table = {}
 loadstring(GetVariable("channels_table") or "")()
 loadstring(GetVariable("nonchannels_table") or "")()
 
---function addNewChannel(name)
---   if not channels_table[name] then
---      channels_table[name] = {["echo"]=true}
---   end
---end
-
-function other_should_echo(name)
-   if never_hide or nonchannels_table[name]["echo"] then 
+function nonchannel_echo(name)
+   if nonchannels_table[name]["echo"] then 
       return true
-   end
+   end 
+   return false
+end
+
+function channel_echo(name)
+   if channels_table[name]["echo"] then 
+      return true
+   end 
    return false
 end
 
 function addDefaultNonChannels()
    for i,v in ipairs(init_nonchannel_keys) do
       nonchannels_table[v] = nonchannels_table[v] or {["echo"]=true}
-      EnableTrigger(v, not other_should_echo(v))
+      EnableTrigger(v, not nonchannel_echo(v))
    end
 end
 
 function addDefaultChannels()
    for i,v in ipairs(init_channel_keys) do
       channels_table[v] = channels_table[v] or {["echo"]=true}
+      EnableTrigger(v, not channel_echo(v))
    --addNewChannel(v)
    end
-   addDefaultNonChannels()
 end
 
 addDefaultChannels()
-
-function OnPluginListChanged ()
-   for k,v in pairs(list_of_filter_enablers) do
-      enable_hiding(GetPluginInfo(k, 17), k)
-   end
-end
+addDefaultNonChannels()
 
 function non_channel (name, line, wildcards, styles)
    EnableTriggerGroup("end_gag", true) -- gags trailing blank line
@@ -461,35 +433,23 @@ function chat_echo (toggle)
       ColourNote ("yellow", "", "Note: This does not affect \"other\" (non-channel) messages, which must be toggled separately.")
       Note("")
    elseif toggle == "off" then
-      if never_hide then
-         return rejection_message()
-      end
       for k,v in pairs(channels_table) do
-         channels_table[k]["echo"] = nil
+         channels_table[k]["echo"] = false
       end
       ColourNote ("yellow", "", "All chats are now", "red", "", " hidden ", "yellow", "", "in the main window.")
       ColourNote ("yellow", "", "Note: This does not affect \"other\" (non-channel) messages, which must be toggled separately.")
       Note("")
    elseif toggle == "channels" then
-      --local tbl = {}
-      --local defaults = {}
-      --local i = 1
-      --for k,v in pairsByKeys(channels_table) do
-      --   tbl[i] = k
-      --   defaults[i] = v["echo"]
-      --   i = i+1
-      --end
       local defaults = {}
       for k,v in pairs(channels_table) do
          defaults[k] = v["echo"]
       end
       local echo_result = utils.multilistbox("Choose which channels to show in the main window.", "Channel Echo Selection", init_channel_pairs, defaults)
       if echo_result then
-         --for i,v in ipairs(tbl) do
-         --   channels_table[v]["echo"] = echo_result[i]
-         --end
          for k,v in pairs(channels_table) do
             v["echo"] = echo_result[k]
+            EnableTrigger(k, not channel_echo(k))
+            print( k, " : ", channel_echo(k) )
          end
       end
    elseif toggle == "nonchannels" then
@@ -501,7 +461,8 @@ function chat_echo (toggle)
       if echo_result then
          for k,v in pairs(nonchannels_table) do
             v["echo"] = echo_result[k]
-            EnableTrigger(k, not other_should_echo(k))
+            EnableTrigger(k, not nonchannel_echo(k))
+            print( k, " : ", nonchannel_echo(k) )
          end
       end
    end -- if
