@@ -1080,15 +1080,15 @@ function extend_rightclick_menu_result(sender, hotspot_id, result)
       else
          ColourNote ("yellow", "", "Logging to file is now ENABLED.")
       end
+   --elseif result == 8 then
+   --   log_colour_codes = (((0 == log_colour_codes) and 1) or 0)
+   --   SetVariable("log_colour_codes", log_colour_codes)
+   --   if log_colour_codes == 0 then
+   --      ColourNote ("yellow", "", "Color codes will be stripped from the log file.")
+   --   else
+   --      ColourNote ("yellow", "", "Color codes will be included in the log file.")
+   --   end
    elseif result == 8 then
-      log_colour_codes = (((0 == log_colour_codes) and 1) or 0)
-      SetVariable("log_colour_codes", log_colour_codes)
-      if log_colour_codes == 0 then
-         ColourNote ("yellow", "", "Color codes will be stripped from the log file.")
-      else
-         ColourNote ("yellow", "", "Color codes will be included in the log file.")
-      end
-   elseif result == 9 then
       log_timestamps = (((0 == log_timestamps) and 1) or 0)
       SetVariable("log_timestamps", log_timestamps)
       if log_timestamps == 0 then
@@ -1096,7 +1096,7 @@ function extend_rightclick_menu_result(sender, hotspot_id, result)
       else
          ColourNote ("yellow", "", "Timestamps will be included in the log file.")
       end
-   elseif result == 10 then
+   elseif result == 9 then
       local ls = utils.inputbox("Input a size in MB. (0 for None)", "Log File Split Size", log_file_size, "", 10, {prompt_height = 16, box_width = 180, box_height = 130, reply_width = 40, reply_height = 20})
       if not ls then -- canceled
          return
@@ -1118,30 +1118,30 @@ function extend_rightclick_menu_result(sender, hotspot_id, result)
    local echo_skip = 0
    if (IsPluginInstalled("55616ea13339bc68e963e1f8")) then
       echo_skip = 4
-      if result == 11 then
+      if result == 10 then
          CallPlugin("55616ea13339bc68e963e1f8", "chat_echo", "on")
-      elseif result == 12 then
+      elseif result == 11 then
          CallPlugin("55616ea13339bc68e963e1f8", "chat_echo", "off")
-      elseif result == 13 then
+      elseif result == 12 then
          CallPlugin("55616ea13339bc68e963e1f8", "chat_echo", "channels")
-      elseif result == 14 then
+      elseif result == 13 then
          CallPlugin("55616ea13339bc68e963e1f8", "chat_echo", "nonchannels")
       end
    end
 
    noremove = (num_tabs < 2) and 1 or 0
 
-   if result == 11+echo_skip then
+   if result == 10+echo_skip then
       setTab(addTab())
-   elseif result == 12+echo_skip-noremove then
+   elseif result == 11+echo_skip-noremove then
       removeTab()
-   elseif result == 13+echo_skip-noremove then
+   elseif result == 12+echo_skip-noremove then
       local name = utils.inputbox("Choose a (preferably short) name for this channel capture tab", "Name Channel Tab", tostring(tabs_names[current_tab] or current_tab))
       if not name then
          return -- cancel was pressed, so keep existing name
       end
       nameTab(current_tab, name)
-   elseif result == 14+echo_skip-noremove then
+   elseif result == 13+echo_skip-noremove then
       local defaults = {}
       --local tbl = {}
       for k,v in pairs(tabs_channel_captures[current_tab]) do
@@ -1170,7 +1170,7 @@ function extend_rightclick_menu_result(sender, hotspot_id, result)
       EnableTrigger("Scouter", check_channel_trigger("Scouter"))
       EnableTrigger("Wartalk", check_channel_trigger("Wartalk"))
       EnableTrigger("Yell", check_channel_trigger("Yell"))
-   elseif result == 15+echo_skip-noremove then
+   elseif result == 14+echo_skip-noremove then
       local defaults = {}
       for k,v in pairs(tabs_nonchannel_captures[current_tab]) do
          defaults[k] = v["capture"]
@@ -1191,13 +1191,13 @@ function extend_rightclick_menu_result(sender, hotspot_id, result)
       EnableTrigger("IMM_Logs", check_nonchannel_trigger("IMM_Logs"))
       EnableTrigger("News_Flash", check_nonchannel_trigger("News_Flash"))
       EnableTrigger("RP_Story", check_nonchannel_trigger("RP_Story"))
-   elseif result == 16+echo_skip-noremove then
+   elseif result == 15+echo_skip-noremove then
       tabs_rects[current_tab]:clear()
-   elseif result == 17+echo_skip-noremove then
+   elseif result == 16+echo_skip-noremove then
       CallPlugin("462b665ecb569efbf261422f","boostMe", win) -- this file
-   elseif result == 18+echo_skip-noremove then
+   elseif result == 17+echo_skip-noremove then
       CallPlugin("462b665ecb569efbf261422f","dropMe", win) -- this file
-   elseif result == 19+echo_skip-noremove then
+   elseif result == 18+echo_skip-noremove then
     if window_title == "" then
         window_title = "Communication Log"
     else
@@ -1228,7 +1228,7 @@ function extend_rightclick_menu_string(tr)
       "<",
       ">Logging to File",
       log_to_file==1 and "Disable" or "Enable",
-      "Log with Color Codes",
+      --"Log with Color Codes",
       "Log with Timestamps",
       "-",
       "Set Log File Split Size ("..((log_file_size == 0) and "None" or (tostring(log_file_size).."MB"))..")",
@@ -1256,10 +1256,10 @@ function extend_rightclick_menu_string(tr)
    if date_format == "[%H:%M:%S] " then check(ms, 6) end
    if date_format == "[%I:%M:%S%p] " then check(ms, 7) end
 
-   if log_colour_codes == 1 then check(ms, 11) end
-   if log_timestamps == 1 then check(ms, 12) end
+   --if log_colour_codes == 1 then check(ms, 11) end
+   if log_timestamps == 1 then check(ms, 11) end
 
-   if num_tabs < 2 then disable(ms, 18) end
+   if num_tabs < 2 then disable(ms, 17) end
 
    if (IsPluginInstalled("55616ea13339bc68e963e1f8")) then
       local echo_menu_strings = {
@@ -1274,7 +1274,7 @@ function extend_rightclick_menu_string(tr)
       local ems = echo_menu_strings
 
       for i,v in ipairs(echo_menu_strings) do
-         table.insert(menu_strings, 15+i, v)
+         table.insert(menu_strings, 14+i, v)
       end
    end
    return table.concat(menu_strings, "|")
