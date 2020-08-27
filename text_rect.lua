@@ -949,8 +949,8 @@ function TextRect:selected_text()
          -- end
 
          -- preserve the message and start the next one
-         --table.insert(s_text, StylesToColours(current_message)) -- removed colours
-         table.insert(s_text, current_message)
+         table.insert(s_text, StylesToColours(current_message)) -- removed colours
+         --table.insert(s_text, current_message)
          current_message = {}
       end
    end

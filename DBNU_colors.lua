@@ -247,12 +247,12 @@ function StylesToColours (styles, dollarC_resets)
    local lastcode = ""
    for i,style in ipairs(styles) do
       local bold = style.bold or (style.style and ((style.style % 2) == 1))
-      local text = string.gsub(style.text, CODE_PREFIX, PREFIX_ESCAPE)
+      local text = style.text --string.gsub(style.text, CODE_PREFIX, PREFIX_ESCAPE)
       local textcolor = style.textcolour
       local code = style.fromx
-                   or bold and client_color_to_bold_code[textcolor]
-                   or client_color_to_dim_code[textcolor]
-                   or client_color_to_xterm_code[textcolor]
+                   --or bold and client_color_to_bold_code[textcolor]
+                   --or client_color_to_dim_code[textcolor]
+                   --or client_color_to_xterm_code[textcolor]
 
       if code and (lastcode ~= code) then
          table.insert(line, code)
