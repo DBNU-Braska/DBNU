@@ -449,7 +449,7 @@ function chat_echo (toggle)
          for k,v in pairs(channels_table) do
             v["echo"] = echo_result[k]
             EnableTrigger(k, not channel_echo(k))
-            print( k, " : ", channel_echo(k) )
+            --print( k, " : ", channel_echo(k) )
          end
       end
    elseif toggle == "nonchannels" then
@@ -462,7 +462,7 @@ function chat_echo (toggle)
          for k,v in pairs(nonchannels_table) do
             v["echo"] = echo_result[k]
             EnableTrigger(k, not nonchannel_echo(k))
-            print( k, " : ", nonchannel_echo(k) )
+            --print( k, " : ", nonchannel_echo(k) )
          end
       end
    end -- if
