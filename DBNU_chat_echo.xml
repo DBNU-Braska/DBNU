@@ -348,14 +348,12 @@ USAGE:
 <![CDATA[
 
 require "pairsbykeys"
---require "gmcphelper"
 
 local init_nonchannel_keys = {"Auction_House", "Auto_Events", "Clan_Info", "Friend_Info", "HighScore", "Info", "IMM_Logs", "News_Flash", "RP_Story"} --"remote_socials"
-local init_nonchannel_pairs = {["Auction_House"]="DBNU Auction House", ["Auto_Events"]="Auto-Event", ["Clan_Info"]="Clan-Info", ["Friend_Info"]="Friend-Info", ["HighScore"]="HighScore", ["Info"]="Info", ["IMM_Log"]="IMM Logs", ["News_Flash"]="NEWS-FLASH", ["RP_Story"]="RP-STORY"} --, ["remote_socials"]="Remote Socials"
+local init_nonchannel_pairs = {["Auction_House"]="DBNU Auction House", ["Auto_Events"]="Auto-Event", ["Clan_Info"]="Clan-Info", ["Friend_Info"]="Friend-Info", ["HighScore"]="HighScore", ["Info"]="Info", ["IMM_Logs"]="IMM Logs", ["News_Flash"]="NEWS-FLASH", ["RP_Story"]="RP-STORY"} --, ["remote_socials"]="Remote Socials"
 local init_channel_keys = {"Ask_Answer", "Clan", "FriendChat", "IMM", "Music", "Newbie", "OOC", "Race", "RP_Chat", "say", "say_get", "Scouter", "Wartalk", "Yell"}
 local init_channel_pairs = {["Ask_Answer"]="Ask_Answer", ["Clan"]="Clan", ["FriendChat"]="FriendChat", ["IMM"]="IMM", ["Music"]="Music", ["Newbie"]="Newbie", ["OOC"]="OOC", ["Race"]="Race", ["RP_Chat"]="RP_Chat", ["say"]="say", ["say_get"]="say_get", ["Scouter"]="Scouter", ["Wartalk"]="Wartalk", ["Yell"]="Yell"}
 
--- functions for handling Aardwolf color codes
 dofile(GetPluginInfo(GetPluginID(), 20) .. "DBNU_colors.lua")
 
 channels_table = {}
@@ -388,7 +386,6 @@ function addDefaultChannels()
    for i,v in ipairs(init_channel_keys) do
       channels_table[v] = channels_table[v] or {["echo"]=true}
       EnableTrigger(v, not channel_echo(v))
-   --addNewChannel(v)
    end
 end
 
@@ -449,7 +446,6 @@ function chat_echo (toggle)
          for k,v in pairs(channels_table) do
             v["echo"] = echo_result[k]
             EnableTrigger(k, not channel_echo(k))
-            --print( k, " : ", channel_echo(k) )
          end
       end
    elseif toggle == "nonchannels" then
@@ -462,7 +458,6 @@ function chat_echo (toggle)
          for k,v in pairs(nonchannels_table) do
             v["echo"] = echo_result[k]
             EnableTrigger(k, not nonchannel_echo(k))
-            --print( k, " : ", nonchannel_echo(k) )
          end
       end
    end -- if

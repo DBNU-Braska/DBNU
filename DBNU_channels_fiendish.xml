@@ -296,7 +296,7 @@ require "DBNU_register_z_on_create"
 
 require "mw_theme_base"
 require "movewindow"
---require "gmcphelper"
+
 require "text_rect"
 require "scrollbar"
 
@@ -326,8 +326,8 @@ log_colour_codes = tonumber(GetVariable("log_colour_codes")) or 1
 log_timestamps = tonumber(GetVariable("log_timestamps")) or 1
 log_file_size = tonumber(GetVariable("log_file_size")) or default_log_file_size
 
-local init_nonchannel_keys = {"Auction_House", "Auto_Events", "Clan_Info", "Friend_Info", "HighScore", "Info", "IMM_Logs", "News_Flash", "RP_Story"} --"remote_socials"
-local init_nonchannel_pairs = {["Auction_House"]="DBNU Auction House", ["Auto_Events"]="Auto-Event", ["Clan_Info"]="Clan-Info", ["Friend_Info"]="Friend-Info", ["HighScore"]="HighScore", ["Info"]="Info", ["IMM_Log"]="IMM Logs", ["News_Flash"]="NEWS-FLASH", ["RP_Story"]="RP-STORY"} --, ["remote_socials"]="Remote Socials"
+local init_nonchannel_keys = {"Auction_House", "Auto_Events", "Clan_Info", "Friend_Info", "HighScore", "Info", "IMM_Logs", "News_Flash", "RP_Story"}
+local init_nonchannel_pairs = {["Auction_House"]="DBNU Auction House", ["Auto_Events"]="Auto-Event", ["Clan_Info"]="Clan-Info", ["Friend_Info"]="Friend-Info", ["HighScore"]="HighScore", ["Info"]="Info", ["IMM_Logs"]="IMM Logs", ["News_Flash"]="NEWS-FLASH", ["RP_Story"]="RP-STORY"} --, ["remote_socials"]="Remote Socials"
 local init_channel_keys = {"Ask_Answer", "Clan", "FriendChat", "IMM", "Music", "Newbie", "OOC", "Race", "RP_Chat", "say", "say_get", "Scouter", "Wartalk", "Yell"}
 local init_channel_pairs = {["Ask_Answer"]="Ask_Answer", ["Clan"]="Clan", ["FriendChat"]="FriendChat", ["IMM"]="IMM", ["Music"]="Music", ["Newbie"]="Newbie", ["OOC"]="OOC", ["Race"]="Race", ["RP_Chat"]="RP_Chat", ["say"]="say", ["say_get"]="say_get", ["Scouter"]="Scouter", ["Wartalk"]="Wartalk", ["Yell"]="Yell"}
 
@@ -346,19 +346,6 @@ tabs_names = {}
 loadstring(GetVariable("tabs_names") or "")()
 
 window_title = GetVariable("window_title") or "Communication Log"
-
---[[
-function reduce_diverse_channels()
-   channels_table = {}
-   for tab,channels in ipairs(tabs_channel_captures) do
-      for chan,v in pairs(channels) do
-         if v["capture"] then
-            channels_table[chan] = {["capture"]=true}
-         end
-      end
-   end
-end
---]]
 
 function check_nonchannel_trigger(key)
    local on = false
@@ -401,15 +388,6 @@ function addDefaultNonChannels()
    EnableTrigger("RP_Story", check_nonchannel_trigger("RP_Story"))
 end
 
---function addNewChannel(chan)
---   for tab,channels in ipairs(tabs_channel_captures) do
---      channels[chan] = channels[chan] or {["capture"]=true}
---      if channels[chan]["capture"] then
---         channels_table[chan] = {["capture"]=true}
---      end
---   end
---end
-
 function addDefaultChannels()
    for tab,channels in ipairs(tabs_channel_captures) do
       tabs_channel_captures[tab] = tabs_channel_captures[tab] or {}
@@ -418,9 +396,6 @@ function addDefaultChannels()
       end
    end
 
---   for i,v in ipairs(init_channel_keys) do
---      addNewChannel(v)
---   end
    EnableTrigger("Ask_Answer", check_channel_trigger("Ask_Answer"))
    EnableTrigger("Clan", check_channel_trigger("Clan"))
    EnableTrigger("FriendChat", check_channel_trigger("FriendChat"))
@@ -437,9 +412,8 @@ function addDefaultChannels()
    EnableTrigger("Yell", check_channel_trigger("Yell"))
    addDefaultNonChannels()
 end
-addDefaultChannels()
---reduce_diverse_channels()
 
+addDefaultChannels()
 
 function makeRect(i)
    tabs_rects[i] = TextRect.new(win, "tr"..tostring(i), tr_left, tr_top, tr_right, tr_bottom, 1000, true, Theme.PRIMARY_BODY, 3, "Dina", 10)
@@ -461,7 +435,6 @@ function makeRect(i)
       temp_tabs_data[i] = nil -- cleanup
    end
 end
-
 
 function findTab(name_or_number)
    -- prefer named tabs first
@@ -589,7 +562,6 @@ function reset_aard()
 end
 
 function OnPluginListChanged ()
-   --dofile "lua/aard_requirements.lua"
    CallPlugin ("55616ea13339bc68e963e1f8", "enable_hiding", true, GetPluginID())
 end
 
@@ -937,10 +909,7 @@ function stampAndLog(styles_or_text, timestamp, omit_log)
    return styles_or_text
 end
 
-function stampAndStore(msg, chan, is_nonchannel) --, is_gmcp
-   --if is_nonchannel then
-   --   msg = filter_as_needed(msg)
-   --end
+function stampAndStore(msg, chan, is_nonchannel)
    if msg then
       msg = stampAndLog(msg, os.date(date_format))
       if is_nonchannel then
@@ -959,20 +928,6 @@ end -- non-channel info
 function channel(name, line, wildcards, styles)
    stampAndStore(styles, name)
 end -- channel info
-
-function filter_as_needed(msg)
-   --if GetPluginInfo("48f867c18f6ff1d6d3b52918", 17) then -- if using the #sub plugin
-      if type(msg) == "table" then
-         msg = StylesToColours(msg)
-      end
-      --rc, msg = CallPlugin("48f867c18f6ff1d6d3b52918", "filter_string", msg)
-   --end
-   if type(msg) == "string" then
-      return ColoursToStyles(msg)
-   else
-      return msg
-   end
-end
 
 function storeTab(styles, tab)
    if (tab >= 1) and (tab <= num_tabs) then
@@ -1008,9 +963,6 @@ end
 function storeChannel(styles, label)
    will_draw = false
    for tab, whats_inside_the_tab in ipairs(tabs_channel_captures) do
-      --if not whats_inside_the_tab[label] then
-      --   addNewChannel(label)
-      --end
       if whats_inside_the_tab[label]["capture"] then
          if storeTab(styles, tab) == 1 then
             will_draw = true
@@ -1080,14 +1032,6 @@ function extend_rightclick_menu_result(sender, hotspot_id, result)
       else
          ColourNote ("yellow", "", "Logging to file is now ENABLED.")
       end
-   --elseif result == 8 then
-   --   log_colour_codes = (((0 == log_colour_codes) and 1) or 0)
-   --   SetVariable("log_colour_codes", log_colour_codes)
-   --   if log_colour_codes == 0 then
-   --      ColourNote ("yellow", "", "Color codes will be stripped from the log file.")
-   --   else
-   --      ColourNote ("yellow", "", "Color codes will be included in the log file.")
-   --   end
    elseif result == 8 then
       log_timestamps = (((0 == log_timestamps) and 1) or 0)
       SetVariable("log_timestamps", log_timestamps)
@@ -1143,9 +1087,7 @@ function extend_rightclick_menu_result(sender, hotspot_id, result)
       nameTab(current_tab, name)
    elseif result == 13+echo_skip-noremove then
       local defaults = {}
-      --local tbl = {}
       for k,v in pairs(tabs_channel_captures[current_tab]) do
-         --tbl[k] = k
          defaults[k] = v["capture"]
       end
 
@@ -1155,7 +1097,7 @@ function extend_rightclick_menu_result(sender, hotspot_id, result)
             v["capture"] = capture_result[k]
          end
       end
-      --reduce_diverse_channels()
+
       EnableTrigger("Ask_Answer", check_channel_trigger("Ask_Answer"))
       EnableTrigger("Clan", check_channel_trigger("Clan"))
       EnableTrigger("FriendChat", check_channel_trigger("FriendChat"))
@@ -1170,6 +1112,7 @@ function extend_rightclick_menu_result(sender, hotspot_id, result)
       EnableTrigger("Scouter", check_channel_trigger("Scouter"))
       EnableTrigger("Wartalk", check_channel_trigger("Wartalk"))
       EnableTrigger("Yell", check_channel_trigger("Yell"))
+
    elseif result == 14+echo_skip-noremove then
       local defaults = {}
       for k,v in pairs(tabs_nonchannel_captures[current_tab]) do
@@ -1182,6 +1125,7 @@ function extend_rightclick_menu_result(sender, hotspot_id, result)
             v["capture"] = capture_result[k]
          end
       end
+
       EnableTrigger("Auction_House", check_nonchannel_trigger("Auction_House"))
       EnableTrigger("Auto_Events", check_nonchannel_trigger("Auto_Events"))
       EnableTrigger("Clan_Info", check_nonchannel_trigger("Clan_Info"))
@@ -1191,13 +1135,10 @@ function extend_rightclick_menu_result(sender, hotspot_id, result)
       EnableTrigger("IMM_Logs", check_nonchannel_trigger("IMM_Logs"))
       EnableTrigger("News_Flash", check_nonchannel_trigger("News_Flash"))
       EnableTrigger("RP_Story", check_nonchannel_trigger("RP_Story"))
+
    elseif result == 15+echo_skip-noremove then
       tabs_rects[current_tab]:clear()
    elseif result == 16+echo_skip-noremove then
-      CallPlugin("462b665ecb569efbf261422f","boostMe", win) -- this file
-   elseif result == 17+echo_skip-noremove then
-      CallPlugin("462b665ecb569efbf261422f","dropMe", win) -- this file
-   elseif result == 18+echo_skip-noremove then
     if window_title == "" then
         window_title = "Communication Log"
     else
@@ -1228,7 +1169,6 @@ function extend_rightclick_menu_string(tr)
       "<",
       ">Logging to File",
       log_to_file==1 and "Disable" or "Enable",
-      --"Log with Color Codes",
       "Log with Timestamps",
       "-",
       "Set Log File Split Size ("..((log_file_size == 0) and "None" or (tostring(log_file_size).."MB"))..")",
@@ -1244,8 +1184,6 @@ function extend_rightclick_menu_string(tr)
       "<",
       "Clear Tab",
       "-",
-      "Bring to Front",
-      "Send to Back",
       "Show/Hide Titlebar"
    }
    local ms = menu_strings
@@ -1256,7 +1194,6 @@ function extend_rightclick_menu_string(tr)
    if date_format == "[%H:%M:%S] " then check(ms, 6) end
    if date_format == "[%I:%M:%S%p] " then check(ms, 7) end
 
-   --if log_colour_codes == 1 then check(ms, 11) end
    if log_timestamps == 1 then check(ms, 11) end
 
    if num_tabs < 2 then disable(ms, 17) end
