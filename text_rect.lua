@@ -926,8 +926,8 @@ function TextRect:copyUrl(hotspot_id)
 end
 
 function TextRect:copyPlain()
-   self:copyAndNotify(strip_colours(self:selected_text()))
-   --self:copyAndNotify(self:selected_text())
+   --self:copyAndNotify(strip_colours(self:selected_text()))
+   self:copyAndNotify(self:selected_text())
 end
 
 --function TextRect:copy()
@@ -972,8 +972,7 @@ function TextRect:selected_text()
                store_message()
             end
             -- add styles from this wrapped line to the current message
-            --local line_styles = TruncateStyles(self.wrapped_lines[copy_line][1], startpos+1, endpos)
-            local line_styles = self.wrapped_lines[copy_line][1]
+            local line_styles = TruncateStyles(self.wrapped_lines[copy_line][1], startpos+1, endpos)
             if line_styles then
                for _, s in ipairs(line_styles) do
                   table.insert(current_message, s)
