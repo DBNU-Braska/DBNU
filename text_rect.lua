@@ -829,8 +829,8 @@ function TextRect:rightClickMenu(hotspot_id)
 
    if (self.copy_start_line ~= nil) and (self.copy_end_line ~= nil) then
       table.insert(menu_text, "Copy Selected")
-      table.insert(menu_text, "Copy Selected Without Colors")
-      table.insert(menu_functions, TextRect.copy)
+      --table.insert(menu_text, "Copy Selected Without Colors")
+      --table.insert(menu_functions, TextRect.copy)
       table.insert(menu_functions, TextRect.copyPlain)
    end
 
@@ -927,11 +927,12 @@ end
 
 function TextRect:copyPlain()
    self:copyAndNotify(strip_colours(self:selected_text()))
+   --self:copyAndNotify(self:selected_text())
 end
 
-function TextRect:copy()
-   self:copyAndNotify(canonicalize_colours(self:selected_text(), true))
-end
+--function TextRect:copy()
+   --self:copyAndNotify(canonicalize_colours(self:selected_text(), true))
+--end
 
 function TextRect:selected_text()
    s_text = {}
@@ -948,6 +949,7 @@ function TextRect:selected_text()
          -- end
 
          -- preserve the message and start the next one
+         --table.insert(s_text, StylesToColours(current_message)) -- removed colours
          table.insert(s_text, current_message)
          current_message = {}
       end
@@ -970,7 +972,8 @@ function TextRect:selected_text()
                store_message()
             end
             -- add styles from this wrapped line to the current message
-            local line_styles = TruncateStyles(self.wrapped_lines[copy_line][1], startpos+1, endpos)
+            --local line_styles = TruncateStyles(self.wrapped_lines[copy_line][1], startpos+1, endpos)
+            local line_styles = self.wrapped_lines[copy_line][1]
             if line_styles then
                for _, s in ipairs(line_styles) do
                   table.insert(current_message, s)
@@ -988,12 +991,22 @@ function TextRect:selected_text()
    return table.concat(s_text, "\n")
 end
 
+function GetLineText (styles)
+   local t = {}
+   for _, style in ipairs (styles) do
+     table.insert (t, style.text)
+   end -- for
+   return table.concat (t)
+ end -- function GetLineText
+
 function TextRect:copyFull()
    local t = {}
    for _,line in ipairs(self.raw_lines) do
-      table.insert(t, StylesToColours(line[1]))
+      -- table.insert(t, StylesToColours(line[1])) --removing colour copying
+      table.insert(t, GetLineText(line[1]))
    end
-   SetClipboard(table.concat(t, WHITE_CODE.."\n")..WHITE_CODE)
+   --SetClipboard(table.concat(t, WHITE_CODE.."\n")..WHITE_CODE) --removing colour copying
+   SetClipboard(table.concat(t,"\r\n"))
    ColourNote("yellow","","All text copied to clipboard.")
 end
 
