@@ -33,7 +33,8 @@ local echo_chat_ID = "55616ea13339bc68e963e1f8"
 local echo_chat_name = "DBNU_chat_echo"
 local chat_miniwindow_ID = "b555825a4a5700c35fa80780"
 local chat_miniwindow_name = "DBNU_channels_fiendish"
-
+local repaint_buffer_ID = "b555825a4a5700c35fa80780"
+local repaint_buffer_name = "repaint_buffer"
 
 function OnPluginInstall ()
     if not IsPluginInstalled(echo_chat_ID) then
@@ -45,6 +46,16 @@ function OnPluginInstall ()
            location =  GetPluginInfo(GetPluginID (), 20)
         end -- if
         LoadPlugin (location .. echo_chat_name .. ".xml")
+    end
+    if not IsPluginInstalled(repaint_buffer_ID) then
+        if GetPluginID () == "" then
+           me = "world script"
+           location = GetInfo (60)
+        else
+           me = GetPluginName () .. " plugin"
+           location =  GetPluginInfo(GetPluginID (), 20)
+        end -- if
+        LoadPlugin (location .. repaint_buffer_name .. ".xml")
     end
     if not IsPluginInstalled(chat_miniwindow_ID) then
         if GetPluginID () == "" then
