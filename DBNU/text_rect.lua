@@ -1,19 +1,22 @@
 -- Bits of this code and ideas were borrowed and remixed from the MUSHclient community. https://www.mushclient.com/forum/?id=9385 and others.
 
 --[[
+
 Thanks to Fiendish of Aardwolf who provided the base and starting point for all of this. 
 Original files sourced from: https://github.com/fiendish/aardwolfclientpackage 
 My process: http://www.gammon.com.au/forum/?id=14718
 Thank you!! 
 
 My Github for DBNU: https://github.com/DBNU-Braska/DBNU
+
 --]]
 
 
 require "wait"
 require "copytable"
 require "colors"
-dofile (GetInfo(60) .. "DBNU_colors.lua")
+dofile(GetPluginInfo(GetPluginID(), 20) .. "DBNU_colors.lua")
+--dofile (GetInfo(60) .. "DBNU_colors.lua")
 
 local function getHighlightColor(bg)
    local h, s, l = colors.rgb_string_to_hsl(string.format('#%06x', bg))

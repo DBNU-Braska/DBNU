@@ -14,8 +14,8 @@
    save_state="y"
    sequence="-9000"
 >
-<!-- Plugin sequence must be before echo plugin to capture unechoed info 
-
+<!-- Plugin sequence must be before echo plugin to capture unechoed info -->
+<!--
 
 Thanks to Fiendish of Aardwolf who provided the base and starting point for all of this. 
 Original files sourced from: https://github.com/fiendish/aardwolfclientpackage 
@@ -23,7 +23,6 @@ My process: http://www.gammon.com.au/forum/?id=14718
 Thank you!! 
 
 My Github for DBNU: https://github.com/DBNU-Braska/DBNU
-
 
 -->
 <description trim="y">
@@ -303,13 +302,14 @@ USAGE:
 
 <script>
 <![CDATA[
---require "DBNU_register_z_on_create"
 
-require "mw_theme_base"
+dofile(GetPluginInfo(GetPluginID(), 20) .. "mw_theme_base.lua")
+--require "mw_theme_base"
 require "movewindow"
-
-require "text_rect"
-require "scrollbar"
+dofile(GetPluginInfo(GetPluginID(), 20) .. "text_rect.lua")
+--require "text_rect"
+dofile(GetPluginInfo(GetPluginID(), 20) .. "scrollbar.lua")
+--require "scrollbar"
 
 dofile(GetPluginInfo(GetPluginID(), 20) .. "DBNU_colors.lua")
 

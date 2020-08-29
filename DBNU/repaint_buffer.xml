@@ -2,7 +2,16 @@
 <!DOCTYPE muclient>
 <!-- Saved on Wednesday, December 01, 2010, 11:54 AM -->
 <!-- MuClient version 4.70 -->
+<!--
 
+Thanks to Fiendish of Aardwolf who provided the base and starting point for all of this. 
+Original files sourced from: https://github.com/fiendish/aardwolfclientpackage 
+My process: http://www.gammon.com.au/forum/?id=14718
+Thank you!! 
+
+My Github for DBNU: https://github.com/DBNU-Braska/DBNU
+
+-->
 <muclient>
 <plugin
    name="Repaint_Buffer"

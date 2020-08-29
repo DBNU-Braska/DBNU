@@ -16,19 +16,24 @@ Steps for use: (also see https://github.com/fiendish/aardwolfclientpackage/wiki/
 5) Optional: If your plugin wants to preserve state between theme changes (changing theme reloads the plugin),
    you can detect whether the plugin is closing because of a theme change with GetVariable(Theme.reloading_variable).
 --]]
+
 --[[
+
 Thanks to Fiendish of Aardwolf who provided the base and starting point for all of this. 
 Original files sourced from: https://github.com/fiendish/aardwolfclientpackage 
 My process: http://www.gammon.com.au/forum/?id=14718
 Thank you!! 
 
 My Github for DBNU: https://github.com/DBNU-Braska/DBNU
+
 --]]
 
+--dofile(GetPluginInfo(GetPluginID(), 20) .. "checkplugin.lua")
 
 require "checkplugin"
 require "movewindow"
-dofile(GetInfo(60) .. "DBNU_colors.lua")
+--dofile(GetInfo(60) .. "DBNU_colors.lua")
+dofile(GetPluginInfo(GetPluginID(), 20) .. "DBNU_colors.lua")
 
 module ("Theme", package.seeall)
 
@@ -37,7 +42,7 @@ function b9315e040989d3f81f4328d6() -- Theme_controller
    return true
 end
 
-theme_dir = GetInfo(66).."lua\\mw_themes\\"
+theme_dir = GetInfo(66).."Worlds\\plugins\\DBNU\\mw_themes\\"
 theme_file = "Charcoal.lua"
 
 function get_theme()
@@ -123,12 +128,15 @@ function _load_controller()
       return
    end
    if not IsPluginInstalled(theme_controller_ID) then
-      local inner_action = [[if not theme_plugin_loading then theme_plugin_loading = true; DoAfterSpecial(0.1, 'require \'checkplugin\'; theme_plugin_loading = nil; do_plugin_check_now(\']]..theme_controller_ID..[[\', \']]..theme_controller_name..[[\')', sendto.scriptafteromit) end]]
-      -- run_in_global_space(inner_action)
-      local prefix = GetAlphaOption("script_prefix")
-      SetAlphaOption("script_prefix", "/")
-      Execute("/"..inner_action)
-      SetAlphaOption("script_prefix", prefix)
+      if GetPluginID () == "" then
+         me = "world script"
+         location = GetInfo (60)
+      else
+         me = GetPluginName () .. " plugin"
+         location =  GetPluginInfo(GetPluginID (), 20)
+      end -- if
+
+      LoadPlugin (location .. theme_controller_name .. ".xml")
    end
 end
 
