@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE muclient>
+<!-- Saved on Wednesday, December 01, 2010, 11:54 AM -->
+<!-- MuClient version 4.70 -->
+<!--
+
+Thanks to Fiendish of Aardwolf who provided the base and starting point for all of this. 
+Original files sourced from: https://github.com/fiendish/aardwolfclientpackage 
+My process: http://www.gammon.com.au/forum/?id=14718
+Thank you!! 
+
+My Github for DBNU: https://github.com/DBNU-Braska/DBNU
+
+-->
+<muclient>
+<plugin
+   name="Install_DBNU_Chat_Plugins"
+   author="Braska"
+   id="bb7b2d2b3ed45efecb299b6e"
+   language="Lua"
+   purpose="Loads plugins for DBNU Chat Windows"
+   date_written="2020-08-28"
+   requires="5.06"
+   version="1.0"
+>
+
+</plugin>
+
+<script>
+<![CDATA[
+
+local echo_chat_ID = "55616ea13339bc68e963e1f8"
+local echo_chat_name = "DBNU_chat_echo"
+local chat_miniwindow_ID = "b555825a4a5700c35fa80780"
+local chat_miniwindow_name = "DBNU_channels_fiendish"
+local repaint_buffer_ID = "abc1a0944ae4af7586ce88dc"
+local repaint_buffer_name = "repaint_buffer"
+local theme_controller_ID = "b9315e040989d3f81f4328d6"
+
+function OnPluginInstall ()
+    if not IsPluginInstalled(echo_chat_ID) then
+        if GetPluginID () == "" then
+           me = "world script"
+           location = GetInfo (60)
+        else
+           me = GetPluginName () .. " plugin"
+           location =  GetPluginInfo(GetPluginID (), 20)
+        end -- if
+        LoadPlugin (location .. echo_chat_name .. ".xml")
+        print("Chat Echo Installed Successfully.")
+    end
+    if not IsPluginInstalled(chat_miniwindow_ID) then
+        if GetPluginID () == "" then
+            me = "world script"
+            location = GetInfo (60)
+        else
+            me = GetPluginName () .. " plugin"
+            location =  GetPluginInfo(GetPluginID (), 20)
+        end -- if
+        LoadPlugin (location .. chat_miniwindow_name .. ".xml")
+        print("Chat Window Installed Successfully.")
+    end
+    if not IsPluginInstalled(repaint_buffer_ID) then
+        if GetPluginID () == "" then
+           me = "world script"
+           location = GetInfo (60)
+        else
+           me = GetPluginName () .. " plugin"
+           location =  GetPluginInfo(GetPluginID (), 20)
+        end -- if
+        LoadPlugin (location .. repaint_buffer_name .. ".xml")
+        print("Repaint Buffer Installed Successfully.")
+    end
+
+end -- OnPluginInstall
+
+function OnPluginClose ()
+    print("Removing this plugin will not remove all of the DBNU supported plugins if there are others installed dependent on them.")
+    print("It will only remove those independent of other plugins.")
+    if IsPluginInstalled(chat_miniwindow_ID) then
+        UnloadPlugin (chat_miniwindow_ID)
+        print("Chat Window Uninstalled Successfully.")
+    end    
+    if IsPluginInstalled(echo_chat_ID) then
+        UnloadPlugin (echo_chat_ID)
+        print("Chat Echo Uninstalled Successfully.")
+    end
+    if IsPluginInstalled(theme_controller_ID) then
+        -- if IsPluginInstalled(something!_ID) then
+        --    print("Theme Controller still needed.")
+        --else
+            UnloadPlugin (theme_controller_ID)
+            print("Theme Controller Uninstalled Successfully.")
+        --end
+    end
+    if IsPluginInstalled(repaint_buffer_ID) then
+        if IsPluginInstalled(theme_controller_ID) then
+            print("Repaint Buffer still needed.")
+        else
+            UnloadPlugin (repaint_buffer_ID)
+            print("Repaint Buffer Uninstalled Successfully.")
+        end
+    end
+end -- OnPluginClose
+
+]]>
+</script>
+</muclient>

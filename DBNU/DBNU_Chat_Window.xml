@@ -3,7 +3,7 @@
 <!-- Thanks to Orogan for past help. I wish I remembered what with, but I didn't write it down. -->
 <muclient>
 <plugin
-   name="DBNU_Chat_Capture_Miniwindow"
+   name="DBNU_Chat_Window"
    author="Fiendish"
    id="b555825a4a5700c35fa80780"
    language="Lua"

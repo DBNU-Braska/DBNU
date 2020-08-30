@@ -120,7 +120,7 @@ function load_theme(file)
 end
 
 local theme_controller_ID = "b9315e040989d3f81f4328d6"
-local theme_controller_name = "Theme_Controller"
+local theme_controller_name = "DBNU_Theme_Controller"
 
 function _load_controller()
    if not GetInfo(119) then
