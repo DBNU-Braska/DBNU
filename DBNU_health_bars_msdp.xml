@@ -38,15 +38,11 @@ DBNU MSDP based health bars
 
 <script>
 <![CDATA[
---require "aard_register_z_on_create"
 
 dofile(GetPluginInfo(GetPluginID(), 20) .. "mw_theme_base.lua")
---require "mw_theme_base"
-
 require "movewindow"
 require "gauge"
 dofile(GetPluginInfo(GetPluginID(), 20) .. "MSDPHelper.lua")
---require "gmcphelper"
 require "serialize"
 require "colors"
 
