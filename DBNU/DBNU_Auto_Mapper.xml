@@ -368,7 +368,7 @@ function map_find (name, line, wildcards)
 end
 
 function map_debug(name, line, wildcards)
-    local newlevel = tonumber(wildcards[0])
+    local newlevel = tonumber(wildcards[1])
 
     if (newlevel and newlevel >= 0 and newlevel <= 3) then
         output_level = newlevel
@@ -1507,7 +1507,7 @@ function OnPluginInstall ()
     -- get saved configuration
     assert (loadstring (GetVariable ("config") or "")) ()
     
-    output_level = tonumber(GetVariable("outputlevel") or "1")
+    output_level = tonumber(GetVariable("outputlevel") or "0")
 
     DebugNote(3,"Installing plugin")
     
