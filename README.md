@@ -1,18 +1,12 @@
 # DBNU
-This branch is for MSDP based plugins. 
+To get this working in your MUSHClient:
 
-To get this working in your MUSHclient:
+Download code as Zip. The big green button that says CODE...
 
-   Download:   - My_Chat_Window.lua
-               - MSDPHanlder.xml
-               - MSDPHelper.lua
-               - colours.lua
-   
-   Download any of the other .xml plugin files
+Extract contents of DBNU-master folder to MUSHClient -> Worlds -> Plugins folder
 
-Put them in the MUSHclient -> Worlds -> Plugins folder
+You should now have a folder called DBNU in your MUSHClient Plugins folder.
 
-install them via file - plugins in MUSHclient! 
+install 0_DBNU_Plugin_Installer.xml via file - plugins within MUSHClient!
 
-
-Have fun! 
+Have fun!
