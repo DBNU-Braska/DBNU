@@ -183,7 +183,7 @@ USAGE:
 <aliases>
     <alias
     script="chat_echo"
-    match="^chats echo( on| off)?$"
+    match="^quests echo( on| off)?$"
     enabled="y"
     regexp="y"
     sequence="100"
@@ -192,7 +192,7 @@ USAGE:
 
     <alias
     script="chat_show"
-    match="chats show"
+    match="quests show"
     enabled="y"
     sequence="100"
     ignore_case="y"
@@ -200,7 +200,7 @@ USAGE:
 
     <alias
     script="chat_hide"
-    match="chats hide"
+    match="quests hide"
     enabled="y"
     sequence="100"
     ignore_case="y"
