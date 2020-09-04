@@ -16,7 +16,6 @@ require "wait"
 require "copytable"
 require "colors"
 dofile(GetPluginInfo(GetPluginID(), 20) .. "DBNU_colors.lua")
---dofile (GetInfo(60) .. "DBNU_colors.lua")
 
 local function getHighlightColor(bg)
    local h, s, l = colors.rgb_string_to_hsl(string.format('#%06x', bg))
@@ -929,13 +928,8 @@ function TextRect:copyUrl(hotspot_id)
 end
 
 function TextRect:copyPlain()
-   --self:copyAndNotify(strip_colours(self:selected_text()))
    self:copyAndNotify(self:selected_text())
 end
-
---function TextRect:copy()
-   --self:copyAndNotify(canonicalize_colours(self:selected_text(), true))
---end
 
 function TextRect:selected_text()
    s_text = {}
@@ -943,17 +937,7 @@ function TextRect:selected_text()
 
    function store_message()
       if current_message[1] then
-         -- -- end in white if line contains any other color
-         -- for _,s in ipairs(current_message) do
-         --    if s.textcolour then
-         --       table.insert(current_message, {text="", textcolour=GetNormalColour(8)})
-         --       break
-         --    end
-         -- end
-
-         -- preserve the message and start the next one
          table.insert(s_text, StylesToColours(current_message)) -- removed colours
-         --table.insert(s_text, current_message)
          current_message = {}
       end
    end
@@ -1004,10 +988,8 @@ function GetLineText (styles)
 function TextRect:copyFull()
    local t = {}
    for _,line in ipairs(self.raw_lines) do
-      -- table.insert(t, StylesToColours(line[1])) --removing colour copying
       table.insert(t, GetLineText(line[1]))
    end
-   --SetClipboard(table.concat(t, WHITE_CODE.."\n")..WHITE_CODE) --removing colour copying
    SetClipboard(table.concat(t,"\r\n"))
    ColourNote("yellow","","All text copied to clipboard.")
 end

@@ -53,6 +53,10 @@
 dofile(GetPluginInfo(GetPluginID(), 20) .. "mw_theme_base.lua")
 dofile(GetPluginInfo(GetPluginID(), 20) .. "scrollbar.lua")
 
+--function OnPluginListChanged()
+--   file(GetPluginInfo(GetPluginID(), 20) .. "DBNU_requirements.lua")
+--end
+
 default_top = 240
 default_bottom = 720
 default_left = 7
@@ -421,7 +425,7 @@ function OnPluginInstall()
    end
 
    if 0 ~= SetBackgroundImage(imgpath, 13) then
-      imgpath = dir.."worlds\\plugins\\DBNU\\images\\bg1.png"
+      imgpath = dir.."worlds\\plugins\\DBNU\\images\\space2.png"
       -- add some theme coloring to the background
       WindowCreate("WiLl_It_BlEnD", 0, 0, 0, 0, 0, 0, Theme.SECONDARY_BODY)
       WindowLoadImage("WiLl_It_BlEnD", "tExTuRe", imgpath)

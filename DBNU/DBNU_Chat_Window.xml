@@ -275,11 +275,11 @@ USAGE:
 <aliases>
 
 <alias
-   match="resetaard"
+   match="resetdbnu"
    enabled="y"
    sequence="100"
    ignore_case="y"
-   script="reset_aard"
+   script="reset_dbnu"
 ></alias>
 
 <alias
@@ -302,31 +302,24 @@ USAGE:
 
 <script>
 <![CDATA[
+--dofile(GetPluginInfo(GetPluginID(), 20) .. "register_z_on_create.lua")
 
 dofile(GetPluginInfo(GetPluginID(), 20) .. "mw_theme_base.lua")
---require "mw_theme_base"
 require "movewindow"
 dofile(GetPluginInfo(GetPluginID(), 20) .. "text_rect.lua")
---require "text_rect"
 dofile(GetPluginInfo(GetPluginID(), 20) .. "scrollbar.lua")
---require "scrollbar"
 
 dofile(GetPluginInfo(GetPluginID(), 20) .. "DBNU_colors.lua")
 
 local gap = 1
 MAX_LINES = 10000 -- how many lines to store in scrollback
 
--- date_format = "[%d %b %H:%M:%S] "   -- [30 Aug 13:29:49]   date and time 24 hour
--- date_format = "[%d %b %I:%M:%S%p] " -- [30 Aug 01:20:12PM] date and time 12 hour
--- date_format = "[%H:%M:%S] "         -- [13:29:08]          time 24 hour
--- date_format = "[%X] "               -- [1:22:06 PM]        time 12 hour
-
-default_width = 657 + Theme.RESIZER_SIZE + 2
-default_height = 132
+default_width = 721 + Theme.RESIZER_SIZE + 18
+default_height = 235
 default_x = 0
 default_y = 0
-default_font_name = "Dina"
-default_font_size = "8"
+default_font_name = "Consolas"
+default_font_size = "11"
 default_log_file_size = 0 -- MB or 0 for no split
 
 date_format = GetVariable("date_format") or "[%d %b %H:%M:%S] "
@@ -562,7 +555,7 @@ function removeTab()
    setTab(current_tab)
 end
 
-function reset_aard()
+function reset_dbnu()
    font_name = default_font_name
    font_size = default_font_size
    WindowPosition(win, default_x, default_y, 0, 18)
@@ -573,6 +566,7 @@ function reset_aard()
 end
 
 function OnPluginListChanged ()
+   --   dofile(GetPluginInfo(GetPluginID(), 20) .. "DBNU_requirements.lua")
    CallPlugin ("55616ea13339bc68e963e1f8", "enable_hiding", true, GetPluginID())
 end
 
@@ -736,9 +730,9 @@ function drawBackground ()
 end
 
 function ResizeMoveCallback ()
-   --if GetPluginVariable("c293f9e7f04dde889f65cb90", "lock_down_miniwindows") == "1" then -- aard_layout.xml
-   --   return
-   --end
+   if GetPluginVariable("c293f9e7f04dde889f65cb90", "lock_down_miniwindows") == "1" then -- aard_layout.xml
+      return
+   end
    posx, posy = WindowInfo(win, 17), WindowInfo(win, 18)
    width = width+posx-startx
    startx = posx

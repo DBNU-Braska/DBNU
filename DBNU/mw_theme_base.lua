@@ -28,11 +28,8 @@ My Github for DBNU: https://github.com/DBNU-Braska/DBNU
 
 --]]
 
---dofile(GetPluginInfo(GetPluginID(), 20) .. "checkplugin.lua")
-
 require "checkplugin"
 require "movewindow"
---dofile(GetInfo(60) .. "DBNU_colors.lua")
 dofile(GetPluginInfo(GetPluginID(), 20) .. "DBNU_colors.lua")
 
 module ("Theme", package.seeall)
@@ -128,15 +125,23 @@ function _load_controller()
       return
    end
    if not IsPluginInstalled(theme_controller_ID) then
-      if GetPluginID () == "" then
-         me = "world script"
-         location = GetInfo (60)
-      else
-         me = GetPluginName () .. " plugin"
-         location =  GetPluginInfo(GetPluginID (), 20)
-      end -- if
+      local inner_action = [[if not theme_plugin_loading then theme_plugin_loading = true; DoAfterSpecial(0.1, 'require \'checkplugin\'; theme_plugin_loading = nil; do_plugin_check_now(\']]..theme_controller_ID..[[\', \']]..theme_controller_name..[[\')', sendto.scriptafteromit) end]]
+      -- run_in_global_space(inner_action)
+      local prefix = GetAlphaOption("script_prefix")
+      SetAlphaOption("script_prefix", "/")
+      Execute("/"..inner_action)
+      SetAlphaOption("script_prefix", prefix)
+      
+      
+--      if GetPluginID () == "" then
+--         me = "world script"
+--         location = GetInfo (60)
+--      else
+--         me = GetPluginName () .. " plugin"
+--         location =  GetPluginInfo(GetPluginID (), 20)
+--      end -- if
 
-      LoadPlugin (location .. theme_controller_name .. ".xml")
+--      LoadPlugin (location .. theme_controller_name .. ".xml")
    end
 end
 

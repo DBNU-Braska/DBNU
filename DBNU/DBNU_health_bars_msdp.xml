@@ -33,6 +33,7 @@ DBNU MSDP based health bars
 
 <script>
 <![CDATA[
+--dofile(GetPluginInfo(GetPluginID(), 20) .. "register_z_on_create.lua")
 
 dofile(GetPluginInfo(GetPluginID(), 20) .. "mw_theme_base.lua")
 require "movewindow"
@@ -352,7 +353,7 @@ function right_click_menu ()
    menustring = menustring .. ">Activate/De-activate|"..activeBars.."<|"
    menustring = menustring .. ">Configure Colors|>Health|Main|Border|<|>Ki|Main|Border|<|>Moves|Main|Border|<|>TNL|Main|Border|<|>Enemy|Main|Border|<|>Align|Evil|Good|<|<|"
    menustring = menustring .. ">HP Thresholds|>First|"..(((thresh1active == 1) and "+") or "").."Activate|Set Percent ("..thresh1percent.."%)|Set Color ("..RGBColourToName(thresh1color)..")|<|>Second|"..(((thresh2active == 1) and "+") or "").."Activate|Set Percent ("..thresh2percent.."%)|Set Color ("..RGBColourToName(thresh2color)..")|<|<|"
-   menustring = menustring .. ((reverseTNL==1 and "+") or "").."Reverse TNL|-|"..((graphicalMode==0 and "+") or "").."Text Mode|"..((flat_gauges==1 and "+") or "").."Use Flat Gauges|>Overlay Numbers|"..((overlay_numbers==0 and "+") or "").."None"..(((graphicalMode==0) and " (Same as \"Standard\" in Text Mode)") or "").."|"..((overlay_numbers==1 and "+") or "").."Standard|"..((overlay_numbers==2 and "+") or "").."Percentages|"..((overlay_numbers==3 and "+") or "").."Standard+Percentages|<|-|Bring To Front|Send To Back|-|>(In case of emergency)|Reduce Size|<|"
+   menustring = menustring .. ((reverseTNL==1 and "+") or "").."Reverse TNL|-|"..((graphicalMode==0 and "+") or "").."Text Mode|"..((flat_gauges==1 and "+") or "").."Use Flat Gauges|>Overlay Numbers|"..((overlay_numbers==0 and "+") or "").."None"..(((graphicalMode==0) and " (Same as \"Standard\" in Text Mode)") or "").."|"..((overlay_numbers==1 and "+") or "").."Standard|"..((overlay_numbers==2 and "+") or "").."Percentages|"..((overlay_numbers==3 and "+") or "").."Standard+Percentages|<|-|>(In case of emergency)|Reduce Size|<|"
 
    result = WindowMenu (win,
       WindowInfo (win, 14),  -- x position
@@ -439,12 +440,6 @@ function right_click_menu ()
       elseif numResult == 34 then
          overlay_numbers = 3
       elseif numResult == 35 then
-         -- bring to front
-         CallPlugin("462b665ecb569efbf261422f","boostMe", win)
-      elseif numResult == 36 then
-         -- send to back
-         CallPlugin("462b665ecb569efbf261422f","dropMe", win)
-      elseif numResult == 37 then
          -- reduce size
          font_name = default_font_name
          font_size = default_font_size
@@ -465,6 +460,9 @@ function OnPluginBroadcast (msg, id, name, text)
    if (id == 'b3aae34498d5bf19b5b2e2af') then
          page_built = true
          DisplayStatsPage()      
+   --elseif (id == "462b665ecb569efbf261422f" and msg==996 and text == "re-register z") then
+   --   CallPlugin("462b665ecb569efbf261422f", "registerMiniwindow", win)
+      
    end
 end
 
@@ -612,15 +610,9 @@ function OnPluginInstall()
 
    local fonts = utils.getfontfamilies()
 
-   -- if Dina not there already, add it
-   if not fonts.Dina then
-      AddFont(GetInfo(66) .. "\\Dina.fon")
-      fonts = utils.getfontfamilies()
-   end
-
-   if fonts["Dina"] then
-      default_font_size = 8
-      default_font_name = "Dina"
+   if fonts["Consolas"] then
+      default_font_size = 11
+      default_font_name = "Consolas"
    elseif fonts["Courier New"] then
       default_font_size = 9
       default_font_name = "Courier New"
@@ -653,10 +645,6 @@ function OnPluginInstall()
    width = math.max(width, MIN_WIDTH)
 
    resize_window()
-
-   --if IsConnected() then
-   --   Send_GMCP_Packet("request char")
-   --end
 
    installed = true
    WindowShow(win, true)
