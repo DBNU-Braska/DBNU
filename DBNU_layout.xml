@@ -53,10 +53,10 @@
 dofile(GetPluginInfo(GetPluginID(), 20) .. "mw_theme_base.lua")
 dofile(GetPluginInfo(GetPluginID(), 20) .. "scrollbar.lua")
 
-default_top = 139
-default_bottom = 545
+default_top = 240
+default_bottom = 720
 default_left = 7
-default_right = 650
+default_right = 730
 
 -- Variables not saved.
 startx           = ""
