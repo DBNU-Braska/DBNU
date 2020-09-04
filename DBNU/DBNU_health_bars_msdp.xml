@@ -582,7 +582,7 @@ end -- OnPluginEnable
 win = GetPluginID()
 
 --function OnPluginListChanged()
---   dofile "lua/aard_requirements.lua"
+--   dofile(GetPluginInfo(GetPluginID(), 20) .. "DBNU_requirements.lua")
 --end
 
 function OnPluginWorldOutputResized()
