@@ -1,0 +1,1238 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE muclient>
+<!-- Thanks to Orogan for past help. I wish I remembered what with, but I didn't write it down. -->
+<muclient>
+<plugin
+   name="DBNU_Chat_Window"
+   author="Fiendish"
+   id="b555825a4a5700c35fa80780"
+   language="Lua"
+   purpose="Move chats to a miniwindow"
+   date_written="2010-10-25"
+   requires="4.73"
+   version="2.0"
+   save_state="y"
+   sequence="-9000"
+>
+<!-- Plugin sequence must be before echo plugin to capture unechoed info -->
+<!--
+
+Thanks to Fiendish of Aardwolf who provided the base and starting point for all of this. 
+Original files sourced from: https://github.com/fiendish/aardwolfclientpackage 
+My process: http://www.gammon.com.au/forum/?id=14718
+Thank you!! 
+
+My Github for DBNU: https://github.com/DBNU-Braska/DBNU
+
+-->
+<description trim="y">
+USAGE:
+
+   chats show       : show chats window
+   chats hide       : hide chats window
+
+   Drag title bar to move window.
+   Drag inside text area to select text.
+   Right-click text area to see menu of options
+
+</description>
+
+</plugin>
+<triggers>
+
+<trigger
+   enabled="y"
+   name="OOC"
+   match="^\<(OOC|IMM)\> (.+)$"   
+   regexp="y"
+   script="channel"
+   sequence="100"
+  >
+  </trigger>	
+
+  <trigger
+   enabled="y"
+   name="Wartalk"
+   match="^\[WAR\] (.+)$"
+   regexp="y"
+   script="channel"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+   enabled="n"
+   name="IMM"
+   match="^\[IMM\] (.+)$"
+   regexp="y"
+   script="channel"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+   enabled="n"
+   name="Music"
+   match="^\[MUSIC\] (.+)$"
+   regexp="y"
+   script="channel"
+   sequence="100"
+  >
+  </trigger>
+  
+  <trigger
+    enabled="n"
+   name="Newbie"
+   match="^\[(New-Player|Immortal)\] (.+)$"
+   regexp="y"
+   script="channel"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+   enabled="n"
+   name="Ask_Answer"
+   match="^\[(Ask|Answer)\] (.+)$"
+   regexp="y"
+   script="channel"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+   enabled="n"
+   name="RP_Chat"
+   match="^\(Chat\) (.+)$"
+   regexp="y"
+   script="channel"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+   enabled="n"
+   name="Race"
+   match="^\<(Race)\> (.+)$"
+   regexp="y"
+   script="channel"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+   enabled="n"
+   name="Clan"
+   match="^\<Clan\> (.+)$"
+   regexp="y"
+   script="channel"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+   enabled="n"
+   name="Yell"
+   match="^\{Area-Yell\} (.+)$"
+   regexp="y"
+   script="channel"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+   enabled="n"
+   name="FriendChat"
+   match="\{(FriendChat)\} (.+) \'(.+)\'"
+   regexp="y"
+   script="channel"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+   enabled="n"
+   name="Scouter"
+   match="\[Scouter -(.+)\] (.+)$"
+   regexp="y"
+   script="channel"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+   enabled="n"
+   name="say_get"
+   match="^(.+) says (.+)$"
+   regexp="y"
+   script="channel"
+   sequence="100"
+   >
+   </trigger> 
+
+   <trigger
+   enabled="n"
+   name="say"
+   match="You say (.+)$"
+   regexp="y"
+   script="channel"
+   sequence="100"
+   >
+   </trigger> 
+
+  <trigger
+   enabled="n"
+   name="IMM_Logs"
+   match="^(Log|Comm|Build|Monitor): (.+)$"
+   regexp="y"
+   script="non_channel"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+   enabled="n"
+   name="RP_Story"
+   match="^\[RP-STORY (.+)\] (.+)$"
+   regexp="y"
+   script="non_channel"
+   sequence="100"
+  >
+  </trigger>   
+
+  <trigger
+   enabled="n"
+   name="Clan_Info"
+   match="^\[Clan-Info\] (.+)$"
+   regexp="y"
+   script="non_channel"
+   sequence="100"
+  >
+  </trigger>	
+   
+  <trigger
+   enabled="n"
+   name="Friend_Info"
+   match="\[Friend-Info\] (.+)"
+   regexp="y"
+   script="non_channel"
+   sequence="100"
+  >
+  </trigger>
+
+    <trigger
+   enabled="n"
+   name="News_Flash"
+   match="^\[NEWS-FLASH\] (.+)$"
+   regexp="y"
+   script="non_channel"
+   sequence="100"
+  >
+  </trigger>  
+
+  <trigger
+   enabled="n"
+   name="Info"
+   match="^\[(Info|A - Info)\] (.+)$"
+   regexp="y"
+   script="non_channel"
+   sequence="100"
+  >
+  </trigger>
+    
+  <trigger
+   enabled="n"
+   name="HighScore"
+   match="^\[HighScore\] (.+)$"
+   regexp="y"
+   script="non_channel"
+   sequence="100"
+  >
+  </trigger>
+    
+   <trigger
+   enabled="n"
+   name="Auto_Events"
+   match="^\[Auto-Event\] (.+)$"
+   regexp="y"
+   script="non_channel"
+   sequence="100"
+  >
+  </trigger>
+
+  <trigger
+   enabled="n"
+   name="Auction_House"
+   match="\[DBNU Auction House] (.+)$"
+   regexp="y"
+   script="non_channel"
+   sequence="100"
+  >
+  </trigger>  
+
+</triggers>
+
+<aliases>
+
+<alias
+   match="resetaard"
+   enabled="y"
+   sequence="100"
+   ignore_case="y"
+   script="reset_aard"
+></alias>
+
+<alias
+   script="chat_show"
+   match="chats show"
+   enabled="y"
+   sequence="100"
+   ignore_case="y"
+></alias>
+
+<alias
+   script="chat_hide"
+   match="chats hide"
+   enabled="y"
+   sequence="100"
+   ignore_case="y"
+></alias>
+
+</aliases>
+
+<script>
+<![CDATA[
+
+dofile(GetPluginInfo(GetPluginID(), 20) .. "mw_theme_base.lua")
+--require "mw_theme_base"
+require "movewindow"
+dofile(GetPluginInfo(GetPluginID(), 20) .. "text_rect.lua")
+--require "text_rect"
+dofile(GetPluginInfo(GetPluginID(), 20) .. "scrollbar.lua")
+--require "scrollbar"
+
+dofile(GetPluginInfo(GetPluginID(), 20) .. "DBNU_colors.lua")
+
+local gap = 1
+MAX_LINES = 10000 -- how many lines to store in scrollback
+
+-- date_format = "[%d %b %H:%M:%S] "   -- [30 Aug 13:29:49]   date and time 24 hour
+-- date_format = "[%d %b %I:%M:%S%p] " -- [30 Aug 01:20:12PM] date and time 12 hour
+-- date_format = "[%H:%M:%S] "         -- [13:29:08]          time 24 hour
+-- date_format = "[%X] "               -- [1:22:06 PM]        time 12 hour
+
+default_width = 657 + Theme.RESIZER_SIZE + 2
+default_height = 132
+default_x = 0
+default_y = 0
+default_font_name = "Dina"
+default_font_size = "8"
+default_log_file_size = 0 -- MB or 0 for no split
+
+date_format = GetVariable("date_format") or "[%d %b %H:%M:%S] "
+width = tonumber(GetVariable("WINDOW_WIDTH")) or default_width
+height = tonumber(GetVariable("WINDOW_HEIGHT")) or default_height
+log_to_file = tonumber(GetVariable("log_to_file")) or 0
+log_colour_codes = tonumber(GetVariable("log_colour_codes")) or 1
+log_timestamps = tonumber(GetVariable("log_timestamps")) or 1
+log_file_size = tonumber(GetVariable("log_file_size")) or default_log_file_size
+
+local init_nonchannel_keys = {"Auction_House", "Auto_Events", "Clan_Info", "Friend_Info", "HighScore", "Info", "IMM_Logs", "News_Flash", "RP_Story"}
+local init_nonchannel_pairs = {["Auction_House"]="DBNU Auction House", ["Auto_Events"]="Auto-Event", ["Clan_Info"]="Clan-Info", ["Friend_Info"]="Friend-Info", ["HighScore"]="HighScore", ["Info"]="Info", ["IMM_Logs"]="IMM Logs", ["News_Flash"]="NEWS-FLASH", ["RP_Story"]="RP-STORY"} --, ["remote_socials"]="Remote Socials"
+local init_channel_keys = {"Ask_Answer", "Clan", "FriendChat", "IMM", "Music", "Newbie", "OOC", "Race", "RP_Chat", "say", "say_get", "Scouter", "Wartalk", "Yell"}
+local init_channel_pairs = {["Ask_Answer"]="Ask_Answer", ["Clan"]="Clan", ["FriendChat"]="FriendChat", ["IMM"]="IMM", ["Music"]="Music", ["Newbie"]="Newbie", ["OOC"]="OOC", ["Race"]="Race", ["RP_Chat"]="RP_Chat", ["say"]="say", ["say_get"]="say_get", ["Scouter"]="Scouter", ["Wartalk"]="Wartalk", ["Yell"]="Yell"}
+
+channels_table = {}
+loadstring(GetVariable("channels_table") or "")()
+
+tabs_activity = {}
+tabs_channel_captures = {{}}
+loadstring(GetVariable("tabs_channel_captures") or "")()
+tabs_nonchannel_captures = {{}}
+loadstring(GetVariable("tabs_nonchannel_captures") or "")()
+
+num_tabs = #tabs_channel_captures
+current_tab = math.min(tonumber(GetVariable("current_tab")) or 1, #tabs_channel_captures)
+tabs_names = {}
+loadstring(GetVariable("tabs_names") or "")()
+
+window_title = GetVariable("window_title") or "Communication Log"
+
+function check_nonchannel_trigger(key)
+   local on = false
+   for tab,nonchannels in ipairs(tabs_nonchannel_captures) do
+      if nonchannels[key]["capture"] then
+         on = true
+         break
+      end
+   end
+   return on
+end
+
+function check_channel_trigger(key)
+   local on = false
+   for tab,channels in ipairs(tabs_channel_captures) do
+      if channels[key]["capture"] then
+         on = true
+         break
+      end
+   end
+   return on
+end
+
+function addDefaultNonChannels()
+   for tab,channels in ipairs(tabs_channel_captures) do
+      tabs_nonchannel_captures[tab] = tabs_nonchannel_captures[tab] or {}
+      for i,v in ipairs(init_nonchannel_keys) do
+         tabs_nonchannel_captures[tab][v] = tabs_nonchannel_captures[tab][v] or {["capture"]=true}
+      end
+   end
+
+   EnableTrigger("Auction_House", check_nonchannel_trigger("Auction_House"))
+   EnableTrigger("Auto_Events", check_nonchannel_trigger("Auto_Events"))
+   EnableTrigger("Clan_Info", check_nonchannel_trigger("Clan_Info"))
+   EnableTrigger("Friend_Info", check_nonchannel_trigger("Friend_Info"))
+   EnableTrigger("HighScore", check_nonchannel_trigger("HighScore"))
+   EnableTrigger("Info", check_nonchannel_trigger("Info"))
+   EnableTrigger("IMM_Logs", check_nonchannel_trigger("IMM_Logs"))
+   EnableTrigger("News_Flash", check_nonchannel_trigger("News_Flash"))
+   EnableTrigger("RP_Story", check_nonchannel_trigger("RP_Story"))
+end
+
+function addDefaultChannels()
+   for tab,channels in ipairs(tabs_channel_captures) do
+      tabs_channel_captures[tab] = tabs_channel_captures[tab] or {}
+      for i,v in ipairs(init_channel_keys) do
+         tabs_channel_captures[tab][v] = tabs_channel_captures[tab][v] or {["capture"]=true}
+      end
+   end
+
+   EnableTrigger("Ask_Answer", check_channel_trigger("Ask_Answer"))
+   EnableTrigger("Clan", check_channel_trigger("Clan"))
+   EnableTrigger("FriendChat", check_channel_trigger("FriendChat"))
+   EnableTrigger("IMM", check_channel_trigger("IMM"))
+   EnableTrigger("Music", check_channel_trigger("Music"))
+   EnableTrigger("Newbie", check_channel_trigger("Newbie"))
+   EnableTrigger("OOC", check_channel_trigger("OOC"))
+   EnableTrigger("Race", check_channel_trigger("Race"))
+   EnableTrigger("RP_Chat", check_channel_trigger("RP_Chat"))
+   EnableTrigger("say", check_channel_trigger("say"))
+   EnableTrigger("say_get", check_channel_trigger("say_get"))
+   EnableTrigger("Scouter", check_channel_trigger("Scouter"))
+   EnableTrigger("Wartalk", check_channel_trigger("Wartalk"))
+   EnableTrigger("Yell", check_channel_trigger("Yell"))
+   addDefaultNonChannels()
+end
+
+addDefaultChannels()
+
+function makeRect(i)
+   tabs_rects[i] = TextRect.new(win, "tr"..tostring(i), tr_left, tr_top, tr_right, tr_bottom, 1000, true, Theme.PRIMARY_BODY, 3, "Dina", 10)
+   tabs_scrollbars[i] = ScrollBar.new(win, "sb"..tostring(i), tr_right, tr_top, draw_right, draw_bottom-Theme.RESIZER_SIZE)
+
+   tabs_rects[i]:addUpdateCallback(tabs_scrollbars[i], tabs_scrollbars[i].setScroll)
+   tabs_scrollbars[i]:addUpdateCallback(tabs_rects[i], tabs_rects[i].setScroll)
+
+   tabs_rects[i]:setExternalMenuFunction(extend_rightclick_menu_string, extend_rightclick_menu_result)
+   tabs_rects[i]:loadFont(font_name, font_size)
+
+   bump_top_for_tabs()
+   tabs_rects[i]:setRect(tr_left, tr_top, tr_right, tr_bottom)
+   tabs_scrollbars[i]:setRect(tr_right, tr_top, draw_right, tr_bottom-Theme.RESIZER_SIZE)
+
+   if temp_tabs_data and temp_tabs_data[i] then
+      tabs_rects[i]:deserializeContents(temp_tabs_data[i].contents)
+      tabs_activity[i] = temp_tabs_data[i].activity
+      temp_tabs_data[i] = nil -- cleanup
+   end
+end
+
+function findTab(name_or_number)
+   -- prefer named tabs first
+   for i=1,num_tabs do
+      if tabs_names[i] and (tabs_names[i]:upper() == tostring(name_or_number):upper()) then
+         return i
+      end
+   end
+
+   -- but if the "name" is a number and there isn't a matching named tab,
+   -- pick that number tab.
+   for i=1,num_tabs do
+      if tostring(i) == tostring(name_or_number) then
+         return i
+      end
+   end
+end
+
+function setTabByName(name)
+   if type(name) ~= "string" then
+      return
+   end
+
+   local tab = findTab(name)
+   if tab then
+      setTab(tab)
+   end
+end
+
+function setTab(i)
+   if type(i) ~= "number" then
+      return
+   end
+
+   if tabs_rects[current_tab] then
+      tabs_rects[current_tab]:unInit()
+      tabs_scrollbars[current_tab]:unInit()
+   end
+   current_tab = math.min(math.max(i, 1), num_tabs)
+   tabs_activity[current_tab] = false
+
+   setupDisplay()
+   Repaint()
+   return current_tab
+end
+
+function nextTab()
+   local prev_tab = current_tab
+   if prev_tab == setTab(current_tab+1) then
+      setTab(1)
+   end
+end
+
+function prevTab()
+   local prev_tab = current_tab
+   if prev_tab == setTab(current_tab-1) then
+      setTab(num_tabs)
+   end
+end
+
+function addTab()
+   clearTabHotspots()
+   num_tabs = num_tabs + 1
+   tabs_channel_captures[num_tabs] = {}
+   tabs_nonchannel_captures[num_tabs] = {}
+   tabs_activity[num_tabs] = false
+   addDefaultChannels()
+   setupDisplay()
+
+   return num_tabs
+end
+
+function nameTab(tab, name)
+   if (tab >= 1) and (tab <= num_tabs) then
+      name = Trim(name or "")
+      if name ~= "" then
+         tabs_names[tab] = name
+      else
+         tabs_names[tab] = nil
+      end
+      clearTabHotspots()
+      drawTabs()
+      return tab
+   end
+end
+
+function getNamedTab(name)
+   local existing = findTab(name)
+   if existing then
+      return existing
+   else
+      return nameTab(addTab(), name)
+   end
+end
+
+function clearTabHotspots()
+   for i=1,#tabs_names do
+      WindowDeleteHotspot(win, "tab"..tostring(i))
+   end
+end
+
+function removeTab()
+   clearTabHotspots()
+   tabs_rects[current_tab]:unInit()
+   tabs_scrollbars[current_tab]:unInit()
+
+   table.remove(tabs_names, current_tab)
+   table.remove(tabs_rects, current_tab)
+   table.remove(tabs_scrollbars, current_tab)
+   table.remove(tabs_channel_captures, current_tab)
+   table.remove(tabs_nonchannel_captures, current_tab)
+
+   num_tabs = num_tabs - 1
+   setTab(current_tab)
+end
+
+function reset_aard()
+   font_name = default_font_name
+   font_size = default_font_size
+   WindowPosition(win, default_x, default_y, 0, 18)
+   WindowResize(win, default_width, default_height, Theme.SECONDARY_BODY)
+   Repaint() -- hack because WindowPosition doesn't immediately update coordinates
+   SaveState()
+   OnPluginInstall()
+end
+
+function OnPluginListChanged ()
+   CallPlugin ("55616ea13339bc68e963e1f8", "enable_hiding", true, GetPluginID())
+end
+
+function OnPluginInstall ()
+   DeleteVariable("temp_tabs_data") -- clean up after 9531ad91a3ed70b6bf9722bb218df8a9daa08614
+   init()
+   setupDisplay()
+   OnPluginEnable()
+end
+
+function bump_top_for_tabs()
+   if num_tabs > 1 then
+      tab_top = draw_top + 2
+      tr_top = tab_top + (2*gap) + tab_font_height + 2
+   end
+end
+
+function set_tr_shape()
+   tr_left = draw_left
+   tr_top = draw_top
+
+   bump_top_for_tabs()
+
+   tr_right = draw_right - Theme.RESIZER_SIZE + 1
+   tr_bottom = draw_bottom
+   return tr_left, tr_top, tr_right, tr_bottom
+end
+
+function init ()
+   win = GetPluginID()
+
+   local fonts = utils.getfontfamilies ()
+
+   -- install Dina
+   if not fonts.Dina then
+      AddFont(GetInfo (66) .. "\\Dina.fon")
+   end
+
+   -- create window with position from movewindow
+   windowinfo  = movewindow.install(win, miniwin.pos_top_right, miniwin.create_absolute_location, false, nil, {mouseup=MouseUp, mousedown=LeftClickOnly, dragmove=LeftClickOnly, dragrelease=LeftClickOnly},{x=default_x, y=default_y})
+   WindowCreate(win, windowinfo.window_left, windowinfo.window_top, width, height, windowinfo.window_mode, windowinfo.window_flags, Theme.SECONDARY_BODY)
+
+   -- Add handler for resizing
+   WindowAddHotspot(win, "resize", width-Theme.RESIZER_SIZE, height-Theme.RESIZER_SIZE, width, height, nil, nil, "MouseDown", nil, nil, "", 6, 0)
+   WindowDragHandler(win, "resize", "ResizeMoveCallback", "ResizeReleaseCallback", 0)
+
+   WindowShow(win, true)
+
+   font_name = GetVariable("font_name") or default_font_name
+   font_size = tonumber(GetVariable("font_size")) or default_font_size
+
+   WindowFont(win, "channels_font", font_name, font_size, false, false, false, false, 0)
+   tab_font_height = Theme.TextHeight(win, "channels_font")
+
+   tabs_rects = {}
+   tabs_scrollbars = {}
+
+   f = io.open(tmpfile, "r")
+   if f then
+      loadstring("temp_tabs_data =" .. (f:read("*a") or "nil"))()
+      f:close()
+      os.remove(tmpfile)
+   end
+end
+
+function drawTabs (mouseover)
+   if num_tabs > 1 then
+      local tab_left = draw_left+5
+      local tab_padding = Theme.DYNAMIC_BUTTON_PADDING
+      local active_left = nil
+      local active_width = nil
+
+      WindowRectOp(win, miniwin.rect_fill, draw_left, draw_top, draw_right+1, draw_top + (4*gap) + tab_font_height+1, Theme.SECONDARY_BODY)
+
+      for i,_ in ipairs(tabs_channel_captures) do
+         local name = tabs_names[i] or tostring(i)
+         local tab_width = WindowTextWidth(win, "channels_font", name) + (tab_padding * 2)
+
+         if not WindowHotspotInfo(win, "tab"..tostring(i), 1) then
+            WindowAddHotspot(win, "tab"..tostring(i), tab_left, tab_top, tab_left + tab_width, tab_top + (3*gap) + tab_font_height, "tabMouseOver", "tabCancelMouseOver", "tabMouseDown", nil, "tabMouseUp", "", 1, 0)
+         else
+            WindowMoveHotspot(win, "tab"..tostring(i), tab_left, tab_top, tab_left + tab_width, tab_top + (3*gap) + tab_font_height)
+         end
+
+         local text_color = Theme.BODY_TEXT
+         if i == current_tab then
+            active_left = tab_left
+            active_width = tab_width
+         else
+            local bg_color
+            if i ~= mouseover then
+               if tabs_activity[i] then
+                  bg_color = Theme.CLICKABLE_HOT
+                  text_color = Theme.CLICKABLE_HOT_TEXT
+               else
+                  bg_color = Theme.CLICKABLE
+                  text_color = Theme.CLICKABLE_TEXT
+               end
+            else
+               -- reversed coloration during mouseover
+               bg_color = Theme.CLICKABLE_HOVER
+               text_color = Theme.CLICKABLE_HOVER_TEXT
+            end
+
+            WindowCircleOp(
+               win, miniwin.circle_round_rectangle,
+               tab_left, tab_top, tab_left + tab_width, tab_top + (4*gap) + (2*tab_font_height), -- coords
+               Theme.THREE_D_HIGHLIGHT, miniwin.pen_solid, 1,          -- pen
+               bg_color, miniwin.brush_solid,             -- brush
+               16,   -- width of the ellipse used to draw the rounded corner
+               (4*gap) + (2*tab_font_height)  -- height of the ellipse used to draw the rounded corner
+            )
+         end
+
+         tab_left = tab_left + tab_padding
+         tab_left = tab_left + WindowText(win, "channels_font", name, tab_left, tab_top + gap + 1, draw_right, draw_top + (3*gap) + tab_font_height, text_color, false)
+         tab_left = tab_left + tab_padding
+      end
+
+      WindowLine(win, draw_left, tab_top + (2*gap) + tab_font_height + 1, draw_right+1, tab_top + (2*gap) + tab_font_height + 1, Theme.THREE_D_HIGHLIGHT, 0 + 0x0200, 1)
+      WindowCircleOp(
+         win, miniwin.circle_round_rectangle,
+         active_left, tab_top, active_left + active_width, tab_top + (4*gap) + (2*tab_font_height), -- coords
+         Theme.THREE_D_HIGHLIGHT, miniwin.pen_solid, 1,          -- pen
+         Theme.PRIMARY_BODY, miniwin.brush_solid,  -- brush
+         16,   -- width of the ellipse used to draw the rounded corner
+         (4*gap) + (2*tab_font_height)   -- height of the ellipse used to draw the rounded corner
+      )
+      WindowText(win, "channels_font", tabs_names[current_tab] or tostring(current_tab), active_left + tab_padding, tab_top + gap + 1, draw_right, draw_top + (3*gap) + tab_font_height, Theme.BODY_TEXT, false)
+   end
+   tabs_rects[current_tab]:draw()
+   tabs_scrollbars[current_tab]:draw()
+   CallPlugin("abc1a0944ae4af7586ce88dc", "BufferedRepaint")
+end
+
+function tabMouseOver (flags, hotspot_id)
+   drawTabs(tonumber(hotspot_id:sub(4)))
+end
+
+function tabCancelMouseOver (flags, hotspot_id)
+   drawTabs()
+end
+
+function tabMouseDown (flags, hotspot_id)
+   setTab(tonumber(hotspot_id:sub(4)))
+end
+
+function tabMouseUp (flags, hotspot_id)
+   if hotspot_id == "titlebar" then
+      hotspot_id = "tab"..tostring(current_tab or 1)
+   end
+   if bit.band(flags, miniwin.hotspot_got_rh_mouse) ~= 0 then
+      tabs_rects[tonumber(hotspot_id:sub(4))]:rightClickMenu()
+   end
+end
+
+function drawBackground ()
+   -- WindowAddHotspot(win, "titlebar", 0, 0, 0, 0, nil, nil, nil, nil, "tabMouseUp", "", miniwin.cursor_hand, 0)
+   draw_left, draw_top, draw_right, draw_bottom = Theme.DressWindow(win, "channels_font", window_title, nil)
+   Theme.AddResizeTag(win, 2, nil, nil, "MouseDown", "ResizeMoveCallback", "ResizeReleaseCallback")
+end
+
+function ResizeMoveCallback ()
+   --if GetPluginVariable("c293f9e7f04dde889f65cb90", "lock_down_miniwindows") == "1" then -- aard_layout.xml
+   --   return
+   --end
+   posx, posy = WindowInfo(win, 17), WindowInfo(win, 18)
+   width = width+posx-startx
+   startx = posx
+   if (WindowTextWidth(win, "channels_font", "Communication Log")+2*Theme.RESIZER_SIZE > width) then
+      width = WindowTextWidth(win, "channels_font", "Communication Log")+2*Theme.RESIZER_SIZE
+      startx = windowinfo.window_left+width
+   elseif (windowinfo.window_left+width > GetInfo(281)) then
+      width = GetInfo(281)-windowinfo.window_left
+      startx = GetInfo(281)
+   end
+   height = height+posy-starty
+   starty=posy
+   if (3*Theme.RESIZER_SIZE + 70 > height) then
+      height = 3*Theme.RESIZER_SIZE + 70
+      starty = windowinfo.window_top+height
+   elseif (windowinfo.window_top+height > GetInfo(280)) then
+      height = GetInfo(280)-windowinfo.window_top
+      starty = GetInfo(280)
+   end
+   if (utils.timer() - lastRefresh > 0.0333) then
+      setupDisplay()
+      lastRefresh = utils.timer()
+   end
+end
+
+lastRefresh = 0
+
+function ResizeReleaseCallback ()
+   setupDisplay()
+
+   for i = 1,num_tabs do
+      tabs_rects[i]:reWrapLines()
+   end
+
+   tabs_rects[current_tab]:draw()
+   tabs_scrollbars[current_tab]:draw()
+
+   WindowMoveHotspot(win, "resize", draw_right-Theme.RESIZER_SIZE, draw_bottom-Theme.RESIZER_SIZE, 0, 0)
+end
+
+function setupDisplay ()
+   WindowResize(win, width, height, 0x00ff00)
+   drawBackground()
+   set_tr_shape()
+   for i = 1,num_tabs do
+      if tabs_rects[i] then
+         tabs_rects[i]:setRect(tr_left, tr_top, tr_right, tr_bottom)
+         tabs_scrollbars[i]:setRect(tr_right, tr_top, draw_right, tr_bottom-Theme.RESIZER_SIZE)
+      else
+         makeRect(i)
+      end
+   end
+   temp_tabs_data = nil
+   drawTabs()
+end
+
+tmpfile = GetInfo(66) .. GetPluginID() .. "_temp_data.txt"
+
+function OnPluginClose ()
+   WindowDelete(win)
+   if GetVariable(Theme.reloading_variable) then
+      local temp_tabs_data = {}
+      for i,v in ipairs(tabs_rects) do
+         temp_tabs_data[i] = {
+            ["contents"] = v:serializeContents(),
+            ["activity"] = tabs_activity[i]
+         }
+      end
+      f = io.open(tmpfile, "w")
+      if f then
+         f:write(serialize.save_simple(temp_tabs_data))
+         f:flush()
+         f:close()
+      end
+   end
+end -- OnPluginClose
+
+function OnPluginEnable ()
+   WindowShow(win, true)
+end -- OnPluginEnable
+
+function OnPluginDisable()
+   WindowShow( win, false )
+end --  OnPluginDisable
+
+require "serialize"
+function OnPluginSaveState()
+   -- save window current location for next time
+   movewindow.save_state(win)
+
+   SetVariable("font_name", font_name)
+   SetVariable("font_size", font_size)
+   SetVariable("date_format", date_format)
+   if WindowInfo(win, 3) and WindowInfo(win, 4) then
+      width = WindowInfo(win, 3)
+      height = WindowInfo(win, 4)
+   end
+   SetVariable("WINDOW_WIDTH", width)
+   SetVariable("WINDOW_HEIGHT", height)
+   SetVariable("log_to_file", log_to_file)
+   SetVariable("log_file_size", log_file_size)
+   SetVariable("log_colour_codes", log_colour_codes)
+   SetVariable("log_timestamps", log_timestamps)
+   SetVariable("current_tab", current_tab)
+   SetVariable("channels_table", serialize.save("channels_table"))
+   SetVariable("tabs_names", serialize.save("tabs_names"))
+   SetVariable("tabs_channel_captures", serialize.save("tabs_channel_captures"))
+   SetVariable("tabs_nonchannel_captures", serialize.save("tabs_nonchannel_captures"))
+   SetVariable("window_title", window_title)
+end
+
+function sanitize_filename(str)
+   str = string.gsub(str, "[^%w%s()_-]", "")
+   return Trim(str or "")
+end
+
+re = require "re"
+
+function log(styles_or_text, timestamp)
+   local text = ((type(styles_or_text) == "table") and StylesToColours(styles_or_text) or styles_or_text)
+   local log_text = text
+
+   if log_timestamps == 1 then
+      log_text = "@w"..timestamp..text
+   end
+   if log_colour_codes == 0 then
+      log_text = strip_colours(log_text)
+   end
+   local filename = GetInfo(58):gsub("^.\\",GetInfo(56))..sanitize_filename(GetInfo(2)).."ChatLog.txt"
+   local f, err = io.open(filename, "a+") -- handle to chat log file
+   if f then
+      f:write(log_text.."\n") -- write to it
+      local size = f:seek("end") -- get current file size
+      f:close()  -- close that file now
+      if log_file_size > 0 and (size / 1048576) >= log_file_size then
+         local splitfilename = GetInfo(58):gsub("^.\\",GetInfo(56))..os.time().."-"..sanitize_filename(GetInfo(2)).."ChatLog.txt"
+         os.rename(filename, splitfilename) -- rename file to start a new one
+      end
+   else
+      ColourNote("white", "red", "COMMUNICATION LOG ERROR: Failed to access your logging file because of the following reason:" )
+      ColourNote("white", "red", err)
+      ColourNote("white", "red", "Fix the problem or disable Logging to File in the Communication Log plugin.")
+   end
+end
+
+function stampAndLog(styles_or_text, timestamp, omit_log)
+   if not timestamp then
+      timestamp = ""
+   end
+
+   -- remove control characters, but preserve newlines,
+   -- and don't use %g because that clobbers multibyte symbols
+   local is_styles = false
+   if type(styles_or_text) == "table" then
+      is_styles = true
+   end
+
+   if is_styles then
+      for i,v in ipairs(styles_or_text) do
+         v.text = v.text:gsub("[^%C\n]", "")
+         v.length = v.text:len()
+      end
+   else
+      styles_or_text = styles_or_text:gsub("[^%C\n]", "")
+   end
+
+   if (log_to_file == 1) and not omit_log then
+      log(styles_or_text, timestamp)
+   end
+
+   if timestamp ~= "" then
+      if is_styles then
+         table.insert(styles_or_text,1,{text=timestamp, length=string.len(timestamp), textcolour=0xc0c0c0})
+      else
+         styles_or_text = "@w"..timestamp..styles_or_text
+      end
+   end
+
+   return styles_or_text
+end
+
+function stampAndStore(msg, chan, is_nonchannel)
+   if msg then
+      msg = stampAndLog(msg, os.date(date_format))
+      if is_nonchannel then
+         storeNonChannel(msg, chan)
+      else
+         storeChannel(msg, chan)
+      end
+   end
+end
+
+
+function non_channel (name, line, wildcards, styles)
+   stampAndStore(styles, name, true)
+end -- non-channel info
+
+function channel(name, line, wildcards, styles)
+   stampAndStore(styles, name)
+end -- channel info
+
+function storeTab(styles, tab)
+   if (tab >= 1) and (tab <= num_tabs) then
+      tabs_rects[tab]:addStyles(styles)
+      if tab == current_tab then
+         tabs_rects[tab]:draw()
+         tabs_scrollbars[tab]:draw()
+      else
+         if not tabs_activity[tab] then
+            tabs_activity[tab] = true
+            return 1  -- should redraw tabs
+         end
+      end
+      return 0
+   end
+   return -1
+end
+
+function storeNonChannel(styles, label)
+   will_draw = false
+   for tab, whats_inside_the_tab in ipairs(tabs_nonchannel_captures) do
+      if whats_inside_the_tab[label]["capture"] then
+         if storeTab(styles, tab) == 1 then
+            will_draw = true
+         end
+      end
+   end
+   if will_draw then
+      drawTabs()
+   end
+end
+
+function storeChannel(styles, label)
+   will_draw = false
+   for tab, whats_inside_the_tab in ipairs(tabs_channel_captures) do
+      if whats_inside_the_tab[label]["capture"] then
+         if storeTab(styles, tab) == 1 then
+            will_draw = true
+         end
+      end
+   end
+   if will_draw then
+      drawTabs()
+   end
+end
+
+function MouseDown(flags, hotspot_id)
+   if (hotspot_id == "resize") then
+      startx, starty = WindowInfo (win, 17), WindowInfo (win, 18)
+   end
+end
+
+
+function chat_show(name, line, wildcards)
+   WindowShow( win, true )
+   ColourNote ("yellow", "", "Chats window now shown. Type 'chats hide' to hide it.")
+end -- function chat_show
+
+function chat_hide(name, line, wildcards)
+   WindowShow( win, false )
+   ColourNote ("yellow", "", "Chats window now hidden. Type 'chats show' to see it again.")
+end -- function chat_hide
+
+require "pairsbykeys"
+
+function extend_rightclick_menu_result(sender, hotspot_id, result)
+   if result == 1 then
+      wanted_font = utils.fontpicker(font_name, font_size) --font dialog
+      if wanted_font then
+         font_name = wanted_font.name
+         font_size = wanted_font.size
+         SetVariable("font_name", font_name)
+         SetVariable("font_size", font_size)
+         WindowFont(win, "channels_font", font_name, font_size, false, false, false, false, 0)
+         tab_font_height = Theme.TextHeight(win, "channels_font")
+         for i = 1,num_tabs do
+            tabs_rects[i]:loadFont(font_name, font_size)
+            tabs_rects[i]:reWrapLines()
+         end
+         setupDisplay()
+      end
+   elseif result == 2 then
+      date_format = ""
+      ColourNote ("yellow", "", "Timestamps in communication window DISABLED.")
+   elseif result == 3 then
+      date_format = "[%d %b %H:%M:%S] "
+      ColourNote ("yellow", "", "Timestamps in communication window ENABLED using format like '30 Aug 13:29:49'.")
+   elseif result == 4 then
+      date_format = "[%d %b %I:%M:%S%p] "
+      ColourNote ("yellow", "", "Timestamps in communication window ENABLED using format like '30 Aug 01:20:12PM'.")
+   elseif result == 5 then
+      date_format = "[%H:%M:%S] "
+      ColourNote ("yellow", "", "Timestamps in communication window ENABLED using format like '13:29:08'.")
+   elseif result == 6 then
+      date_format = "[%I:%M:%S%p] "
+      ColourNote ("yellow", "", "Timestamps in communication window ENABLED using format like '1:22:06 PM'.")
+   elseif result == 7 then
+      log_to_file = (((0 == log_to_file) and 1) or 0)
+      SetVariable("log_to_file", log_to_file)
+      if log_to_file == 0 then
+         ColourNote ("yellow", "", "Logging to file is now DISABLED.")
+      else
+         ColourNote ("yellow", "", "Logging to file is now ENABLED.")
+      end
+   elseif result == 8 then
+      log_timestamps = (((0 == log_timestamps) and 1) or 0)
+      SetVariable("log_timestamps", log_timestamps)
+      if log_timestamps == 0 then
+         ColourNote ("yellow", "", "Timestamps will not be included in the log file.")
+      else
+         ColourNote ("yellow", "", "Timestamps will be included in the log file.")
+      end
+   elseif result == 9 then
+      local ls = utils.inputbox("Input a size in MB. (0 for None)", "Log File Split Size", log_file_size, "", 10, {prompt_height = 16, box_width = 180, box_height = 130, reply_width = 40, reply_height = 20})
+      if not ls then -- canceled
+         return
+      end
+      ls = tonumber(ls)
+      if not ls then -- not a number
+         extend_rightclick_menu_result(sender, hotspot_id, result)
+         return
+      else
+         log_file_size = ls
+      end
+      if log_file_size == 0 then
+         ColourNote ("yellow", "", "Log file will not be split.")
+      else
+         ColourNote ("yellow", "", "Log files will be split at "..log_file_size.." MB.")
+      end
+   end
+
+   local echo_skip = 0
+   if (IsPluginInstalled("55616ea13339bc68e963e1f8")) then
+      echo_skip = 4
+      if result == 10 then
+         CallPlugin("55616ea13339bc68e963e1f8", "chat_echo", "on")
+      elseif result == 11 then
+         CallPlugin("55616ea13339bc68e963e1f8", "chat_echo", "off")
+      elseif result == 12 then
+         CallPlugin("55616ea13339bc68e963e1f8", "chat_echo", "channels")
+      elseif result == 13 then
+         CallPlugin("55616ea13339bc68e963e1f8", "chat_echo", "nonchannels")
+      end
+   end
+
+   noremove = (num_tabs < 2) and 1 or 0
+
+   if result == 10+echo_skip then
+      setTab(addTab())
+   elseif result == 11+echo_skip-noremove then
+      removeTab()
+   elseif result == 12+echo_skip-noremove then
+      local name = utils.inputbox("Choose a (preferably short) name for this channel capture tab", "Name Channel Tab", tostring(tabs_names[current_tab] or current_tab))
+      if not name then
+         return -- cancel was pressed, so keep existing name
+      end
+      nameTab(current_tab, name)
+   elseif result == 13+echo_skip-noremove then
+      local defaults = {}
+      for k,v in pairs(tabs_channel_captures[current_tab]) do
+         defaults[k] = v["capture"]
+      end
+
+      local capture_result = utils.multilistbox ("Choose which channels to capture to this communication log tab.", "Communication Log Channel Selection", init_channel_pairs, defaults)
+      if capture_result then
+         for k,v in pairs(tabs_channel_captures[current_tab]) do
+            v["capture"] = capture_result[k]
+         end
+      end
+
+      EnableTrigger("Ask_Answer", check_channel_trigger("Ask_Answer"))
+      EnableTrigger("Clan", check_channel_trigger("Clan"))
+      EnableTrigger("FriendChat", check_channel_trigger("FriendChat"))
+      EnableTrigger("IMM", check_channel_trigger("IMM"))
+      EnableTrigger("Music", check_channel_trigger("Music"))
+      EnableTrigger("Newbie", check_channel_trigger("Newbie"))
+      EnableTrigger("OOC", check_channel_trigger("OOC"))
+      EnableTrigger("Race", check_channel_trigger("Race"))
+      EnableTrigger("RP_Chat", check_channel_trigger("RP_Chat"))
+      EnableTrigger("say", check_channel_trigger("say"))
+      EnableTrigger("say_get", check_channel_trigger("say_get"))
+      EnableTrigger("Scouter", check_channel_trigger("Scouter"))
+      EnableTrigger("Wartalk", check_channel_trigger("Wartalk"))
+      EnableTrigger("Yell", check_channel_trigger("Yell"))
+
+   elseif result == 14+echo_skip-noremove then
+      local defaults = {}
+      for k,v in pairs(tabs_nonchannel_captures[current_tab]) do
+         defaults[k] = v["capture"]
+      end
+
+      local capture_result = utils.multilistbox ("Choose which non-channel messages to capture to this communication log tab.", "Communication Log Channel Selection", init_nonchannel_pairs, defaults)
+      if capture_result then
+         for k,v in pairs(tabs_nonchannel_captures[current_tab]) do
+            v["capture"] = capture_result[k]
+         end
+      end
+
+      EnableTrigger("Auction_House", check_nonchannel_trigger("Auction_House"))
+      EnableTrigger("Auto_Events", check_nonchannel_trigger("Auto_Events"))
+      EnableTrigger("Clan_Info", check_nonchannel_trigger("Clan_Info"))
+      EnableTrigger("Friend_Info", check_nonchannel_trigger("Friend_Info"))
+      EnableTrigger("HighScore", check_nonchannel_trigger("HighScore"))
+      EnableTrigger("Info", check_nonchannel_trigger("Info"))
+      EnableTrigger("IMM_Logs", check_nonchannel_trigger("IMM_Logs"))
+      EnableTrigger("News_Flash", check_nonchannel_trigger("News_Flash"))
+      EnableTrigger("RP_Story", check_nonchannel_trigger("RP_Story"))
+
+   elseif result == 15+echo_skip-noremove then
+      tabs_rects[current_tab]:clear()
+   elseif result == 16+echo_skip-noremove then
+    if window_title == "" then
+        window_title = "Communication Log"
+    else
+        window_title = ""
+    end
+    setupDisplay()
+   end
+   SaveState()
+end
+
+function extend_rightclick_menu_string(tr)
+   local function check(t, i)
+      t[i] = "+"..t[i]
+   end
+
+   local function disable(t, i)
+      t[i] = "^"..t[i]
+   end
+
+   local menu_strings = {
+      "Configure Font",
+      ">Timestamp",
+      "No Timestamps",
+      "30 Aug 13:29:49",
+      "30 Aug 01:20:12PM",
+      "13:29:08",
+      "1:22:06 PM",
+      "<",
+      ">Logging to File",
+      log_to_file==1 and "Disable" or "Enable",
+      "Log with Timestamps",
+      "-",
+      "Set Log File Split Size ("..((log_file_size == 0) and "None" or (tostring(log_file_size).."MB"))..")",
+      "<",
+      "Add New Tab",
+      "-",
+      "Remove This Tab",
+      "-",
+      "Name This Tab",
+      ">Tab Capture Settings",
+      "Edit Channel Captures",
+      "Edit Non-channel Captures",
+      "<",
+      "Clear Tab",
+      "-",
+      "Show/Hide Titlebar"
+   }
+   local ms = menu_strings
+
+   if date_format == "" then check(ms, 3) end
+   if date_format == "[%d %b %H:%M:%S] " then check(ms, 4) end
+   if date_format == "[%d %b %I:%M:%S%p] " then check(ms, 5) end
+   if date_format == "[%H:%M:%S] " then check(ms, 6) end
+   if date_format == "[%I:%M:%S%p] " then check(ms, 7) end
+
+   if log_timestamps == 1 then check(ms, 11) end
+
+   if num_tabs < 2 then disable(ms, 17) end
+
+   if (IsPluginInstalled("55616ea13339bc68e963e1f8")) then
+      local echo_menu_strings = {
+         ">Echo In Main Window Settings",
+         "Echo All",
+         "Echo None",
+         "-",
+         "Edit Channel Echoes",
+         "Edit Non-channel Echoes",
+         "<"
+      }
+      local ems = echo_menu_strings
+
+      for i,v in ipairs(echo_menu_strings) do
+         table.insert(menu_strings, 14+i, v)
+      end
+   end
+   return table.concat(menu_strings, "|")
+end
+
+function getmemoryusage()
+   collectgarbage('collect')
+   return collectgarbage('count')
+end
+
+]]>
+</script>
+</muclient>
