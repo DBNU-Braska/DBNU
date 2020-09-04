@@ -41,6 +41,6 @@ return {
    -- See Pink_Neon.lua for a "glitter on black" variant.
    -- Just make sure to return the path to a valid png file.
    bg_texture_function = function()
-      return GetInfo(66).."worlds/plugins/DBNU/images/bg1.png"
+      return GetInfo(66).."worlds/plugins/DBNU/images/bg2.png"
    end
 }
