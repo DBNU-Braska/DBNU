@@ -425,7 +425,7 @@ function OnPluginInstall()
    end
 
    if 0 ~= SetBackgroundImage(imgpath, 13) then
-      imgpath = dir.."worlds\\plugins\\DBNU\\images\\space2.png"
+      imgpath = dir.."worlds\\plugins\\DBNU\\images\\bg1.png"
       -- add some theme coloring to the background
       WindowCreate("WiLl_It_BlEnD", 0, 0, 0, 0, 0, 0, Theme.SECONDARY_BODY)
       WindowLoadImage("WiLl_It_BlEnD", "tExTuRe", imgpath)
