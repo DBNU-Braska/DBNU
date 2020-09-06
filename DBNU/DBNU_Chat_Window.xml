@@ -302,7 +302,7 @@ USAGE:
 
 <script>
 <![CDATA[
---dofile(GetPluginInfo(GetPluginID(), 20) .. "register_z_on_create.lua")
+--dofile(GetPluginInfo(GetPluginID(), 20) .. "DBNU_register_z_on_create.lua")
 
 dofile(GetPluginInfo(GetPluginID(), 20) .. "mw_theme_base.lua")
 require "movewindow"

@@ -39,7 +39,7 @@ function b9315e040989d3f81f4328d6() -- Theme_controller
    return true
 end
 
-theme_dir = GetInfo(66).."Worlds\\plugins\\DBNU\\mw_themes\\"
+theme_dir = GetInfo(66).."worlds\\plugins\\DBNU\\mw_themes\\"
 theme_file = "Charcoal.lua"
 
 function get_theme()
@@ -131,17 +131,6 @@ function _load_controller()
       SetAlphaOption("script_prefix", "/")
       Execute("/"..inner_action)
       SetAlphaOption("script_prefix", prefix)
-      
-      
---      if GetPluginID () == "" then
---         me = "world script"
---         location = GetInfo (60)
---      else
---         me = GetPluginName () .. " plugin"
---         location =  GetPluginInfo(GetPluginID (), 20)
---      end -- if
-
---      LoadPlugin (location .. theme_controller_name .. ".xml")
    end
 end
 
@@ -150,9 +139,9 @@ if (GetPluginID() ~= theme_controller_ID) then
 
    local maybe_theme_file = GetPluginVariable(theme_controller_ID, "theme_file") or theme_file
 
-   if not maybe_theme_file then
+   --if not maybe_theme_file then
       theme_file = maybe_theme_file
-   end
+   --end
 
    load_theme(theme_file)
 end
