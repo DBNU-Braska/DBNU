@@ -42,7 +42,7 @@ return {
    -- See Charcoal.lua for a "do nothing" variant.
    -- Just make sure to return the path to a valid png file.
    bg_texture_function = function()
-      imgpath = GetInfo(66).."worlds/plugins/images/forest2.png"
+      imgpath = GetInfo(66).."worlds/plugins/DBNU/images/forest2.png"
 
       WindowCreate("WiLl_It_BlEnD", 0, 0, 0, 0, 0, 0, 0)
       WindowLoadImage("WiLl_It_BlEnD", "tExTuRe", imgpath)
@@ -55,7 +55,7 @@ return {
       WindowFilter("WiLl_It_BlEnD", 0, 0, 0, 0, 9, 4)
       WindowBlendImage("WiLl_It_BlEnD", "cOlOr", 0, 0, 0, 0, 5, 0.8)
       
-      imgpath = GetInfo(66).."worlds/plugins/images/temp_theme_blend.png"
+      imgpath = GetInfo(66).."worlds/plugins/DBNU/images/temp_theme_blend.png"
       WindowWrite("WiLl_It_BlEnD", imgpath)
       return imgpath
    end
