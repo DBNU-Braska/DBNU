@@ -2,7 +2,7 @@
 
 -- CHARCOAL THEME
 return {
-   LOGO_OPACITY = 0.05,                    -- Main output background logo
+   LOGO_OPACITY = 0.09,                    -- Main output background logo
 
    PRIMARY_BODY = 0x000000,                -- Background for main output and miniwindow main areas
    SECONDARY_BODY = 0x333333,              -- Secondary background color (color under the chat window tabs)
@@ -31,7 +31,7 @@ return {
 
    -- scrollbar background
    SCROLL_TRACK_COLOR1 = 0x444444,         -- Color of accent brush on scrollbar
-   SCROLL_TRACK_COLOR2 = 0x696969,         -- Main color of scrollbar
+   SCROLL_TRACK_COLOR2 = 0x696969,         -- Main color of scrollbar 0x696969
    VERTICAL_TRACK_BRUSH = miniwin.brush_hatch_forwards_diagonal,  -- Scrollbar background texture
 
    DYNAMIC_BUTTON_PADDING = 20,            -- Padding around button text if button is dynamically sized to the text
@@ -41,6 +41,6 @@ return {
    -- See Pink_Neon.lua for a "glitter on black" variant.
    -- Just make sure to return the path to a valid png file.
    bg_texture_function = function()
-      return GetInfo(66).."worlds/plugins/DBNU/images/bg2.png"
+      return GetInfo(66).."worlds/plugins/DBNU/images/goku-bg.png"
    end
 }
