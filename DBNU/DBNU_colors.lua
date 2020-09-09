@@ -357,12 +357,13 @@ function ColoursToStyles (input, default_foreground_code, default_background_cod
 --      end -- if
 
       input = input:gsub(PREFIX_ESCAPE, "\0") -- change @@ to 0x00
+      --input = input:gsub(XTERM_ESCAPE, "\0") -- change `` to 0x00
       input = input:gsub(TILDE_PATTERN, "~") -- fix tildes (historical)
-      --input = input:gsub(X_NONNUMERIC_PATTERN,"%1") -- strip invalid xterm codes (non-number)
-      --input = input:gsub(X_THREEHUNDRED_PATTERN,"") -- strip invalid xterm codes (300+)
-      --input = input:gsub(X_TWOSIXTY_PATTERN,"") -- strip invalid xterm codes (260+)
-      --input = input:gsub(X_TWOFIFTYSIX_PATTERN,"") -- strip invalid xterm codes (256+)
-      --input = input:gsub(HIDDEN_GARBAGE_PATTERN, "")  -- strip hidden garbage
+      input = input:gsub(X_NONNUMERIC_PATTERN,"%1") -- strip invalid xterm codes (non-number)
+      input = input:gsub(X_THREEHUNDRED_PATTERN,"") -- strip invalid xterm codes (300+)
+      input = input:gsub(X_TWOSIXTY_PATTERN,"") -- strip invalid xterm codes (260+)
+      input = input:gsub(X_TWOFIFTYSIX_PATTERN,"") -- strip invalid xterm codes (256+)
+      input = input:gsub(HIDDEN_GARBAGE_PATTERN, "")  -- strip hidden garbage
 
 --      for code, text in input:gmatch(CODE_REST_CAPTURE_PATTERN) do
 --         local from_x = nil
