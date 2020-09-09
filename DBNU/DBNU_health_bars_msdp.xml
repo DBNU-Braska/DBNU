@@ -70,7 +70,6 @@ posx       = ""
 posy       = ""
 hotspot_id = ""
 page_built = false
-gmcp_char = {}
 
 -- functions for handling color codes
 dofile (GetPluginInfo (GetPluginID(), 20) .. "DBNU_colors.lua")
@@ -239,8 +238,8 @@ function DisplayStatsPage()
 
       bar = "Enemy"
       if (showBar[bar][2] == true) then
-         fighting = getmsdp("OPPONENT_HEALTH_MAX")
-         if fighting ~= "0" then
+         fighting = getmsdp("OPPONENT_NAME")
+         if fighting ~= "" then
             enemypct = getmsdp("OPPONENT_HEALTH")
             if enemypct ~= "0" then
                if showLabels == 1 then
