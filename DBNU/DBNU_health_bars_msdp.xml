@@ -240,7 +240,7 @@ function DisplayStatsPage()
       if (showBar[bar][2] == true) then
          fighting = getmsdp("OPPONENT_NAME")
          if fighting ~= "" then
-            enemypct = getmsdp("OPPONENT_HEALTH")
+            enemypct = (tonumber(getmsdp("OPPONENT_HEALTH"))/tonumber(getmsdp("OPPONENT_HEALTH_MAX")))*100
             if enemypct ~= "0" then
                if showLabels == 1 then
                   if stacked == 1 then
@@ -251,9 +251,9 @@ function DisplayStatsPage()
                end
             end
             if graphicalMode == 1 then
-               gauge(win,showBar[bar][3],tonumber(enemypct),100,xpos+label_width,ypos,bar_width,line_height,showBar[bar][4],0x000000,num_ticks,0x000000,showBar[bar][5],nil,flat_gauges==1)
+               gauge(win,showBar[bar][3],tonumber(getmsdp("OPPONENT_HEALTH")),tonumber(getmsdp("OPPONENT_HEALTH_MAX")),xpos+label_width,ypos,bar_width,line_height,showBar[bar][4],0x000000,num_ticks,0x000000,showBar[bar][5],nil,flat_gauges==1)
                if overlay_numbers ~= 0 then
-                  txt = string.lpad(enemypct.."%", 4, ' ')
+                  txt = string.lpad(string.format ("%.f",enemypct).."%", 4, ' ')
                   txtlen = WindowTextWidth(win,font_id,txt)
                   outlined_text(win, font_id, txt, xpos+label_width+((bar_width-txtlen)/2), ypos, 0, 0, 0xeeeeee, utf8)
                end
