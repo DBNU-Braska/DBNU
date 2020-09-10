@@ -109,9 +109,9 @@ function BuildStatsPage()
       table.insert(cstyles, {
             {text="Str",textcolour=label_colors["Strength"] or Theme.BODY_TEXT},
             bracket,
-            {text=string.format("%3s",getmsdp("STR")),textcolour=data_colors["Strength"]},
+            {text=string.format("%3s", commas_in_numbers and commas(getmsdp("STR")) or getmsdp("STR")),textcolour=data_colors["Strength"]},
             slash,
-            {text=string.format("%-3s",getmsdp("STR_PERM")),textcolour=data_colors["Strength"]},
+            {text=string.format("%-3s", commas_in_numbers and commas(getmsdp("STR_PERM")) or getmsdp("STR_PERM")),textcolour=data_colors["Strength"]},
             endbracket,
 
             {text="     Hp ",textcolour=label_colors["Health"] or Theme.BODY_TEXT},
@@ -225,7 +225,7 @@ function BuildStatsPage()
 
             {text="     Zeni",textcolour=label_colors["Zeni"] or Theme.BODY_TEXT},
             bracket,
-            {text=string.format("%s", commas_in_gold and commas(getmsdp("MONEY")) or getmsdp("MONEY")), textcolour=data_colors["Zeni"]},
+            {text=string.format("%s", commas_in_numbers and commas(getmsdp("MONEY")) or getmsdp("MONEY")), textcolour=data_colors["Zeni"]},
             endbracket,
             })
 
@@ -253,9 +253,9 @@ function BuildStatsPage()
       table.insert(cstyles, {
             {text="Str",textcolour=label_colors["Strength"] or Theme.BODY_TEXT},
             bracket,
-            {text=string.format("%3s",getmsdp("STR")),textcolour=data_colors["Strength"]},
+            {text=string.format("%3s", commas_in_numbers and commas(getmsdp("STR")) or getmsdp("STR")),textcolour=data_colors["Strength"]},
             slash,
-            {text=string.format("%-3s",getmsdp("STR_PERM")),textcolour=data_colors["Strength"]},
+            {text=string.format("%-3s", commas_in_numbers and commas(getmsdp("STR_PERM")) or getmsdp("STR_PERM")),textcolour=data_colors["Strength"]},
             endbracket
       })
 
@@ -338,7 +338,7 @@ function BuildStatsPage()
       table.insert(cstyles, {
             {text="Zeni ",textcolour=label_colors["Zeni"] or Theme.BODY_TEXT},
             bracket,
-            {text=string.format("%s",commas_in_gold and commas(getmsdp("MONEY")) or getmsdp("MONEY")), textcolour=data_colors["Zeni"]},
+            {text=string.format("%s",commas_in_numbers and commas(getmsdp("MONEY")) or getmsdp("MONEY")), textcolour=data_colors["Zeni"]},
             endbracket
       })
 
@@ -466,7 +466,7 @@ function right_click_menu ()
       colorstring = colorstring..">"..v.."|"..v.." Label ("..RGBColourToName(label_colors[v] or Theme.BODY_TEXT)..")|"..v.." Data ("..RGBColourToName(data_colors[v])..")|<|"
    end
 
-   menustring = "Flip Orientation|Change Font|>Colors|"..colorstring.."<|"..(commas_in_gold and "+" or "").."Commas in Zeni|-|Bring To Front|Send To Back|-|Reset Defaults"
+   menustring = "Flip Orientation|Change Font|>Colors|"..colorstring.."<|"..(commas_in_numbers and "+" or "").."Commas|-|Bring To Front|Send To Back|-|Reset Defaults"
 
    result = WindowMenu (win,
       WindowInfo (win, 14),  -- x position
@@ -552,8 +552,8 @@ function right_click_menu ()
             RefreshPage()
          end
       end
-   elseif result == "Commas in Zeni" then
-      commas_in_gold = not commas_in_gold
+   elseif result == "Commas" then
+      commas_in_numbers = not commas_in_numbers
       SaveState()
       OnPluginInstall()
       BuildStatsPage()
@@ -571,7 +571,7 @@ function right_click_menu ()
    elseif result == "Send To Back" then
       CallPlugin("462b665ecb569efbf261422f","dropMe", win)
    elseif result == "Reset Defaults" then
-      commas_in_gold   = false
+      commas_in_numbers   = false
       font_name        = default_font_name
       font_size        = default_font_size
       height           = default_height
@@ -697,7 +697,7 @@ function OnPluginSaveState ()
    SetVariable ("font_name", font_name)
    SetVariable ("font_size", font_size)
    SetVariable ("stacked", stacked)
-   SetVariable ("commas_in_gold", commas_in_gold and 1 or 0)
+   SetVariable ("commas_in_numbers", commas_in_numbers and 1 or 0)
    SetVariable ("label_colors", serialize.save("label_colors"))
    SetVariable ("data_colors", serialize.save("data_colors"))
 end
@@ -748,7 +748,7 @@ function OnPluginInstall()
    orig_height = height
    width = tonumber(GetVariable("width")) or default_width
    stacked = tonumber(GetVariable("stacked")) or 0
-   commas_in_gold = tonumber(GetVariable("commas_in_gold")) == 1
+   commas_in_numbers = tonumber(GetVariable("commas_in_numbers")) == 1
    windowinfo = movewindow.install(win, miniwin.pos_top_right, miniwin.create_absolute_location, false, nil, {mouseup=MouseUp, mousedown=LeftClickOnly, dragmove=LeftClickOnly, dragrelease=LeftClickOnly},{x=default_x, y=default_y})
    WindowCreate(win, windowinfo.window_left, windowinfo.window_top, width, height, windowinfo.window_mode, windowinfo.window_flags, Theme.SECONDARY_BODY)
    WindowFont(win, font_id, font_name, font_size, false, false, false, false, 0)
