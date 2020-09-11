@@ -101,74 +101,72 @@ function BuildStatsPage()
    cstyles = {}
 
    --- Check if we have data in each category, but only as much as necessary - once page built we can stop.
-   --if (not text == "INT" or not text == "CON" or not text == "STR" or not text == "DEX" or not text == "CHA" or not text == "LCK" or not text == "WIS" or not text == "HEALTH" or not text == "MANA" or not text == "MONEY" or not text == "EXPERIENCE") then
-   --   return
-   --end
+   if (not text == "INT" or not text == "CON" or not text == "STR" or not text == "DEX" or not text == "CHA" or not text == "LCK" or not text == "WIS" or not text == "HEALTH" or not text == "MANA" or not text == "MONEY") then
+      return
+   end 
 
    if (stacked == 1) then
       table.insert(cstyles, {
             {text="Str",textcolour=label_colors["Strength"] or Theme.BODY_TEXT},
             bracket,
-            {text=string.format("%3s", commas_in_numbers and commas(getmsdp("STR")) or getmsdp("STR")),textcolour=data_colors["Strength"]},
+            {text=string.format("%3s", getmsdp("STR")),textcolour=data_colors["Strength"]},
             slash,
-            {text=string.format("%-3s", commas_in_numbers and commas(getmsdp("STR_PERM")) or getmsdp("STR_PERM")),textcolour=data_colors["Strength"]},
+            {text=string.format("%-3s", getmsdp("STR_PERM")),textcolour=data_colors["Strength"]},
             endbracket,
 
             {text="     Hp ",textcolour=label_colors["Health"] or Theme.BODY_TEXT},
             bracket,
-            {text=string.format("%6s",getmsdp("HEALTH")), textcolour=data_colors["Health"]},
+            {text=string.format("%6s",commas_in_numbers and commas(getmsdp("HEALTH")) or getmsdp("HEALTH")), textcolour=data_colors["Health"]},
             slash,
-            {text=string.format("%6s",getmsdp("HEALTH_MAX")),textcolour=data_colors["Health"]},
+            {text=string.format("%6s",commas_in_numbers and commas(getmsdp("HEALTH_MAX")) or getmsdp("HEALTH_MAX")),textcolour=data_colors["Health"]},
             endbracket
             })
 
       table.insert(cstyles, {
             {text="Int",textcolour=label_colors["Intelligence"] or Theme.BODY_TEXT},
             bracket,
-            {text=string.format("%3s",getmsdp("INT")),textcolour=data_colors["Intelligence"]},
+            {text=string.format("%3s", getmsdp("INT")),textcolour=data_colors["Intelligence"]},
             slash,
-            {text=string.format("%-3s",getmsdp("INT_PERM")),textcolour=data_colors["Intelligence"]},
+            {text=string.format("%-3s", getmsdp("INT_PERM")),textcolour=data_colors["Intelligence"]},
             endbracket,
 
             {text="     Ki ",textcolour=label_colors["Ki"] or Theme.BODY_TEXT},
             bracket,
-            {text=string.format("%6s",getmsdp("MANA")), textcolour=data_colors["Ki"]},
+            {text=string.format("%6s",commas_in_numbers and commas(getmsdp("MANA")) or getmsdp("MANA")), textcolour=data_colors["Ki"]},
             slash,
-            {text=string.format("%6s",getmsdp("MANA_MAX")),textcolour=data_colors["Ki"]},
+            {text=string.format("%6s",commas_in_numbers and commas(getmsdp("MANA_MAX")) or getmsdp("MANA_MAX")),textcolour=data_colors["Ki"]},
             endbracket
             })
 
       table.insert(cstyles, {
             {text="Wis",textcolour=label_colors["Wisdom"] or Theme.BODY_TEXT},
             bracket,
-            {text=string.format("%3s",getmsdp("WIS")),textcolour=data_colors["Wisdom"]},
+            {text=string.format("%3s", getmsdp("WIS")),textcolour=data_colors["Wisdom"]},
             slash,
-            {text=string.format("%-3s",getmsdp("WIS_PERM")),textcolour=data_colors["Wisdom"]},
-            endbracket,
+            {text=string.format("%-3s", getmsdp("WIS_PERM")),textcolour=data_colors["Wisdom"]},
+            endbracket--[[,
 
-            {text="     Mvs",textcolour=label_colors["Moves"] or Theme.BODY_TEXT},
+            {text="   "..ragename,textcolour=label_colors["Moves"] or Theme.BODY_TEXT},
             bracket,
-            {text=string.format("%6s",getmsdp("MOVEMENT")), textcolour=data_colors["Moves"]},
-            slash,
-            {text=string.format("%6s",getmsdp("MOVEMENT_MAX")),textcolour=data_colors["Moves"]},
-            endbracket
+            {text=string.format("%6s",rage), textcolour=data_colors["Moves"]},
+            endbracket --]]
             })
 
       table.insert(cstyles, {
             {text="Dex",textcolour=label_colors["Dexterity"] or Theme.BODY_TEXT},
             bracket,
-            {text=string.format("%3s",getmsdp("DEX")),textcolour=data_colors["Dexterity"]},
+            {text=string.format("%3s", getmsdp("DEX")),textcolour=data_colors["Dexterity"]},
             slash,
-            {text=string.format("%-3s",getmsdp("DEX_PERM")),textcolour=data_colors["Dexterity"]},
+            {text=string.format("%-3s", getmsdp("DEX_PERM")),textcolour=data_colors["Dexterity"]},
             endbracket
             })
 
       table.insert(cstyles, {
             {text="Con",textcolour=label_colors["Constitution"] or Theme.BODY_TEXT},
             bracket,
-            {text=string.format("%3s",getmsdp("CON")),textcolour=data_colors["Constitution"]},
+            {text=string.format("%3s", getmsdp("CON")),textcolour=data_colors["Constitution"]},
             slash,
-            {text=string.format("%-3s",getmsdp("CON_PERM")),textcolour=data_colors["Constitution"]},
+            {text=string.format("%-3s", getmsdp("CON_PERM")),textcolour=data_colors["Constitution"]},
             endbracket,
 
             {text="     HR ",textcolour=label_colors["Hitroll"] or Theme.BODY_TEXT},
@@ -180,9 +178,9 @@ function BuildStatsPage()
       table.insert(cstyles, {
             {text="Lck",textcolour=label_colors["Luck"] or Theme.BODY_TEXT},
             bracket,
-            {text=string.format("%3s",getmsdp("LCK")),textcolour=data_colors["Luck"]},
+            {text=string.format("%3s", getmsdp("LCK")),textcolour=data_colors["Luck"]},
             slash,
-            {text=string.format("%-3s",getmsdp("LCK_PERM")),textcolour=data_colors["Luck"]},
+            {text=string.format("%-3s", getmsdp("LCK_PERM")),textcolour=data_colors["Luck"]},
             endbracket,
 
             {text="     DR ",textcolour=label_colors["Damroll"] or Theme.BODY_TEXT},
@@ -191,19 +189,16 @@ function BuildStatsPage()
             endbracket
             })
 
-      table.insert(cstyles, {})
-
       table.insert(cstyles, {
-            {text="N/A",textcolour=label_colors["TNL"] or Theme.BODY_TEXT},
+            {text="Cha",textcolour=label_colors["Charisma"] or Theme.BODY_TEXT},
             bracket,
-            {text=string.format("%5s","N/A"), textcolour=data_colors["TNL"]},
-            endbracket,
-
-            {text="       N/A",textcolour=label_colors["Level"] or Theme.BODY_TEXT},
-            bracket,
-            {text=string.format("%5s","N/A"), textcolour=data_colors["Level"]},
-            endbracket,
+            {text=string.format("%3s",getmsdp("CHA")), textcolour=data_colors["Charisma"]},
+            slash,
+            {text=string.format("%-3s", getmsdp("CHA_PERM")),textcolour=data_colors["Charisma"]},
+            endbracket
             })
+
+      table.insert(cstyles, {})
 
       table.insert(cstyles, {
             {text="QP ",textcolour=label_colors["Quest Points"] or Theme.BODY_TEXT},
@@ -220,7 +215,7 @@ function BuildStatsPage()
       table.insert(cstyles, {
             {text="Align",textcolour=label_colors["Alignment"] or Theme.BODY_TEXT},
             bracket,
-            {text=string.format("%5s",getmsdp("ALIGNMENT")), textcolour=data_colors["Alignment"]},
+            {text=string.format("%5s", getmsdp("ALIGNMENT")), textcolour=data_colors["Alignment"]},
             endbracket,
 
             {text="     Zeni",textcolour=label_colors["Zeni"] or Theme.BODY_TEXT},
@@ -230,7 +225,7 @@ function BuildStatsPage()
             })
 
       table.insert(cstyles, {
-            {text="RPP",textcolour=label_colors["Trains"] or Theme.BODY_TEXT},
+            {text="RP",textcolour=label_colors["Trains"] or Theme.BODY_TEXT},
             bracket,
             {text=string.format("%5s","N/A"), textcolour=data_colors["Trains"]},
             endbracket,
@@ -244,7 +239,7 @@ function BuildStatsPage()
       fighting = getmsdp("OPPONENT_NAME")
 
       if fighting ~= "" and fighting ~= null then
-         fstr = string.format("Foe : (%s/%s) %s",getmsdp("OPPONENT_HEALTH"),getmsdp("OPPONENT_HEALTH_MAX"),getmsdp("OPPONENT_NAME"))
+         fstr = string.format("Foe : (%s/%s) %s",commas_in_numbers and commas(getmsdp("OPPONENT_HEALTH")) or getmsdp("OPPONENT_HEALTH"),commas_in_numbers and commas(getmsdp("OPPONENT_HEALTH_MAX")) or getmsdp("OPPONENT_HEALTH_MAX"),getmsdp("OPPONENT_NAME"))
          table.insert(cstyles,ColoursToStyles(fstr))
       else
          table.insert(cstyles,{text=""})
@@ -253,74 +248,68 @@ function BuildStatsPage()
       table.insert(cstyles, {
             {text="Str",textcolour=label_colors["Strength"] or Theme.BODY_TEXT},
             bracket,
-            {text=string.format("%3s", commas_in_numbers and commas(getmsdp("STR")) or getmsdp("STR")),textcolour=data_colors["Strength"]},
+            {text=string.format("%3s", getmsdp("STR")),textcolour=data_colors["Strength"]},
             slash,
-            {text=string.format("%-3s", commas_in_numbers and commas(getmsdp("STR_PERM")) or getmsdp("STR_PERM")),textcolour=data_colors["Strength"]},
+            {text=string.format("%-3s", getmsdp("STR_PERM")),textcolour=data_colors["Strength"]},
             endbracket
       })
 
       table.insert(cstyles, {
             {text="Int",textcolour=label_colors["Intelligence"] or Theme.BODY_TEXT},
             bracket,
-            {text=string.format("%3s",getmsdp("INT")),textcolour=data_colors["Intelligence"]},
+            {text=string.format("%3s", getmsdp("INT")),textcolour=data_colors["Intelligence"]},
             slash,
-            {text=string.format("%-3s",getmsdp("INT_PERM")),textcolour=data_colors["Intelligence"]},
+            {text=string.format("%-3s", getmsdp("INT_PERM")),textcolour=data_colors["Intelligence"]},
             endbracket
       })
 
       table.insert(cstyles, {
             {text="Wis",textcolour=label_colors["Wisdom"] or Theme.BODY_TEXT},
             bracket,
-            {text=string.format("%3s",getmsdp("WIS")),textcolour=data_colors["Wisdom"]},
+            {text=string.format("%3s", getmsdp("WIS")),textcolour=data_colors["Wisdom"]},
             slash,
-            {text=string.format("%-3s",getmsdp("WIS_PERM")),textcolour=data_colors["Wisdom"]},
+            {text=string.format("%-3s", getmsdp("WIS_PERM")),textcolour=data_colors["Wisdom"]},
             endbracket
       })
 
       table.insert(cstyles, {
             {text="Dex",textcolour=label_colors["Dexterity"] or Theme.BODY_TEXT},
             bracket,
-            {text=string.format("%3s",getmsdp("DEX")),textcolour=data_colors["Dexterity"]},
+            {text=string.format("%3s", getmsdp("DEX")),textcolour=data_colors["Dexterity"]},
             slash,
-            {text=string.format("%-3s",getmsdp("DEX_PERM")),textcolour=data_colors["Dexterity"]},
+            {text=string.format("%-3s", getmsdp("DEX_PERM")),textcolour=data_colors["Dexterity"]},
             endbracket
       })
 
       table.insert(cstyles, {
             {text="Con",textcolour=label_colors["Constitution"] or Theme.BODY_TEXT},
             bracket,
-            {text=string.format("%3s",getmsdp("CON")),textcolour=data_colors["Constitution"]},
+            {text=string.format("%3s", getmsdp("CON")),textcolour=data_colors["Constitution"]},
             slash,
-            {text=string.format("%-3s",getmsdp("CON_PERM")),textcolour=data_colors["Constitution"]},
+            {text=string.format("%-3s", getmsdp("CON_PERM")),textcolour=data_colors["Constitution"]},
             endbracket
       })
 
       table.insert(cstyles, {
             {text="Lck",textcolour=label_colors["Luck"] or Theme.BODY_TEXT},
             bracket,
-            {text=string.format("%3s",getmsdp("LCK")),textcolour=data_colors["Luck"]},
+            {text=string.format("%3s", getmsdp("LCK")),textcolour=data_colors["Luck"]},
             slash,
-            {text=string.format("%-3s",getmsdp("LCK_PERM")),textcolour=data_colors["Luck"]},
+            {text=string.format("%-3s", getmsdp("LCK_PERM")),textcolour=data_colors["Luck"]},
             endbracket
       })
 
       table.insert(cstyles, {
-            {text="HR ",textcolour=label_colors["Hitroll"] or Theme.BODY_TEXT},
+            {text="Cha",textcolour=label_colors["Charisma"] or Theme.BODY_TEXT},
             bracket,
-            {text=string.format("%5s",getmsdp("HITROLL")), textcolour=data_colors["Hitroll"]},
-            endbracket
-      })
-
-
-      table.insert(cstyles, {
-            {text="DR ",textcolour=label_colors["Damroll"] or Theme.BODY_TEXT},
-            bracket,
-            {text=string.format("%5s",getmsdp("DAMROLL")), textcolour=data_colors["Damroll"]},
+            {text=string.format("%3s",getmsdp("CHA")), textcolour=data_colors["Charisma"]},
+            slash,
+            {text=string.format("%-3s", getmsdp("CHA_PERM")),textcolour=data_colors["Charisma"]},
             endbracket
       })
 
       table.insert(cstyles,{})
-
+      --[[
       table.insert(cstyles, {
             {text="RPP",textcolour=label_colors["Trains"] or Theme.BODY_TEXT},
             bracket,
@@ -332,13 +321,6 @@ function BuildStatsPage()
             {text="SM ",textcolour=label_colors["Pracs"] or Theme.BODY_TEXT},
             bracket,
             {text=string.format("%5s","N/A"), textcolour=data_colors["Pracs"]},
-            endbracket
-      })
-
-      table.insert(cstyles, {
-            {text="Zeni ",textcolour=label_colors["Zeni"] or Theme.BODY_TEXT},
-            bracket,
-            {text=string.format("%s",commas_in_numbers and commas(getmsdp("MONEY")) or getmsdp("MONEY")), textcolour=data_colors["Zeni"]},
             endbracket
       })
 
@@ -357,7 +339,7 @@ function BuildStatsPage()
       })
 
       table.insert(cstyles, {})
-
+      --]]
       table.insert(cstyles, {
             {text="Lvl  ",textcolour=label_colors["Level"] or Theme.BODY_TEXT},
             bracket,
@@ -366,10 +348,10 @@ function BuildStatsPage()
       })
 
       table.insert(cstyles, {
-            {text="TNL  ",textcolour=label_colors["TNL"] or Theme.BODY_TEXT},
-            bracket,
-            {text=string.format("%5s","N/A"), textcolour=data_colors["TNL"]},
-            endbracket
+         {text="Zeni ",textcolour=label_colors["Zeni"] or Theme.BODY_TEXT},
+         bracket,
+         {text=string.format("%s",commas_in_numbers and commas(getmsdp("MONEY")) or getmsdp("MONEY")), textcolour=data_colors["Zeni"]},
+         endbracket
       })
 
       table.insert(cstyles, {
@@ -384,34 +366,63 @@ function BuildStatsPage()
       table.insert(cstyles, {
             {text="Hp ",textcolour=label_colors["Health"] or Theme.BODY_TEXT},
             bracket,
-            {text=string.format("%3s",getmsdp("HEALTH")),textcolour=data_colors["Health"]},
+            {text=string.format("%3s",commas_in_numbers and commas(getmsdp("HEALTH")) or getmsdp("HEALTH")),textcolour=data_colors["Health"]},
             slash,
-            {text=string.format("%-3s",getmsdp("HEALTH_MAX")),textcolour=data_colors["Health"]},
+            {text=string.format("%-3s",commas_in_numbers and commas(getmsdp("HEALTH_MAX")) or getmsdp("HEALTH_MAX")),textcolour=data_colors["Health"]},
             endbracket
       })
 
       table.insert(cstyles, {
             {text="Ki ",textcolour=label_colors["Ki"] or Theme.BODY_TEXT},
             bracket,
-            {text=string.format("%3s",getmsdp("MANA")),textcolour=data_colors["Ki"]},
+            {text=string.format("%3s",commas_in_numbers and commas(getmsdp("MANA")) or getmsdp("MANA")),textcolour=data_colors["Ki"]},
             slash,
-            {text=string.format("%-3s",getmsdp("MANA_MAX")),textcolour=data_colors["Ki"]},
+            {text=string.format("%-3s",commas_in_numbers and commas(getmsdp("MANA_MAX")) or getmsdp("MANA_MAX")),textcolour=data_colors["Ki"]},
             endbracket
       })
 
-      table.insert(cstyles, {
-            {text="Mvs",textcolour=label_colors["Moves"] or Theme.BODY_TEXT},
-            bracket,
-            {text=string.format("%3s",getmsdp("MOVEMENT")),textcolour=data_colors["Moves"]},
-            slash,
-            {text=string.format("%-3s",getmsdp("MOVEMENT_MAX")),textcolour=data_colors["Moves"]},
-            endbracket
-      })
+      if ( getmsdp("RACE") == "Aquarian" ) then
+         table.insert(cstyles, {
+             {text= "Hydration:",textcolour=label_colors["Moves"] or Theme.BODY_TEXT},
+             bracket,
+             {text=string.format("%3s",getmsdp("HYDRATION")),textcolour=data_colors["Moves"]},
+             endbracket
+         })
+     end
+
+     if ( getmsdp("RACE") == "Icer" ) then
+         table.insert(cstyles, {
+             {text= "Ego:",textcolour=label_colors["Moves"] or Theme.BODY_TEXT},
+             bracket,
+             {text=string.format("%3s",getmsdp("EGO")),textcolour=data_colors["Moves"]},
+             endbracket
+         })
+     end
+
+     if ( getmsdp("RACE") == "Saiyan" or getmsdp("RACE") == "Halfbreed" or getmsdp("RACE") == "Bioandroid") then
+         table.insert(cstyles, {
+             {text= "Rage:",textcolour=label_colors["Moves"] or Theme.BODY_TEXT},
+             bracket,
+             {text=string.format("%3s",getmsdp("RAGE")),textcolour=data_colors["Moves"]},
+             endbracket
+         })
+     end
+     
+     if ( getmsdp("RACE") == "Saibaman") then
+         table.insert(cstyles, {
+             {text= "Root:",textcolour=label_colors["Moves"] or Theme.BODY_TEXT},
+             bracket,
+             {text=string.format("%3s",getmsdp("ROOT")),textcolour=data_colors["Moves"]},
+             endbracket
+         })
+     else
+         table.insert(cstyles,{})
+     end
 
       fighting = getmsdp("OPPONENT_NAME")
 
       if fighting ~= "" and fighting ~= null then
-         fstr = string.format("Foe : (%s/%s) %s",getmsdp("OPPONENT_HEALTH"),getmsdp("OPPONENT_HEALTH_MAX"),getmsdp("OPPONENT_NAME"))
+         fstr = string.format("Foe : (%s/%s) %s",commas_in_numbers and commas(getmsdp("OPPONENT_HEALTH")) or getmsdp("OPPONENT_HEALTH"),commas_in_numbers and commas(getmsdp("OPPONENT_HEALTH_MAX")) or getmsdp("OPPONENT_HEALTH_MAX"),getmsdp("OPPONENT_NAME"))
          table.insert(cstyles,ColoursToStyles(fstr))
       else
          table.insert(cstyles,{text=""})
@@ -596,14 +607,21 @@ end -- right_click_menu
 function OnPluginBroadcast (msg, id, name, text)
 
    -- Look for MSDP handler.
-    if (id == 'b3aae34498d5bf19b5b2e2af') then
-        pagebuilt = true
-        --if (text == "INT" or text == "CON" or text == "STR" or text == "DEX" or text == "CHA" or text == "LCK" or text == "WIS" or text == "HEALTH" or text == "MANA" or text == "MONEY" or text == "EXPERIENCE") then
-        RefreshPage()
-        --end
-    elseif (id == "462b665ecb569efbf261422f" and msg==996 and text == "re-register z") then
+   if (id == 'b3aae34498d5bf19b5b2e2af') then
+      if (text == 'reload') then
+         -- invalidate current data
+         page_built = false
+         return
+      end
+
+      if (text == "INT" or text == "CON" or text == "STR" or text == "DEX" or text == "CHA" or text == "LCK" or text == "WIS" or text == "HEALTH" or text == "MANA") then
+         RefreshPage()
+      end
+
+      print()
+   elseif (id == "462b665ecb569efbf261422f" and msg==996 and text == "re-register z") then
         CallPlugin("462b665ecb569efbf261422f", "registerMiniwindow", win)
-    end
+   end
 end
 
 ---------------------------------------------------------------------------------
