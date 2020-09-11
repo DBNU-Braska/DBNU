@@ -415,8 +415,6 @@ function BuildStatsPage()
              {text=string.format("%3s",getmsdp("ROOT")),textcolour=data_colors["Moves"]},
              endbracket
          })
-     else
-         table.insert(cstyles,{})
      end
 
       fighting = getmsdp("OPPONENT_NAME")
